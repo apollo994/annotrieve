@@ -1,9 +1,6 @@
 from fastapi import HTTPException
 from db.models import BioProject
 from helpers import response as response_helper, query_visitors as query_visitors_helper
-import os
-from jobs.updates import update_bioprojects
-
 
 def get_bioprojects(filter: str = None, offset: int = 0, limit: int = 20, sort_by: str = None, sort_order: str = 'desc'):
     """
@@ -28,13 +25,3 @@ def get_bioproject(accession: str):
     if not bioproject:
         raise HTTPException(status_code=404, detail=f"Bioproject {accession} not found")
     return bioproject
-
-
-def trigger_bioprojects_update(auth_key: str):
-    """
-    Trigger the bioprojects update
-    """
-    if auth_key != os.getenv('AUTH_KEY'):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    update_bioprojects.delay()
-    return {"message": "Bioprojects update task triggered"}

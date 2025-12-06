@@ -3,49 +3,34 @@ from helpers import query_visitors as query_visitors_helper
 from helpers import response as response_helper
 from helpers import parameters as params_helper
 from helpers import pysam_helper
+from helpers import constants as constants_helper
 from helpers import annotation as annotation_helper
-from helpers import pipelines as pipelines_helper
-from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap, drop_all_collections, TaxonNode, GenomeAssembly, Organism, GenomicSequence, BioProject
-from fastapi.responses import StreamingResponse, Response
-from fastapi import HTTPException
+from helpers import feature_stats as feature_stats_helper
+from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap
+from fastapi.responses import StreamingResponse
+from fastapi import HTTPException, BackgroundTasks
 from typing import Optional, Dict, Any
 import os
-from jobs.import_annotations import import_annotations
-from jobs.updates import update_annotation_fields, update_feature_stats
-import statistics
 from datetime import datetime
+from db.embedded_documents import GFFStats
 
-FIELD_TSV_MAP = {
-    'annotation_id': 'annotation_id',
-    'assembly_accession': 'assembly_accession',
-    'assembly_name': 'assembly_name',
-    'organism_name': 'organism_name',
-    'taxid': 'taxid',
-    'database': 'source_file_info__database',
-    'provider': 'source_file_info__provider',
-    'source_url': 'source_file_info__url_path',
-    'bgzip_path': 'indexed_file_info__bgzipped_path',
-    'csi_path': 'indexed_file_info__csi_path',
-}
-
-NO_VALUE_KEY = "no_value"
-def get_annotations(args: dict, field: str = None, response_type: str = 'metadata'):
+def get_annotations(args: dict, field: str = None, response_type: str = 'metadata', background_tasks: Optional[BackgroundTasks] = None):
     try:
         #drop_all_collections()
         limit = args.pop('limit', 20)
         offset = args.pop('offset', 0)
         fields = args.pop('fields', None)
-        annotations = get_annotation_records(**args)
+        annotations = annotation_helper.get_annotation_records(**args)
         total = annotations.count()
         if response_type == 'frequencies':
             return query_visitors_helper.get_frequencies(annotations, field, type='annotation')
-        elif response_type == 'summary_stats':
-            return get_annotations_summary_stats(annotations)
         elif response_type == 'tsv':
             return stream_annotation_tsv(annotations)
+        #elif response_type == 'tar':
+        #    return download_tar_package(annotations, background_tasks)
         else:
             if fields:
-                annotations = annotations.only(*fields.split(','))
+                annotations = annotations.only(*fields.split(',') if isinstance(fields, str) else fields)
             return response_helper.json_response_with_pagination(annotations, total, offset, limit)
 
     except HTTPException as e:
@@ -56,9 +41,9 @@ def get_annotations(args: dict, field: str = None, response_type: str = 'metadat
 
 def stream_annotation_tsv(annotations):
     def row_iterator():
-        header = "\t".join(FIELD_TSV_MAP.keys()) + "\n"
+        header = "\t".join(constants_helper.FIELD_TSV_MAP.keys()) + "\n"
         yield header
-        for annotation in annotations.scalar(*FIELD_TSV_MAP.values()):
+        for annotation in annotations.scalar(*constants_helper.FIELD_TSV_MAP.values()):
             row = "\t".join("" if value is None else str(value) for value in annotation) + "\n"
             yield row
 
@@ -69,67 +54,6 @@ def stream_annotation_tsv(annotations):
             "Content-Disposition": f'attachment; filename="annotations_{datetime.now().strftime("%Y%m%d_%H%M%S")}.tsv"',
         },
     )
-
-def get_annotation_records(
-    filter:str = None, #text search on assembly, taxonomy or annotation id
-    taxids: Optional[str] = None, 
-    db_sources: Optional[str] = None, #GenBank, RefSeq, Ensembl
-    feature_sources: Optional[str] = None, #second column in the gff file
-    assembly_accessions: Optional[str] = None,
-    bioproject_accessions: Optional[str] = None,
-    biotypes: Optional[str] = None, #biotype present in the 9th column in the gff file
-    feature_types: Optional[str] = None,# third column in the gff file
-    has_stats: Optional[bool] = None, #True, False, None for all
-    pipelines: Optional[str] = None, #pipeline name
-    providers: Optional[str] = None, #annotation provider list separated by comma
-    md5_checksums: Optional[str] = None, 
-    refseq_categories: str = None, #true
-    assembly_levels: str = None,
-    assembly_statuses: str = None,
-    assembly_types: str = None,
-    sort_by: str = None,
-    sort_order: str = None,
-    release_date_from: str = None,
-    release_date_to: str = None,
-):
-
-    mongoengine_query = annotation_helper.query_params_to_mongoengine_query(
-        taxids=taxids,
-        db_sources=db_sources,
-        assembly_accessions=assembly_accessions,
-        md5_checksums=md5_checksums,
-        feature_sources=feature_sources,
-        biotypes=biotypes,
-        feature_types=feature_types,
-        has_stats=has_stats,
-        pipelines=pipelines,
-        providers=providers,
-        release_date_from=release_date_from,
-        release_date_to=release_date_to,
-    )
-    annotations = GenomeAnnotation.objects(**mongoengine_query).exclude('id')
-    #check if any assembly related param is present
-    if any([refseq_categories, assembly_levels, assembly_statuses, assembly_types, bioproject_accessions]):
-        query = {}
-        if refseq_categories:
-            query['refseq_category__in'] = refseq_categories.split(',') if isinstance(refseq_categories, str) else refseq_categories
-        if assembly_levels:
-            query['assembly_level__in'] = assembly_levels.split(',') if isinstance(assembly_levels, str) else assembly_levels
-        if assembly_statuses:
-            query['assembly_status__in'] = assembly_statuses.split(',') if isinstance(assembly_statuses, str) else assembly_statuses
-        if assembly_types:
-            query['assembly_type__in'] = assembly_types.split(',') if isinstance(assembly_types, str) else assembly_types
-        if bioproject_accessions:
-            query['bioprojects__in'] = bioproject_accessions.split(',') if isinstance(bioproject_accessions, str) else bioproject_accessions
-        #fetch assemblies from the assemblies collection
-        assemblies = GenomeAssembly.objects(**query).scalar('assembly_accession')
-        annotations = annotations.filter(assembly_accession__in=assemblies)
-    if filter:
-        annotations = annotations.filter(query_visitors_helper.annotation_query(filter))
-    if sort_by:
-        sort = '-' + sort_by if sort_order == 'desc' else sort_by
-        annotations = annotations.order_by(sort)
-    return annotations
 
 def get_annotation_metadata(md5_checksum):
     annotation = GenomeAnnotation.objects(annotation_id=md5_checksum).exclude('id').first()
@@ -143,301 +67,10 @@ def get_annotation(md5_checksum):
         raise HTTPException(status_code=404, detail=f"Annotation {md5_checksum} not found")
     return annotation
 
-
-def trigger_annotation_fields_update(auth_key: str):
-    if auth_key != os.getenv('AUTH_KEY'):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    #queue both tasks
-    update_feature_stats.delay()
-    return {"message": "Feature stats and import annotations task triggered"}
-
-
-
-
-def get_annotations_distribution_data(annotations, metric: str = 'all', category: str = 'all'):
-    """
-    Extract distribution data from annotations for box/violin plots.
-    
-    Args:
-        annotations: QuerySet of GenomeAnnotation objects
-        metric: One of 'counts', 'mean_lengths', 'ratios', or 'all' (default: 'all')
-        category: One of 'coding_genes', 'non_coding_genes', 'pseudogenes', or 'all' (default: 'all')
-    
-    Returns:
-        Dict with distribution data suitable for plotting
-    """
-    valid_metrics = ['counts', 'mean_lengths', 'ratios', 'all']
-    valid_categories = ['coding_genes', 'non_coding_genes', 'pseudogenes', 'all']
-    
-    if metric not in valid_metrics:
-        raise HTTPException(
-            status_code=400, 
-            detail=f"Invalid metric: {metric}. Must be one of: {', '.join(valid_metrics)}"
-        )
-    
-    if category not in valid_categories:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid category: {category}. Must be one of: {', '.join(valid_categories)}"
-        )
-    
-    # Determine which categories to process
-    categories_to_process = ['coding_genes', 'non_coding_genes', 'pseudogenes']
-    if category != 'all':
-        categories_to_process = [category]
-    
-    # Extract raw data for each category using aggregation pipelines
-    # Note: The pipeline already filters for annotations with stats, so we use the full queryset
-    category_data = {}
-    for cat_name in categories_to_process:
-        pipeline = pipelines_helper.category_stats_pipeline(cat_name)
-        result = list(annotations.aggregate(pipeline))
-        
-        if result and result[0]:
-            data = result[0]
-            counts = [c for c in data.get('counts', []) if c is not None]
-            mean_lengths = [ml for ml in data.get('mean_lengths', []) if ml is not None]
-            
-            category_data[cat_name] = {
-                'counts': counts,
-                'mean_lengths': mean_lengths
-            }
-        else:
-            category_data[cat_name] = {
-                'counts': [],
-                'mean_lengths': []
-            }
-    
-    # Build response based on requested metrics
-    response = {}
-    
-    if metric in ['counts', 'all']:
-        response['counts'] = {
-            cat: category_data[cat]['counts'] 
-            for cat in categories_to_process
-        }
-    
-    if metric in ['mean_lengths', 'all']:
-        response['mean_lengths'] = {
-            cat: category_data[cat]['mean_lengths'] 
-            for cat in categories_to_process
-        }
-    
-    if metric in ['ratios', 'all']:
-        # Calculate ratios - need all three categories to compute ratios
-        if category == 'all':
-            # Use aggregation pipeline to extract all counts together for ratio calculation
-            ratio_pipeline = [
-                {
-                    "$project": {
-                        "coding_count": "$features_statistics.coding_genes.count",
-                        "non_coding_count": "$features_statistics.non_coding_genes.count",
-                        "pseudogene_count": "$features_statistics.pseudogenes.count"
-                    }
-                },
-                {
-                    "$match": {
-                        "$or": [
-                            {"coding_count": {"$ne": None}},
-                            {"non_coding_count": {"$ne": None}},
-                            {"pseudogene_count": {"$ne": None}}
-                        ]
-                    }
-                },
-                {
-                    "$project": {
-                        "coding_count": {"$ifNull": ["$coding_count", 0]},
-                        "non_coding_count": {"$ifNull": ["$non_coding_count", 0]},
-                        "pseudogene_count": {"$ifNull": ["$pseudogene_count", 0]},
-                        "total": {
-                            "$add": [
-                                {"$ifNull": ["$coding_count", 0]},
-                                {"$ifNull": ["$non_coding_count", 0]},
-                                {"$ifNull": ["$pseudogene_count", 0]}
-                            ]
-                        }
-                    }
-                },
-                {
-                    "$match": {
-                        "total": {"$gt": 0}
-                    }
-                },
-                {
-                    "$project": {
-                        "coding_ratio": {"$divide": ["$coding_count", "$total"]},
-                        "non_coding_ratio": {"$divide": ["$non_coding_count", "$total"]},
-                        "pseudogene_ratio": {"$divide": ["$pseudogene_count", "$total"]}
-                    }
-                }
-            ]
-            
-            ratio_results = list(annotations.aggregate(ratio_pipeline))
-            
-            ratios = {
-                'coding_ratio': [r['coding_ratio'] for r in ratio_results],
-                'non_coding_ratio': [r['non_coding_ratio'] for r in ratio_results],
-                'pseudogene_ratio': [r['pseudogene_ratio'] for r in ratio_results]
-            }
-            
-            response['ratios'] = ratios
-        else:
-            # For single category, ratios don't make sense
-            response['ratios'] = {}
-    
-    return response
-
-def get_annotations_summary_stats(annotations):
-    """
-    Calculate summary statistics across all annotations in the queryset.
-    Returns aggregated stats for genes, transcripts, and features.
-    """
-
-    # Basic annotation counts
-    total_count = annotations.count()
-    related_organisms_count = len(annotations.distinct('taxid'))
-    related_assemblies_count = len(annotations.distinct('assembly_accession'))
-    
-    # Helper function to calculate stats for a gene category
-    def get_gene_category_stats(category_name):
-        pipeline = pipelines_helper.category_stats_pipeline(category_name)
-        
-        result = list(annotations.aggregate(pipeline))
-        if not result or not result[0]:
-            return None
-        
-        data = result[0]
-        counts = [c for c in data.get('counts', []) if c is not None]
-        mean_lengths = [ml for ml in data.get('mean_lengths', []) if ml is not None]
-        
-        return annotation_helper.map_to_gene_category_stats(data, counts, mean_lengths)
-    
-    # Get stats for each gene category
-    coding_genes_stats = get_gene_category_stats('coding_genes')
-    non_coding_genes_stats = get_gene_category_stats('non_coding_genes')
-    pseudogenes_stats = get_gene_category_stats('pseudogenes')
-    
-    # Helper function to aggregate transcript type stats (e.g., mRNA)
-    def get_transcript_type_stats(gene_categories):
-        """Aggregate transcript types across all gene categories"""
-        transcript_stats = {}
-        
-        for category_stats in gene_categories:
-            if not category_stats or not category_stats.get('transcript_types'):
-                continue
-            
-            for types_dict in category_stats['transcript_types']:
-                if not types_dict or not isinstance(types_dict, dict):
-                    continue
-                
-                for type_name, type_data in types_dict.items():
-                    if type_name not in transcript_stats:
-                        transcript_stats[type_name] = {
-                            'counts': [],
-                            'mean_lengths': []
-                        }
-                    
-                    if isinstance(type_data, dict):
-                        count = type_data.get('count')
-                        if count is not None:
-                            transcript_stats[type_name]['counts'].append(count)
-                        
-                        length_stats = type_data.get('length_stats', {})
-                        if isinstance(length_stats, dict):
-                            mean_length = length_stats.get('mean')
-                            if mean_length is not None:
-                                transcript_stats[type_name]['mean_lengths'].append(mean_length)
-        
-        # Calculate final stats for each transcript type
-        result = {}
-        for type_name, data in transcript_stats.items():
-            counts = data['counts']
-            mean_lengths = data['mean_lengths']
-            
-            # Build the proper data dictionary with calculated stats
-            stats_data = {
-                'total_count': sum(counts) if counts else 0,
-                'avg_count': statistics.mean(counts) if counts else 0,
-                'avg_mean_length': statistics.mean(mean_lengths) if mean_lengths else 0
-            }
-            
-            result[type_name] = annotation_helper.map_to_transcript_type_stats(stats_data, counts, mean_lengths)
-        
-        return result
-    
-    # Get transcript stats
-    transcript_stats = get_transcript_type_stats([
-        coding_genes_stats,
-        non_coding_genes_stats,
-        pseudogenes_stats
-    ])
-    
-    # Helper function to get feature stats (cds, exons, introns)
-    def get_feature_stats(gene_category, feature_name):
-        """Get stats for a specific feature type within a gene category"""
-        
-        pipeline = pipelines_helper.feature_stats_pipeline(gene_category, feature_name)        
-        result = list(annotations.aggregate(pipeline))
-        if not result or not result[0]:
-            return None
-        
-        data = result[0]
-        mean_lengths = [ml for ml in data.get('mean_lengths', []) if ml is not None]
-        
-        return {
-            'mean_length': round(data.get('avg_mean_length', 0), 2) if data.get('avg_mean_length') else 0,
-            'median_length': round(statistics.median(mean_lengths), 2) if mean_lengths else 0
-        }
-    
-    # Aggregate feature stats across all gene categories
-    feature_types = ['cds', 'exons', 'introns']
-    gene_categories = ['coding_genes', 'non_coding_genes', 'pseudogenes']
-    
-    features_stats = {}
-    for feature_name in feature_types:
-        all_mean_lengths = []
-        
-        for gene_category in gene_categories:
-            feature_stat = get_feature_stats(gene_category, feature_name)
-            if feature_stat and feature_stat.get('mean_length'):
-                all_mean_lengths.append(feature_stat['mean_length'])
-        
-        features_stats[feature_name] = {
-            'mean_length': round(statistics.mean(all_mean_lengths), 2) if all_mean_lengths else 0,
-            'median_length': round(statistics.median(all_mean_lengths), 2) if all_mean_lengths else 0
-        }
-    
-    # Build final summary report
-    summary_report = {
-        'annotations': {
-            'total_count': total_count,
-            'related_organisms_count': related_organisms_count,
-            'related_assemblies_count': related_assemblies_count,
-        },
-        'genes': {}
-    }
-    
-    # Add gene stats
-    if coding_genes_stats:
-        summary_report['genes']['coding_genes'] = annotation_helper.category_stats_to_dict(coding_genes_stats)
-    
-    if non_coding_genes_stats:
-        summary_report['genes']['non_coding_genes'] = annotation_helper.category_stats_to_dict(non_coding_genes_stats)
-    
-    if pseudogenes_stats:
-        summary_report['genes']['pseudogenes'] = annotation_helper.category_stats_to_dict(pseudogenes_stats)
-    
-    # Add transcript stats
-    if transcript_stats:
-        summary_report['transcripts'] = transcript_stats
-    
-    # Add feature stats
-    if features_stats:
-        summary_report['features'] = features_stats
-    
-    return summary_report
-
 def update_annotation_stats(md5_checksum, payload):
+    """
+    Update the stats for an annotation
+    """
     if not payload:
         raise HTTPException(status_code=400, detail="No payload provided")
     auth_key = payload.get('auth_key')
@@ -445,11 +78,8 @@ def update_annotation_stats(md5_checksum, payload):
         raise HTTPException(status_code=401, detail="Unauthorized")
     annotation = get_annotation(md5_checksum)
     gene_stats, transcript_stats = annotation_helper.map_to_stats(payload.get('features_statistics'))
-    if gene_stats:
-        annotation.features_statistics.gene_category_stats = gene_stats
-    if transcript_stats:
-        annotation.features_statistics.transcript_type_stats = transcript_stats
-    annotation.save()
+    gff_stats = GFFStats(gene_category_stats=gene_stats if gene_stats else {}, transcript_type_stats=transcript_stats if transcript_stats else {})
+    annotation.modify(features_statistics=gff_stats)
 
 def get_mapped_regions(md5_checksum, offset_param, limit_param):
     try:
@@ -510,21 +140,6 @@ def stream_annotation_tabix(md5_checksum:str, region:str=None, start:int=None, e
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error processing annotation {md5_checksum}: {e}")
 
-def download_annotation(md5_checksum):
-    annotation = get_annotation(md5_checksum)
-    file_path = file_helper.get_annotation_file_path(annotation)
-
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail=f"Annotation {md5_checksum} not found")
-    
-    headers = {
-        "X-Accel-Redirect": f"/_protected_files/{file_path}",
-        "Content-Disposition": f'attachment; filename="{os.path.basename(file_path)}"',
-        "Cache-Control": "public, max-age=86400",
-        "X-Accel-Buffering": "no",
-    }
-    return Response(status_code=200, headers=headers)   
-
 def get_annotation_errors(offset_param=0, limit_param=20):
     try:
         errors = AnnotationError.objects()
@@ -534,354 +149,31 @@ def get_annotation_errors(offset_param=0, limit_param=20):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching annotation errors: {e}")
 
-def trigger_import_annotations(auth_key: str):
-    if auth_key != os.getenv('AUTH_KEY'):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    import_annotations.delay()
-    return {"message": "Import annotations task triggered"}
-
-
-def drop_collections(auth_key: str, model: str):
-    if auth_key != os.getenv('AUTH_KEY'):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    if model == 'all':
-        drop_all_collections()
-    elif model == 'annotations':
-        GenomeAnnotation.objects().delete()
-        AnnotationSequenceMap.objects().delete()
-        AnnotationError.objects().delete()
-    elif model == 'taxonomy':
-        TaxonNode.objects().delete()
-        Organism.objects().delete()
-    elif model == 'genomes':
-        GenomeAssembly.objects().delete()
-        GenomicSequence.objects().delete()
-    return {"message": "Collections dropped"}
-
 def get_gene_stats_summary(commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
     Get gene stats summary with specific structure for coding, non_coding, and pseudogene categories
     """
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    total_annotations = annotations.count()
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_gene_stats_summary(annotations)
     
-    # Map output keys to possible database keys (try variations)
-    category_mapping = {
-        "coding": ["coding", "coding_genes"],
-        "non_coding": ["non_coding", "non_coding_genes"],
-        "pseudogene": ["pseudogene", "pseudogenes"]
-    }
-    
-    # Get stats for each category
-    genes = {}
-    
-    for output_key, possible_keys in category_mapping.items():
-        # Try each possible key until we find one that exists
-        category_found = None
-        results = []
-        
-        for db_key in possible_keys:
-            pipeline = [
-                {
-                    "$match": {
-                        f"features_statistics.gene_category_stats.{db_key}": {"$exists": True, "$ne": None}
-                    }
-                },
-                {
-                    "$project": {
-                        "annotation_id": "$annotation_id",
-                        "total_count": f"$features_statistics.gene_category_stats.{db_key}.total_count",
-                        "mean_length": f"$features_statistics.gene_category_stats.{db_key}.length_stats.mean"
-                    }
-                }
-            ]
-            
-            results = list(annotations.aggregate(pipeline))
-            if results:
-                category_found = db_key
-                break
-        
-        # Count annotations with this category
-        annotations_count = len(results)
-        missing_annotations_count = total_annotations - annotations_count
-        
-        # Extract values for calculations
-        total_count_values = [r["total_count"] for r in results if r.get("total_count") is not None]
-        mean_length_values = [r["mean_length"] for r in results if r.get("mean_length") is not None]
-        
-        # Calculate average count (sum of all counts / annotations with this category)
-        # This is the average number of genes of this category per annotation
-        total_count_sum = sum(total_count_values)
-        average_count = round(total_count_sum / annotations_count, 2) if annotations_count > 0 else None
-        
-        # Calculate average mean length (sum of all mean lengths / annotations with this category)
-        total_length_sum = sum(mean_length_values)
-        average_mean_length = round(total_length_sum / annotations_count, 2) if annotations_count > 0 and mean_length_values else None
-        
-        genes[output_key] = {
-            "annotations_count": annotations_count,
-            "missing_annotations_count": missing_annotations_count,
-            "average_count": average_count,
-            "average_mean_length": average_mean_length
-        }
-    
-    return {
-        "total_annotations": total_annotations,
-        "summary": {
-            "genes": genes
-        },
-        "categories": ["coding", "non_coding", "pseudogene"],
-        "metrics": ["total_count", "average_mean_length"]
-    }
-
 def get_gene_category_details(category: str, commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
     Get details for a specific gene category
     """
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    
-    # Map output category names to possible database keys
-    category_mapping = {
-        "coding": ["coding", "coding_genes"],
-        "non_coding": ["non_coding", "non_coding_genes"],
-        "pseudogene": ["pseudogene", "pseudogenes"]
-    }
-    
-    # Find the actual database key for this category
-    db_category = None
-    if category in category_mapping:
-        for db_key in category_mapping[category]:
-            pipeline = [
-                {
-                    "$match": {
-                        f"features_statistics.gene_category_stats.{db_key}": {"$exists": True, "$ne": None}
-                    }
-                },
-                {
-                    "$limit": 1
-                }
-            ]
-            if list(annotations.aggregate(pipeline)):
-                db_category = db_key
-                break
-    else:
-        # Try the category as-is
-        pipeline = [
-            {
-                "$match": {
-                    f"features_statistics.gene_category_stats.{category}": {"$exists": True, "$ne": None}
-                }
-            },
-            {
-                "$limit": 1
-            }
-        ]
-        if list(annotations.aggregate(pipeline)):
-            db_category = category
-    
-    if not db_category:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Gene category '{category}' not found in the queried annotations"
-        )
-    
-    # Get all values for this category
-    pipeline = [
-        {
-            "$match": {
-                f"features_statistics.gene_category_stats.{db_category}": {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$project": {
-                "annotation_id": "$annotation_id",
-                "category_data": f"$features_statistics.gene_category_stats.{db_category}"
-            }
-        }
-    ]
-    
-    results = list(annotations.aggregate(pipeline))
-    
-    total_counts = []
-    length_means = []
-    
-    for result in results:
-        cat_data = result.get("category_data")
-        if cat_data:
-            if cat_data.get("total_count") is not None:
-                total_counts.append(cat_data["total_count"])
-            if cat_data.get("length_stats"):
-                length_stats = cat_data["length_stats"]
-                if length_stats.get("mean") is not None:
-                    length_means.append(length_stats["mean"])
-    
-    summary_stats = {}
-    if total_counts:
-        summary_stats["total_count"] = {
-            "mean": round(statistics.mean(total_counts), 2)
-        }
-    
-    if length_means:
-        summary_stats["average_mean_length"] = {
-            "mean": round(statistics.mean(length_means), 2)
-        }
-    
-    total_annotations = annotations.count()
-    missing_annotations_count = total_annotations - len(results)
-    
-    return {
-        "category": category,
-        "annotations_count": len(results),
-        "missing_annotations_count": missing_annotations_count,
-        "summary": summary_stats,
-        "metrics": ["total_count", "average_mean_length"]
-    }
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_gene_category_details(category, annotations)
 
 def get_gene_category_metric_values(category: str, metric: str, include_annotations: bool = False, commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
     Get raw values for a specific metric in a specific gene category
     """
-    # Validate metric
-    valid_metrics = ["total_count", "average_mean_length"]
-    if metric not in valid_metrics:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid metric: {metric}. Must be one of: {', '.join(valid_metrics)}"
-        )
-    
+
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    
-    # Map output category names to possible database keys
-    category_mapping = {
-        "coding": ["coding", "coding_genes"],
-        "non_coding": ["non_coding", "non_coding_genes"],
-        "pseudogene": ["pseudogene", "pseudogenes"]
-    }
-    
-    # Find the actual database key for this category
-    db_category = None
-    if category in category_mapping:
-        for db_key in category_mapping[category]:
-            pipeline = [
-                {
-                    "$match": {
-                        f"features_statistics.gene_category_stats.{db_key}": {"$exists": True, "$ne": None}
-                    }
-                },
-                {
-                    "$limit": 1
-                }
-            ]
-            if list(annotations.aggregate(pipeline)):
-                db_category = db_key
-                break
-    else:
-        db_category = category
-    
-    if not db_category:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Gene category '{category}' not found in the queried annotations"
-        )
-    
-    # Build field path - map flattened metric names to database paths
-    if metric == "total_count":
-        field_path = f"features_statistics.gene_category_stats.{db_category}.total_count"
-    elif metric == "average_mean_length":
-        field_path = f"features_statistics.gene_category_stats.{db_category}.length_stats.mean"
-    else:
-        field_path = f"features_statistics.gene_category_stats.{db_category}.{metric}"
-    
-    pipeline = [
-        {
-            "$match": {
-                field_path: {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$project": {
-                "annotation_id": "$annotation_id",
-                "value": f"${field_path}",
-                "is_empty": {
-                    "$or": [
-                        {"$eq": [{"$ifNull": [f"${field_path}", None]}, None]},
-                        {"$eq": [{"$type": f"${field_path}"}, "missing"]}
-                    ]
-                }
-            }
-        },
-        {
-            "$facet": {
-                "values": [
-                    {
-                        "$match": {
-                            "is_empty": False
-                        }
-                    },
-                    {
-                        "$sort": {"annotation_id": 1}
-                    },
-                    {
-                        "$project": {
-                            "_id": 0,
-                            "annotation_id": 1,
-                            "value": 1
-                        }
-                    }
-                ],
-                "empty_annotations": [
-                    {
-                        "$match": {
-                            "is_empty": True
-                        }
-                    },
-                    {
-                        "$sort": {"annotation_id": 1}
-                    },
-                    {
-                        "$project": {
-                            "_id": 0,
-                            "annotation_id": 1
-                        }
-                    }
-                ]
-            }
-        }
-    ]
-    
-    result = list(annotations.aggregate(pipeline))
-    
-    if result:
-        values_docs = result[0].get("values", [])
-        # Values are already sorted by MongoDB
-        # Use zip to extract both values and annotation_ids in one pass
-        if values_docs:
-            values, annotation_ids = zip(*[(doc["value"], doc["annotation_id"]) for doc in values_docs])
-            values = list(values)
-            annotation_ids = list(annotation_ids)
-        else:
-            values = []
-            annotation_ids = []
-        missing = [doc["annotation_id"] for doc in result[0].get("empty_annotations", [])]
-    else:
-        values = []
-        annotation_ids = []
-        missing = []
-    
-    response = {
-        "category": category,
-        "metric": metric,
-        "values": values,
-        "missing": missing
-    }
-    
-    if include_annotations:
-        response["annotation_ids"] = annotation_ids
-    
-    return response
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_gene_category_metric_values(category, metric, annotations, include_annotations)
+
 
 def get_transcript_stats_summary(commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
@@ -889,290 +181,17 @@ def get_transcript_stats_summary(commons: Dict[str, Any] = None, payload: Dict[s
     Optimized to use MongoDB aggregation for grouping and calculations instead of Python
     """
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    total_annotations = annotations.count()
-    
-    # Optimized pipeline: use MongoDB $group instead of Python grouping
-    # This reduces memory usage and improves performance
-    pipeline = [
-        {
-            "$match": {
-                "features_statistics.transcript_type_stats": {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$project": {
-                "transcript_types": {"$objectToArray": "$features_statistics.transcript_type_stats"}
-            }
-        },
-        {
-            "$unwind": "$transcript_types"
-        },
-        {
-            "$group": {
-                "_id": "$transcript_types.k",
-                "annotations": {"$addToSet": "$_id"},  # Track unique annotations
-                "total_counts": {"$push": "$transcript_types.v.total_count"},
-                "mean_lengths": {"$push": "$transcript_types.v.length_stats.mean"},
-                "has_cds_stats": {
-                    "$max": {
-                        "$cond": [
-                            {"$ifNull": ["$transcript_types.v.cds_stats", False]},
-                            1,
-                            0
-                        ]
-                    }
-                }
-            }
-        },
-        {
-            "$project": {
-                "type": "$_id",
-                "annotations_count": {"$size": "$annotations"},
-                "total_count_sum": {
-                    "$reduce": {
-                        "input": "$total_counts",
-                        "initialValue": 0,
-                        "in": {"$add": ["$$value", {"$ifNull": ["$$this", 0]}]}
-                    }
-                },
-                "mean_length_sum": {
-                    "$reduce": {
-                        "input": "$mean_lengths",
-                        "initialValue": 0,
-                        "in": {"$add": ["$$value", {"$ifNull": ["$$this", 0]}]}
-                    }
-                },
-                "mean_length_count": {
-                    "$size": {
-                        "$filter": {
-                            "input": "$mean_lengths",
-                            "as": "ml",
-                            "cond": {"$ne": ["$$ml", None]}
-                        }
-                    }
-                },
-                "has_cds_stats": {"$eq": ["$has_cds_stats", 1]}
-            }
-        },
-        {
-            "$sort": {"type": 1}
-        }
-    ]
-    
-    results = list(annotations.aggregate(pipeline))
-    
-    # Process results and build summary
-    types_summary = {}
-    types_list = []
-    has_cds_stats = False
-    
-    for result in results:
-        transcript_type = result.get("type")
-        if not transcript_type:
-            continue
-        
-        types_list.append(transcript_type)
-        annotations_count = result.get("annotations_count", 0)
-        missing_annotations_count = total_annotations - annotations_count
-        
-        # Calculate averages
-        total_count_sum = result.get("total_count_sum", 0)
-        average_count = round(total_count_sum / annotations_count, 2) if annotations_count > 0 else None
-        
-        mean_length_sum = result.get("mean_length_sum", 0)
-        mean_length_count = result.get("mean_length_count", 0)
-        average_mean_length = round(mean_length_sum / annotations_count, 2) if annotations_count > 0 and mean_length_count > 0 else None
-        
-        types_summary[transcript_type] = {
-            "annotations_count": annotations_count,
-            "missing_annotations_count": missing_annotations_count,
-            "average_count": average_count,
-            "average_mean_length": average_mean_length
-        }
-        
-        # Track if any type has CDS stats
-        if result.get("has_cds_stats"):
-            has_cds_stats = True
-    
-    # Build metrics list - CDS metrics only if CDS stats exist
-    metrics = [
-        "total_count",
-        "average_mean_length",
-        "associated_genes_total_count",
-        "exon_total_count",
-        "exon_average_length",
-        "exon_average_concatenated_length"
-    ]
-    
-    if has_cds_stats:
-        metrics.extend([
-            "cds_total_count",
-            "cds_average_length",
-            "cds_average_concatenated_length"
-        ])
-    
-    return {
-        "total_annotations": total_annotations,
-        "summary": {
-            "types": types_summary
-        },
-        "types": sorted(types_list),
-        "metrics": metrics
-    }
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_transcript_stats_summary(annotations)
+
 
 def get_transcript_type_details(transcript_type: str, commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
     Get details for a specific transcript type
     """
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    
-    # Check if transcript type exists
-    pipeline = [
-        {
-            "$match": {
-                f"features_statistics.transcript_type_stats.{transcript_type}": {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$limit": 1
-        }
-    ]
-    
-    if not list(annotations.aggregate(pipeline)):
-        raise HTTPException(
-            status_code=404,
-            detail=f"Transcript type '{transcript_type}' not found in the queried annotations"
-        )
-    
-    # Get all values for this transcript type
-    pipeline = [
-        {
-            "$match": {
-                f"features_statistics.transcript_type_stats.{transcript_type}": {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$project": {
-                "annotation_id": "$annotation_id",
-                "type_data": f"$features_statistics.transcript_type_stats.{transcript_type}"
-            }
-        }
-    ]
-    
-    results = list(annotations.aggregate(pipeline))
-    
-    # Collect all metric values
-    total_counts = []
-    length_means = []
-    associated_genes_counts = []
-    exon_total_counts = []
-    exon_length_means = []
-    exon_concatenated_length_means = []
-    cds_total_counts = []
-    cds_length_means = []
-    cds_concatenated_length_means = []
-    
-    for result in results:
-        type_data = result.get("type_data")
-        if type_data:
-            if type_data.get("total_count") is not None:
-                total_counts.append(type_data["total_count"])
-            if type_data.get("length_stats") and type_data["length_stats"].get("mean") is not None:
-                length_means.append(type_data["length_stats"]["mean"])
-            if type_data.get("associated_genes") and type_data["associated_genes"].get("total_count") is not None:
-                associated_genes_counts.append(type_data["associated_genes"]["total_count"])
-            if type_data.get("exon_stats"):
-                exon_stats = type_data["exon_stats"]
-                if exon_stats.get("total_count") is not None:
-                    exon_total_counts.append(exon_stats["total_count"])
-                if exon_stats.get("length") and exon_stats["length"].get("mean") is not None:
-                    exon_length_means.append(exon_stats["length"]["mean"])
-                if exon_stats.get("concatenated_length") and exon_stats["concatenated_length"].get("mean") is not None:
-                    exon_concatenated_length_means.append(exon_stats["concatenated_length"]["mean"])
-            if type_data.get("cds_stats"):
-                cds_stats = type_data["cds_stats"]
-                if cds_stats.get("total_count") is not None:
-                    cds_total_counts.append(cds_stats["total_count"])
-                if cds_stats.get("length") and cds_stats["length"].get("mean") is not None:
-                    cds_length_means.append(cds_stats["length"]["mean"])
-                if cds_stats.get("concatenated_length") and cds_stats["concatenated_length"].get("mean") is not None:
-                    cds_concatenated_length_means.append(cds_stats["concatenated_length"]["mean"])
-    
-    summary_stats = {}
-    if total_counts:
-        summary_stats["total_count"] = {
-            "mean": round(statistics.mean(total_counts), 2)
-        }
-    
-    if length_means:
-        summary_stats["average_mean_length"] = {
-            "mean": round(statistics.mean(length_means), 2)
-        }
-    
-    if associated_genes_counts:
-        summary_stats["associated_genes_total_count"] = {
-            "mean": round(statistics.mean(associated_genes_counts), 2)
-        }
-    
-    if exon_total_counts:
-        summary_stats["exon_total_count"] = {
-            "mean": round(statistics.mean(exon_total_counts), 2)
-        }
-    
-    if exon_length_means:
-        summary_stats["exon_average_length"] = {
-            "mean": round(statistics.mean(exon_length_means), 2)
-        }
-    
-    if exon_concatenated_length_means:
-        summary_stats["exon_average_concatenated_length"] = {
-            "mean": round(statistics.mean(exon_concatenated_length_means), 2)
-        }
-    
-    if cds_total_counts:
-        summary_stats["cds_total_count"] = {
-            "mean": round(statistics.mean(cds_total_counts), 2)
-        }
-    
-    if cds_length_means:
-        summary_stats["cds_average_length"] = {
-            "mean": round(statistics.mean(cds_length_means), 2)
-        }
-    
-    if cds_concatenated_length_means:
-        summary_stats["cds_average_concatenated_length"] = {
-            "mean": round(statistics.mean(cds_concatenated_length_means), 2)
-        }
-    
-    # Build list of available metrics based on what actually exists for this transcript type
-    metrics = [
-        "total_count",
-        "average_mean_length"
-    ]
-    
-    # Add optional metrics only if they exist
-    if associated_genes_counts:
-        metrics.append("associated_genes_total_count")
-    
-    if exon_total_counts or exon_length_means or exon_concatenated_length_means:
-        metrics.extend(["exon_total_count", "exon_average_length", "exon_average_concatenated_length"])
-    
-    # Only include CDS metrics if CDS stats exist for this transcript type
-    if cds_total_counts or cds_length_means or cds_concatenated_length_means:
-        metrics.extend(["cds_total_count", "cds_average_length", "cds_average_concatenated_length"])
-    
-    total_annotations = annotations.count()
-    missing_annotations_count = total_annotations - len(results)
-    
-    return {
-        "type": transcript_type,
-        "annotations_count": len(results),
-        "missing_annotations_count": missing_annotations_count,
-        "summary": summary_stats,
-        "metrics": metrics
-    }
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_transcript_type_details(transcript_type, annotations)
 
 def get_transcript_type_metric_values(transcript_type: str, metric: str, include_annotations: bool = False, commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
     """
@@ -1181,124 +200,6 @@ def get_transcript_type_metric_values(transcript_type: str, metric: str, include
     and a list of annotation_ids for empty values.
     """
     params = params_helper.handle_request_params(commons or {}, payload or {})
-    annotations = get_annotation_records(**params)
-    
-    # Check if transcript type exists and get available metrics
-    type_details = get_transcript_type_details(transcript_type, commons, payload)
-    available_metrics = type_details.get("metrics", [])
-    
-    # Map flattened metric names to database paths
-    metric_mapping = {
-        "total_count": f"features_statistics.transcript_type_stats.{transcript_type}.total_count",
-        "average_mean_length": f"features_statistics.transcript_type_stats.{transcript_type}.length_stats.mean",
-        "associated_genes_total_count": f"features_statistics.transcript_type_stats.{transcript_type}.associated_genes.total_count",
-        "exon_total_count": f"features_statistics.transcript_type_stats.{transcript_type}.exon_stats.total_count",
-        "exon_average_length": f"features_statistics.transcript_type_stats.{transcript_type}.exon_stats.length.mean",
-        "exon_average_concatenated_length": f"features_statistics.transcript_type_stats.{transcript_type}.exon_stats.concatenated_length.mean",
-        "cds_total_count": f"features_statistics.transcript_type_stats.{transcript_type}.cds_stats.total_count",
-        "cds_average_length": f"features_statistics.transcript_type_stats.{transcript_type}.cds_stats.length.mean",
-        "cds_average_concatenated_length": f"features_statistics.transcript_type_stats.{transcript_type}.cds_stats.concatenated_length.mean"
-    }
-    
-    # Validate metric exists for this transcript type
-    if metric not in available_metrics:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Metric '{metric}' is not available for transcript type '{transcript_type}'. Available metrics: {', '.join(available_metrics)}"
-        )
-    
-    if metric not in metric_mapping:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid metric: {metric}. Must be one of: {', '.join(metric_mapping.keys())}"
-        )
-    
-    field_path = metric_mapping[metric]
-    
-    pipeline = [
-        {
-            "$match": {
-                field_path: {"$exists": True, "$ne": None}
-            }
-        },
-        {
-            "$project": {
-                "annotation_id": "$annotation_id",
-                "value": f"${field_path}",
-                "is_empty": {
-                    "$or": [
-                        {"$eq": [{"$ifNull": [f"${field_path}", None]}, None]},
-                        {"$eq": [{"$type": f"${field_path}"}, "missing"]}
-                    ]
-                }
-            }
-        },
-        {
-            "$facet": {
-                "values": [
-                    {
-                        "$match": {
-                            "is_empty": False
-                        }
-                    },
-                    {
-                        "$sort": {"annotation_id": 1}
-                    },
-                    {
-                        "$project": {
-                            "_id": 0,
-                            "annotation_id": 1,
-                            "value": 1
-                        }
-                    }
-                ],
-                "empty_annotations": [
-                    {
-                        "$match": {
-                            "is_empty": True
-                        }
-                    },
-                    {
-                        "$sort": {"annotation_id": 1}
-                    },
-                    {
-                        "$project": {
-                            "_id": 0,
-                            "annotation_id": 1
-                        }
-                    }
-                ]
-            }
-        }
-    ]
-    
-    result = list(annotations.aggregate(pipeline))
-    
-    if result:
-        values_docs = result[0].get("values", [])
-        # Values are already sorted by MongoDB
-        # Use zip to extract both values and annotation_ids in one pass
-        if values_docs:
-            values, annotation_ids = zip(*[(doc["value"], doc["annotation_id"]) for doc in values_docs])
-            values = list(values)
-            annotation_ids = list(annotation_ids)
-        else:
-            values = []
-            annotation_ids = []
-        missing = [doc["annotation_id"] for doc in result[0].get("empty_annotations", [])]
-    else:
-        values = []
-        annotation_ids = []
-        missing = []
-    
-    response = {
-        "type": transcript_type,
-        "metric": metric,
-        "values": values,
-        "missing": missing
-    }
-    
-    if include_annotations:
-        response["annotation_ids"] = annotation_ids
-    
-    return response
+    annotations = annotation_helper.get_annotation_records(**params)
+    return feature_stats_helper.get_transcript_type_metric_values(transcript_type, metric, annotations, include_annotations)
+

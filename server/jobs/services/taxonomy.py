@@ -104,6 +104,9 @@ def save_taxons(organisms_to_process: list[OrganismToProcess], batch_size: int=5
     unique_taxons_by_taxid = {}
     for organism in organisms_to_process:
         for taxon in organism.parsed_taxon_lineage:
+            # Skip taxons with invalid taxids (None, empty, or "None")
+            if not taxon.taxid or taxon.taxid == "None":
+                continue
             if taxon.taxid in new_taxids and taxon.taxid not in unique_taxons_by_taxid:
                 unique_taxons_by_taxid[taxon.taxid] = taxon
 
@@ -129,7 +132,8 @@ def get_ordered_taxons(taxids: list[str])->list[TaxonNode]:
     """
     reloaded_taxons = TaxonNode.objects(taxid__in=taxids)
     taxon_map = {t.taxid: t for t in reloaded_taxons}
-    return [taxon_map[t] for t in taxids]
+    # Filter out any taxids that weren't found in the database
+    return [taxon_map[t] for t in taxids if t in taxon_map]
 
 
 def update_taxon_hierarchy(ordered_taxons: list[TaxonNode]):
@@ -142,96 +146,70 @@ def update_taxon_hierarchy(ordered_taxons: list[TaxonNode]):
         father_taxon.modify(add_to_set__children=child_taxon.taxid)
 
 
-def parse_taxons_and_organisms_from_ena_browser(xml_path: str)->list[OrganismToProcess]:
+def parse_taxons_and_organisms_from_ena_browser(xml_path: str) -> list[OrganismToProcess]:
     """
-    Parse taxons from ENA browser XML file and return a tuple of list of organisms (with ordered taxon lineages from species to root) and dictionary of taxon lineages
+    Memory-efficient streaming parser for ENA taxonomy XML files (gzipped).
+    Assumes valid ENA structure:
+      <TAXON_SET><taxon>...</taxon> ... </TAXON_SET>
+    Only top-level <taxon> nodes represent organisms.
     """
-    parsed_organisms = []
-    
-    # Validate file exists and has content
-    if not os.path.exists(xml_path):
-        print(f"XML file does not exist: {xml_path}")
-        return parsed_organisms
-    
-    file_size = os.path.getsize(xml_path)
-    if file_size == 0:
-        print(f"XML file is empty: {xml_path}")
-        return parsed_organisms
-    
-    try:
-        with gzip.open(xml_path, "rb") as f:
-            try:
-                context = etree.iterparse(f, events=("end",), tag="taxon")
-                
-                for _, elem in context:
-                    try:
-                        parent = elem.getparent()
-                        if parent is None:
-                            continue
-                        if parent.tag == "TAXON_SET":
-                            # Top-level taxon
-                            organism_taxid = str(elem.get("taxId"))
-                            if not organism_taxid or organism_taxid == "None":
-                                continue
-                            
-                            organism_info = OrganismToProcess(
-                                taxid=organism_taxid,
-                                organism_name=elem.get("scientificName"),
-                                common_name=elem.get("commonName"),
-                                taxon_lineage=[],
-                                parsed_taxon_lineage=[]
-                            )
-                            #add the organism to the taxon node
-                            organism_info.taxon_lineage.append(organism_taxid)
-                            organism_info.parsed_taxon_lineage.append(TaxonNode(
-                                taxid=organism_taxid,
-                                scientific_name=organism_info.organism_name,
-                                rank="organism"
-                            ))
-                            # Collect lineage children
-                            lineage_elem = elem.find("lineage")
-                            if lineage_elem is not None:
-                                for lt in lineage_elem.findall("taxon"):
-                                    taxid = str(lt.get("taxId"))
-                                    #we suppose this are ordered from species to root
-                                    if lt.get("scientificName") == "root":
-                                        continue
-                                    organism_info.taxon_lineage.append(taxid)
-                                    organism_info.parsed_taxon_lineage.append(TaxonNode(
-                                        taxid=taxid, 
-                                        scientific_name=lt.get("scientificName"), 
-                                        rank=lt.get("rank") if lt.get("rank") else "other"
-                                    ))
+    organisms = []
 
-                            parsed_organisms.append(organism_info)
-                        # Clean up element to free memory
-                        elem.clear()
-                        while elem.getprevious() is not None:
-                            del elem.getparent()[0]
-                    except (AttributeError, TypeError) as e:
-                        # Skip malformed elements
-                        print(f"Warning: Skipping malformed element in {xml_path}: {e}")
+    with gzip.open(xml_path, "rb") as f:
+        # Stream everything; handle tag=taxon manually
+        context = etree.iterparse(f, events=("end",))
+
+        for _, elem in context:
+            if elem.tag != "taxon":
+                continue
+
+            parent = elem.getparent()
+            if parent is None or parent.tag != "TAXON_SET":
+                # lineage/child taxons—do NOT clear them now
+                continue
+
+            # --------- Top-level organism taxon ---------
+            taxid = elem.get("taxId")
+            if not taxid:
+                elem.clear()
+                continue
+
+            organism = OrganismToProcess(
+                taxid=taxid,
+                organism_name=elem.get("scientificName"),
+                common_name=elem.get("commonName"),
+                taxon_lineage=[taxid],
+                parsed_taxon_lineage=[
+                    TaxonNode(
+                        taxid=taxid,
+                        scientific_name=elem.get("scientificName"),
+                        rank="organism"
+                    )
+                ]
+            )
+
+            # --------- Parse lineage ---------
+            lineage_elem = elem.find("lineage")
+            if lineage_elem is not None:
+                for lt in lineage_elem.findall("taxon"):
+                    lt_taxid = lt.get("taxId")
+                    if not lt_taxid or lt.get("scientificName") == "root":
                         continue
-                        
-            except etree.XMLSyntaxError as e:
-                print(f"XML syntax error in {xml_path}: {e}")
-                return parsed_organisms
-            except etree.ParseError as e:
-                print(f"XML parse error in {xml_path}: {e}")
-                return parsed_organisms
-            except etree.Error as e:
-                # Catch "no element found" and other lxml errors
-                print(f"XML parsing error in {xml_path}: {e}")
-                return parsed_organisms
-                
-    except gzip.BadGzipFile as e:
-        print(f"Invalid gzip file: {xml_path}, error: {e}")
-        return parsed_organisms
-    except IOError as e:
-        print(f"IO error reading file {xml_path}: {e}")
-        return parsed_organisms
-    except Exception as e:
-        print(f"Unexpected error reading XML file {xml_path}: {e}")
-        return parsed_organisms
 
-    return parsed_organisms
+                    organism.taxon_lineage.append(lt_taxid)
+                    organism.parsed_taxon_lineage.append(
+                        TaxonNode(
+                            taxid=lt_taxid,
+                            scientific_name=lt.get("scientificName"),
+                            rank=lt.get("rank") or "other"
+                        )
+                    )
+
+            organisms.append(organism)
+
+            # --------- Memory cleanup ONLY for top-level taxon ---------
+            elem.clear()
+            while elem.getprevious() is not None:
+                del elem.getparent()[0]
+
+    return organisms

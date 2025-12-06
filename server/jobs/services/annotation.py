@@ -114,6 +114,7 @@ def save_annotations(annotations: list[GenomeAnnotation], annotations_path: str)
         source_md5s = [annotation.source_file_info.uncompressed_md5 for annotation in annotations]
         AnnotationError.objects(Q(source_md5__in=source_md5s) | Q(source_file_info__url_path__in=url_paths)).delete()
         saved_annotations_ids = [annotation.annotation_id for annotation in annotations]
+        print(f"Saved {len(saved_annotations_ids)} annotations")
     except Exception as e:
         #remove files from the annotations present in the batch
         for annotation in annotations:

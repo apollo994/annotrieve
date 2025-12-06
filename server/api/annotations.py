@@ -1,25 +1,10 @@
-from fastapi import APIRouter, Depends, Body, HTTPException, Response
+from fastapi import APIRouter, Depends, Body
 from typing import Optional, Dict, Any
 from services import annotations_service
 from helpers import parameters as params_helper
 from helpers import query_visitors as query_visitors_helper
-from jobs.import_annotations import import_annotations
 
 router = APIRouter()
-
-@router.get("/annotations/import/{auth_key}")
-async def trigger_import_annotations(auth_key: str):
-    """
-    Import annotations
-    """
-    return annotations_service.trigger_import_annotations(auth_key)
-
-@router.get("/annotations/fields/update/{auth_key}")
-async def trigger_annotation_fields_update(auth_key: str):
-    """
-    Trigger annotation fields update
-    """
-    return annotations_service.trigger_annotation_fields_update(auth_key)
 
 @router.get("/annotations")
 @router.post("/annotations")
@@ -31,6 +16,14 @@ async def get_annotations(commons: Dict[str, Any] = Depends(params_helper.common
     
     return annotations_service.get_annotations(params)
 
+# @router.get("/annotations/download")
+# @router.post("/annotations/download")
+# async def download_async(background_tasks: BackgroundTasks, commons: Dict[str, Any] = Depends(params_helper.common_params), payload: Optional[Dict[str, Any]] = Body(None)):
+#     """
+#     Download annotations
+#     """
+#     params = params_helper.handle_request_params(commons, payload)
+#     return annotations_service.get_annotations(params, response_type='tar', background_tasks=background_tasks)
 
 @router.get("/annotations/report")
 @router.post("/annotations/report")
@@ -57,10 +50,6 @@ async def get_annotations_frequencies(field: str, commons: Dict[str, Any] = Depe
     params = params_helper.handle_request_params(commons, payload)
     
     return annotations_service.get_annotations(params, response_type='frequencies', field=field)
-
-
-
-
 
 @router.get("/annotations/errors")
 async def get_annotation_errors(offset: int = 0, limit: int = 20):

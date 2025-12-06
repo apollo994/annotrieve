@@ -38,9 +38,3 @@ def get_bioproject(accession: str):
     Retrieve a single BioProject by accession.
     """
     return bioproject_service.get_bioproject(accession).to_mongo().to_dict()
-
-
-@router.get("/bioprojects/update/{auth_key}")
-async def update_bioprojects(auth_key: str):
-    return bioproject_service.trigger_bioprojects_update(auth_key)
-

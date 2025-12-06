@@ -3,8 +3,10 @@ from typing import Optional, Dict, List, Any
 from db.embedded_documents import GeneStats, GeneLengthStats, TranscriptStats, LengthStats, FeatureStats, TranscriptTypeStats, FeatureTypeStats, GFFStats, GeneCategoryFeatureStats, GenericTranscriptTypeStats, GenericLengthStats, AssociatedGenesStats, SubFeatureStats
 import statistics
 from fastapi import HTTPException
-from db.models import AnnotationSequenceMap
+from db.models import AnnotationSequenceMap, GenomeAnnotation, GenomeAssembly
 from helpers import pysam_helper
+from helpers import query_visitors as query_visitors_helper
+from helpers import annotation as annotation_helper
 
 
 DEFAULT_FIELD_MAP: Dict[str, str] = {
@@ -22,6 +24,68 @@ DEFAULT_FIELD_MAP: Dict[str, str] = {
     "release_date_from": "source_file_info__release_date__gte",
     "release_date_to": "source_file_info__release_date__lte",
 }
+
+
+def get_annotation_records(
+    filter:str = None, #text search on assembly, taxonomy or annotation id
+    taxids: Optional[str] = None, 
+    db_sources: Optional[str] = None, #GenBank, RefSeq, Ensembl
+    feature_sources: Optional[str] = None, #second column in the gff file
+    assembly_accessions: Optional[str] = None,
+    bioproject_accessions: Optional[str] = None,
+    biotypes: Optional[str] = None, #biotype present in the 9th column in the gff file
+    feature_types: Optional[str] = None,# third column in the gff file
+    has_stats: Optional[bool] = None, #True, False, None for all
+    pipelines: Optional[str] = None, #pipeline name
+    providers: Optional[str] = None, #annotation provider list separated by comma
+    md5_checksums: Optional[str] = None, 
+    refseq_categories: str = None, #true
+    assembly_levels: str = None,
+    assembly_statuses: str = None,
+    assembly_types: str = None,
+    sort_by: str = None,
+    sort_order: str = None,
+    release_date_from: str = None,
+    release_date_to: str = None,
+):
+
+    mongoengine_query = annotation_helper.query_params_to_mongoengine_query(
+        taxids=taxids,
+        db_sources=db_sources,
+        assembly_accessions=assembly_accessions,
+        md5_checksums=md5_checksums,
+        feature_sources=feature_sources,
+        biotypes=biotypes,
+        feature_types=feature_types,
+        has_stats=has_stats,
+        pipelines=pipelines,
+        providers=providers,
+        release_date_from=release_date_from,
+        release_date_to=release_date_to,
+    )
+    annotations = GenomeAnnotation.objects(**mongoengine_query).exclude('id')
+    #check if any assembly related param is present
+    if any([refseq_categories, assembly_levels, assembly_statuses, assembly_types, bioproject_accessions]):
+        query = {}
+        if refseq_categories:
+            query['refseq_category__in'] = refseq_categories.split(',') if isinstance(refseq_categories, str) else refseq_categories
+        if assembly_levels:
+            query['assembly_level__in'] = assembly_levels.split(',') if isinstance(assembly_levels, str) else assembly_levels
+        if assembly_statuses:
+            query['assembly_status__in'] = assembly_statuses.split(',') if isinstance(assembly_statuses, str) else assembly_statuses
+        if assembly_types:
+            query['assembly_type__in'] = assembly_types.split(',') if isinstance(assembly_types, str) else assembly_types
+        if bioproject_accessions:
+            query['bioprojects__in'] = bioproject_accessions.split(',') if isinstance(bioproject_accessions, str) else bioproject_accessions
+        #fetch assemblies from the assemblies collection
+        assemblies = GenomeAssembly.objects(**query).scalar('assembly_accession')
+        annotations = annotations.filter(assembly_accession__in=assemblies)
+    if filter:
+        annotations = annotations.filter(query_visitors_helper.annotation_query(filter))
+    if sort_by:
+        sort = '-' + sort_by if sort_order == 'desc' else sort_by
+        annotations = annotations.order_by(sort)
+    return annotations
 
 # Utility to flatten nested dictionaries
 def flatten_dict(d: Dict[str, Any], parent_key: str = '', sep: str = '.') -> Dict[str, Any]:

@@ -3,9 +3,6 @@ from db.models import GenomeAssembly, GenomicSequence
 from helpers import response as response_helper, query_visitors as query_visitors_helper
 from fastapi.responses import StreamingResponse
 import io
-import os
-from jobs.updates import update_assembly_fields
-
 
 def get_assemblies(filter: str = None, 
                     taxids: str = None, 
@@ -56,14 +53,6 @@ def get_assemblies(filter: str = None,
         return response_helper.json_response_with_pagination(assemblies, assemblies.count(), offset, limit)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching assemblies: {e}")
-
-
-def trigger_assemblies_update(auth_key: str):
-    if auth_key != os.getenv('AUTH_KEY'):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-    update_assembly_fields.delay()
-    return {"message": "Assemblies update task triggered"}
-
 
 def get_assembly(assembly_accession: str):
     assembly = GenomeAssembly.objects(assembly_accession=assembly_accession).exclude('id').first()

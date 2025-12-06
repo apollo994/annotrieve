@@ -1,106 +1,159 @@
-import tarfile
-from io import BytesIO
-from typing import List, Iterator, Optional, Union
-from fastapi import HTTPException
 import os
-import json
+import shutil
+from fastapi import HTTPException
+from fastapi.responses import StreamingResponse
+from fastapi import BackgroundTasks
+from helpers import file as file_helper
+from fastapi.responses import StreamingResponse
+from fastapi import HTTPException, BackgroundTasks
+from typing import Optional
+import os
+import subprocess
 import tempfile
-import atexit
-from datetime import datetime
+import shutil
+from helpers import constants as constants_helper
+import asyncio
+from mongoengine import QuerySet
+from db.models import GenomeAnnotation
 
-def tar_stream_chunked(files: List[str], items=None, chunk_size: int = 8192) -> Iterator[bytes]:
+def _cleanup_temp_dir(dir_path: str):
+    """Background task to clean up temporary directory."""
+    try:
+        if os.path.exists(dir_path):
+            shutil.rmtree(dir_path)
+    except OSError:
+        pass  # Ignore errors if directory was already deleted or doesn't exist
+
+def download_tar_package(annotations: QuerySet[GenomeAnnotation], background_tasks: Optional[BackgroundTasks] = None):
     """
-    Ultra memory-efficient streaming tar creation using temporary files.
-    Writes metadata to temp file, creates tar in temp file, streams it, then cleans up.
-    Uses a generator to start streaming immediately and avoid nginx timeouts.
+    Download annotations as a tar package.
+    
+    Args:
+        annotations: MongoDB QuerySet of GenomeAnnotation objects (not a list)
+        background_tasks: Optional BackgroundTasks for cleanup
+    
+    Returns:
+        StreamingResponse with tar file
+    
+    Note: This function uses symlinks to organize files, which is efficient and avoids
+    command line length limits. Since this runs on Linux servers, symlinks are always supported.
     """
-    temp_dir = None
-    metadata_file_path = None
-    temp_tar_path = None
+    # Get file paths for tar - iterate once to collect paths
+    # Note: annotations is a queryset, not a list
+    gff_paths = []
+    for annotation in annotations:
+        gff_paths.append(file_helper.get_annotation_file_path(annotation))
+
+    if not gff_paths:
+        raise HTTPException(status_code=400, detail="No annotations matching the filters were found")
+    
+    # Create temporary directory for organizing files
+    temp_dir = tempfile.mkdtemp(prefix='annotrieve_tar_')
+    metadata_dir = os.path.join(temp_dir, 'metadata')
+    annotations_dir = os.path.join(temp_dir, 'annotations')
+    os.makedirs(metadata_dir, exist_ok=True)
+    os.makedirs(annotations_dir, exist_ok=True)
+    
+    # Create temporary TSV file in metadata directory
+    tsv_path = os.path.join(metadata_dir, 'annotations.tsv')
+    tsv_file = open(tsv_path, 'w')
     
     try:
-        # Create temporary directory for our files
-        temp_dir = tempfile.mkdtemp(prefix="annotrieve_tar_")
+        # Write TSV header
+        header = "\t".join(constants_helper.FIELD_TSV_MAP.keys()) + "\n"
+        tsv_file.write(header)
+        tsv_file.flush()  # Ensure header is written to disk
         
-        # Create temporary tar file path
-        temp_tar_path = os.path.join(temp_dir, "annotations.tar")
+        # Write TSV rows incrementally (streaming, not loading into RAM)
+        # Re-iterate over annotations for TSV data
+        row_count = 0
+        for annotation in annotations.scalar(*constants_helper.FIELD_TSV_MAP.values()):
+            row = "\t".join("" if value is None else str(value) for value in annotation) + "\n"
+            tsv_file.write(row)
+            row_count += 1
+            # Flush periodically to avoid buffering too much in memory
+            if row_count % 1000 == 0:
+                tsv_file.flush()
         
-        # Create metadata file if needed (write to disk, no memory loading)
-        if items is not None:
-            metadata_file_path = os.path.join(temp_dir, "metadata.json")
-            _write_metadata_to_file(items, metadata_file_path)
+        # Final flush and close
+        tsv_file.flush()
+        tsv_file.close()
         
-        # Create tar file with all files (write to disk)
-        with tarfile.open(temp_tar_path, mode="w") as tar:
-            # Add annotation files
-            for path in files:
-                if os.path.exists(path):
-                    tar.add(path, arcname=os.path.basename(path))
-                else:
-                    print(f"Warning: File not found: {path}")
-            
-            # Add metadata file if it exists
-            if metadata_file_path and os.path.exists(metadata_file_path):
-                tar.add(metadata_file_path, arcname="metadata.json")
+        # Create symlinks in annotations directory for GFF files
+        # This allows us to organize the TAR structure without copying files
+        # Since we're on Linux, symlinks are always supported
+        for gff_path in gff_paths:
+            if os.path.exists(gff_path):
+                # Create symlink in annotations directory with just the filename
+                link_name = os.path.join(annotations_dir, os.path.basename(gff_path))
+                # Use absolute path for symlink target to ensure it works correctly
+                abs_gff_path = os.path.abspath(gff_path)
+                os.symlink(abs_gff_path, link_name)
         
-        # Stream the tar file in chunks from disk
-        with open(temp_tar_path, 'rb') as tar_file:
-            while True:
-                chunk = tar_file.read(chunk_size)
-                if not chunk:
-                    break
-                yield chunk
-                
+        # Build tar command using symlinks
+        # Use -C to change to temp_dir and use relative paths
+        # -h flag follows symlinks so the actual file content is stored, not the symlink
+        # This ensures clean folder structure: metadata/annotations.tsv and annotations/*.gff
+        # This approach is most efficient and doesn't have command line length issues
+        cmd = ["tar", "-chf", "-", "-C", temp_dir, "metadata", "annotations"]
+        
+        # Start tar process with error handling
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # Add cleanup task to background tasks - this ensures cleanup even if client disconnects
+        # BackgroundTasks will execute after the response is sent, ensuring cleanup happens
+        if background_tasks:
+            background_tasks.add_task(_cleanup_temp_dir, temp_dir)
+        # Note: If background_tasks is None, we still have cleanup in the exception handler above
+        # but it's better to always use BackgroundTasks for reliability
+        
+        async def stream():
+            try:
+                while True:
+                    chunk = await asyncio.to_thread(proc.stdout.read, 8*1024*1024)
+                    if not chunk:
+                        break
+                    yield chunk
+            except Exception as e:
+                # Check if tar process failed
+                proc.poll()
+                if proc.returncode and proc.returncode != 0:
+                    # Read stderr for error details
+                    stderr_output = proc.stderr.read().decode('utf-8', errors='ignore') if proc.stderr else ""
+                    raise HTTPException(
+                        status_code=500,
+                        detail=f"Error creating tar archive: {stderr_output or str(e)}"
+                    )
+                raise
+            finally:
+                # Clean up: close process
+                # Directory cleanup is handled by BackgroundTasks, but we ensure process is closed
+                proc.wait()
+                # Check for tar process errors
+                if proc.returncode and proc.returncode != 0:
+                    stderr_output = proc.stderr.read().decode('utf-8', errors='ignore') if proc.stderr else ""
+                    raise HTTPException(
+                        status_code=500,
+                        detail=f"Tar process failed with return code {proc.returncode}: {stderr_output}"
+                    )
+                # Also add cleanup here as a backup (runs after streaming completes)
+                # This is a safety net in case BackgroundTasks somehow doesn't execute
+                if not background_tasks:
+                    _cleanup_temp_dir(temp_dir)
+        
+        return StreamingResponse(
+            stream(),
+            media_type="application/x-tar",
+            headers={"Content-Disposition": "attachment; filename=files.tar"},
+            background=background_tasks
+        )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error creating chunked tar stream: {e}")
-    finally:
-        # Clean up all temporary files after streaming completes
-        try:
-            if metadata_file_path and os.path.exists(metadata_file_path):
-                os.unlink(metadata_file_path)
-            if temp_tar_path and os.path.exists(temp_tar_path):
-                os.unlink(temp_tar_path)
-            if temp_dir and os.path.exists(temp_dir):
-                import shutil
+        # Clean up on error immediately
+        tsv_file.close()
+        if os.path.exists(temp_dir):
+            try:
                 shutil.rmtree(temp_dir)
-        except Exception as e:
-            print(f"Warning: Could not clean up temporary files: {e}")
+            except OSError:
+                pass
+        raise e
 
-
-def _write_metadata_to_file(items, file_path: str) -> None:
-    """
-    Write metadata to a temporary JSON file without loading everything into memory.
-    """
-    # Custom JSON serializer to handle datetime objects
-    def json_serializer(obj):
-        if isinstance(obj, datetime):
-            return obj.isoformat()
-        raise TypeError(f"Type {type(obj)} not serializable")
-    
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write('[')  # Start JSON array
-        
-        first = True
-        if hasattr(items, 'as_pymongo'):
-            # It's a MongoEngine queryset - iterate efficiently
-            for item in items.as_pymongo():
-                if not first:
-                    f.write(',')
-                f.write(json.dumps(item, default=json_serializer))
-                first = False
-        elif isinstance(items, list):
-            # It's already a list
-            for item in items:
-                if not first:
-                    f.write(',')
-                f.write(json.dumps(item, default=json_serializer))
-                first = False
-        else:
-            # Try to iterate over it
-            for item in items:
-                if not first:
-                    f.write(',')
-                f.write(json.dumps(item, default=json_serializer))
-                first = False
-        
-        f.write(']')  # End JSON array

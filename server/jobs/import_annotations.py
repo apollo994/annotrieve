@@ -70,20 +70,16 @@ def import_annotations():
     print(f"Found {len(new_annotations_to_process)} new annotations to process")
     
     existing_annotation_md5s = GenomeAnnotation.objects().scalar('annotation_id') #the annotation id is the md5 of the uncompressed sorted file
-    saved_annotations_ids: list[str] = []
     for annotations in create_batches(new_annotations_to_process, BATCH_SIZE):
         processed_annotations = process_annotations_pipeline(annotations, valid_lineages, existing_annotation_md5s)
-        saved_annotations_ids.extend(
+        if processed_annotations:
             annotation_service.save_annotations(processed_annotations, ANNOTATIONS_PATH)
-            )    
-    if saved_annotations_ids:
-        print(f"Saved {len(saved_annotations_ids)} annotations")
-        stats_service.update_db_stats(saved_annotations_ids)
-    else:
-        print("No annotations saved")
-    
-    print("Cleaning up empty models")
-    stats_service.clean_up_empty_models()
+        else:
+            print("No annotations processed")
+
+    #no matter what we update the stats at the end
+    stats_service.update_db_stats()
+
     print("Import annotations job successfully finished")
 
 def process_annotations_pipeline(annotations: list[AnnotationToProcess], valid_lineages: dict[str, list[str]], existing_annotation_md5s: list[str]) -> list[GenomeAnnotation]:
