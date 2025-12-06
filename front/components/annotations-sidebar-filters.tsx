@@ -4,7 +4,8 @@ import { useState, useEffect, useRef, useCallback, useMemo, useLayoutEffect } fr
 import type { ReactNode, KeyboardEvent as ReactKeyboardEvent } from "react"
 import { Checkbox, Button, Label } from "@/components/ui"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChevronDown, Loader2, ArrowRight } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { ChevronDown, Loader2, ArrowRight, Search } from "lucide-react"
 import { getAssembliesStats } from "@/lib/api/assemblies"
 import { getAnnotationsFrequencies } from "@/lib/api/annotations"
 import { getTaxon, getTaxonRankFrequencies, listTaxons } from "@/lib/api/taxons"
@@ -63,6 +64,7 @@ interface CollapsibleSectionProps {
 const COLLAPSIBLE_ANIMATION_DURATION = 300
 const COLLAPSIBLE_SKELETON_WIDTHS = ["w-5/6", "w-full", "w-2/3"] as const
 const BIOPROJECTS_PAGE_SIZE = 30
+const BIOPROJECT_SEARCH_DEBOUNCE = 400
 
 function usePersistentState<T>(key: string, defaultValue: T) {
   const [value, setValue] = useState<T>(() => {
@@ -291,8 +293,11 @@ export function AnnotationsSidebarFilters() {
   const [bioprojectOffset, setBioprojectOffset] = useState(0)
   const [bioprojectHasMore, setBioprojectHasMore] = useState(false)
   const [loadingBioprojects, setLoadingBioprojects] = useState(false)
+  const [bioprojectSearchQuery, setBioprojectSearchQuery] = useState("")
+  const [debouncedBioprojectSearchQuery, setDebouncedBioprojectSearchQuery] = useState("")
   const bioprojectScrollRef = useRef<HTMLDivElement>(null)
   const bioprojectObserverRef = useRef<HTMLDivElement>(null)
+  const lastFetchedQueryRef = useRef<string>("")
   const [isBioprojectSectionOpen, setIsBioprojectSectionOpen] = usePersistentState<boolean>("annotations-sidebar:bioprojects-open", false)
 
   // Assembly filters - lazy loaded
@@ -350,12 +355,16 @@ export function AnnotationsSidebarFilters() {
     setLoadingBioprojects(true)
     try {
       const currentOffset = reset ? 0 : bioprojectOffset
-      const response = await listBioprojects({
+      const params: any = {
         limit: BIOPROJECTS_PAGE_SIZE,
         offset: currentOffset,
         sort_by: 'assemblies_count',
         sort_order: 'desc'
-      })
+      }
+      if (debouncedBioprojectSearchQuery.trim()) {
+        params.filter = debouncedBioprojectSearchQuery.trim()
+      }
+      const response = await listBioprojects(params)
       const results = response?.results ?? []
       const total = response?.total ?? results.length
       setBioprojectsTotal(total)
@@ -380,7 +389,7 @@ export function AnnotationsSidebarFilters() {
     } finally {
       setLoadingBioprojects(false)
     }
-  }, [bioprojectOffset, loadingBioprojects])
+  }, [bioprojectOffset, loadingBioprojects, debouncedBioprojectSearchQuery])
 
   const loadMoreBioprojects = useCallback(() => {
     if (loadingBioprojects || !bioprojectHasMore) return
@@ -719,12 +728,58 @@ export function AnnotationsSidebarFilters() {
     }
   }, [treeSelectedRank, loadingTreeRankRoots, hasMoreTreeRankRoots, treeRankRootsOffset])
 
+  // Debounce bioproject search query
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedBioprojectSearchQuery(bioprojectSearchQuery)
+    }, BIOPROJECT_SEARCH_DEBOUNCE)
+    return () => clearTimeout(timeoutId)
+  }, [bioprojectSearchQuery])
+
+  // Reset pagination and fetch when search query changes or section opens
   useEffect(() => {
     if (!isBioprojectSectionOpen) return
-    if (bioprojects.length === 0 && !loadingBioprojects) {
-      fetchBioprojects(true)
+    
+    // Avoid duplicate fetches for the same query
+    const currentQuery = debouncedBioprojectSearchQuery.trim()
+    if (lastFetchedQueryRef.current === currentQuery && bioprojects.length > 0) {
+      return
     }
-  }, [isBioprojectSectionOpen, bioprojects.length, loadingBioprojects, fetchBioprojects])
+    
+    lastFetchedQueryRef.current = currentQuery
+    setBioprojectOffset(0)
+    setBioprojects([])
+    
+    // Use the current values directly instead of the callback
+    const fetch = async () => {
+      if (loadingBioprojects) return
+      setLoadingBioprojects(true)
+      try {
+        const params: any = {
+          limit: BIOPROJECTS_PAGE_SIZE,
+          offset: 0,
+          sort_by: 'assemblies_count',
+          sort_order: 'desc'
+        }
+        if (currentQuery) {
+          params.filter = currentQuery
+        }
+        const response = await listBioprojects(params)
+        const results = response?.results ?? []
+        const total = response?.total ?? results.length
+        setBioprojectsTotal(total)
+        setBioprojectOffset(results.length)
+        setBioprojectHasMore(results.length < total)
+        setBioprojects(results)
+      } catch (error) {
+        console.error("Error loading bioprojects:", error)
+      } finally {
+        setLoadingBioprojects(false)
+      }
+    }
+    
+    fetch()
+  }, [debouncedBioprojectSearchQuery, isBioprojectSectionOpen])
 
   useEffect(() => {
     if (!isBioprojectSectionOpen) return
@@ -947,6 +1002,18 @@ export function AnnotationsSidebarFilters() {
                     Clear selection
                   </Button>
                 )}
+              </div>
+
+              {/* Search bar */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search BioProjects by title or accession..."
+                  value={bioprojectSearchQuery}
+                  onChange={(e) => setBioprojectSearchQuery(e.target.value)}
+                  className="pl-9 h-9 text-sm"
+                />
               </div>
 
               <div
