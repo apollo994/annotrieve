@@ -147,7 +147,7 @@ export interface GeneStatsSummary {
 }
 
 export function getGeneStats(params?: Query) {
-  return apiPost<GeneStatsSummary>('/annotations/gene-stats', params)
+  return apiGet<GeneStatsSummary>('/annotations/gene-stats', params)
 }
 
 export interface GeneCategoryDetails {
@@ -159,7 +159,7 @@ export interface GeneCategoryDetails {
 }
 
 export function getGeneCategoryDetails(category: string, params?: Query) {
-  return apiPost<GeneCategoryDetails>(`/annotations/gene-stats/${encodeURIComponent(category)}`, params)
+  return apiGet<GeneCategoryDetails>(`/annotations/gene-stats/${encodeURIComponent(category)}`, params)
 }
 
 export interface GeneCategoryMetricValues {
@@ -175,7 +175,7 @@ export function getGeneCategoryMetricValues(
   metric: string,
   params?: Query & { include_annotations?: boolean }
 ) {
-  return apiPost<GeneCategoryMetricValues>(
+  return apiGet<GeneCategoryMetricValues>(
     `/annotations/gene-stats/${encodeURIComponent(category)}/${encodeURIComponent(metric)}`,
     params
   )
@@ -197,7 +197,7 @@ export interface TranscriptStatsSummary {
 }
 
 export function getTranscriptStats(params?: Query) {
-  return apiPost<TranscriptStatsSummary>('/annotations/transcript-stats', params)
+  return apiGet<TranscriptStatsSummary>('/annotations/transcript-stats', params)
 }
 
 export interface TranscriptTypeDetails {
@@ -209,7 +209,7 @@ export interface TranscriptTypeDetails {
 }
 
 export function getTranscriptTypeDetails(type: string, params?: Query) {
-  return apiPost<TranscriptTypeDetails>(`/annotations/transcript-stats/${encodeURIComponent(type)}`, params)
+  return apiGet<TranscriptTypeDetails>(`/annotations/transcript-stats/${encodeURIComponent(type)}`, params)
 }
 
 export interface TranscriptTypeMetricValues {
@@ -225,7 +225,7 @@ export function getTranscriptTypeMetricValues(
   metric: string,
   params?: Query & { include_annotations?: boolean }
 ) {
-  return apiPost<TranscriptTypeMetricValues>(
+  return apiGet<TranscriptTypeMetricValues>(
     `/annotations/transcript-stats/${encodeURIComponent(type)}/${encodeURIComponent(metric)}`,
     params
   )
