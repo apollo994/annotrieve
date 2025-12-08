@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from db.database import connect_to_db, close_db_connection
 from celery_app.celery_utils import create_celery
 from api.router import router as api_router
-from jobs.import_annotations import import_annotations
 import os
 
 def create_app() -> FastAPI:
@@ -88,5 +87,4 @@ def create_app() -> FastAPI:
 
     return app
 
-app = create_app() 
-print(f"App created")
+app = create_app()

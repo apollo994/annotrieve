@@ -14,12 +14,9 @@ services:
       - "traefik.http.routers.annotrieve-nginx.tls=true"
       - "traefik.http.routers.annotrieve-nginx.entrypoints=web_https"
       - "traefik.http.services.annotrieve-nginx.loadBalancer.server.port=80"
-      # Rate limiting middleware - protects against DDoS while allowing research usage
-      # Per IP: 1000 requests per minute (~16.7/s) with burst of 300
-      - "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.average=1000"
+      - "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.average=10000"
       - "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.period=1m"
-      - "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.burst=300"
-      # Apply rate limiting to the router
+      - "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.burst=5000"
       - "traefik.http.routers.annotrieve-nginx.middlewares=annotrieve-ratelimit"
     networks:
       - monstre
@@ -100,8 +97,3 @@ networks:
   monstre:
     external:
       name: monstre
-
-volumes:
-  mongodb-data:
-  annotations-data:
-
