@@ -80,7 +80,7 @@ export function DownloadsToolbar({ annotation, onStreamDialogOpen }: DownloadsTo
                 variant="ghost"
                 size="sm"
                 className="h-9 px-3 rounded-r-none"
-                onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.bgzipped_path}`)}
+                onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.bgzipped_path}`)}
                 title="Download BGZipped GFF3 file (compressed, tabix-indexed)"
               >
                 <Download className="h-4 w-4 mr-1.5" />
@@ -90,7 +90,7 @@ export function DownloadsToolbar({ annotation, onStreamDialogOpen }: DownloadsTo
                 variant="ghost"
                 size="sm"
                 className="h-9 px-2.5 rounded-l-none border-l hover:bg-muted"
-                onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')}
+                onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')}
                 title="Copy BGZip file URL"
               >
                 {copiedUrl === 'bgzip' ? (
@@ -109,7 +109,7 @@ export function DownloadsToolbar({ annotation, onStreamDialogOpen }: DownloadsTo
                 variant="ghost"
                 size="sm"
                 className="h-9 px-3 rounded-r-none"
-                onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.csi_path}`)}
+                onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.csi_path}`)}
                 title="Download CSI index file for tabix"
               >
                 <Download className="h-4 w-4 mr-1.5" />
@@ -119,7 +119,7 @@ export function DownloadsToolbar({ annotation, onStreamDialogOpen }: DownloadsTo
                 variant="ghost"
                 size="sm"
                 className="h-9 px-2.5 rounded-l-none border-l hover:bg-muted"
-                onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.csi_path}`, 'csi')}
+                onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.csi_path}`, 'csi')}
                 title="Copy CSI index file URL"
               >
                 {copiedUrl === 'csi' ? (
