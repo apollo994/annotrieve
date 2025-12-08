@@ -51,6 +51,7 @@ type FAQItem = {
 }
 
 const faqItems: FAQItem[] = [
+
   {
     value: "what-is",
     question: "What is Annotrieve?",
@@ -336,6 +337,50 @@ const faqItems: FAQItem[] = [
           <p>
             Need a clean slate? Click <em>Clear all</em> next to the chips to reset every filter at once.
           </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    value: "privacy-data",
+    question: "What data do we collect and how is it used?",
+    renderContent: () => (
+      <>
+        <p>
+          Annotrieve collects minimal server-side logs for usage analytics and service improvement. We do not use tracking cookies or client-side analytics.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <p className="font-semibold text-foreground mb-2">Data collected:</p>
+            <ul className="list-disc pl-6 space-y-1 text-sm">
+              <li><strong>IP addresses</strong> – Used to understand usage patterns and prevent abuse</li>
+              <li><strong>User agent</strong> – Browser/client information for compatibility analysis</li>
+              <li><strong>Referrer</strong> – Source of requests (e.g., which page linked to the API)</li>
+              <li><strong>Request details</strong> – API endpoints accessed, HTTP methods, timestamps, response times</li>
+            </ul>
+          </div>
+          <div>
+            <p className="font-semibold text-foreground mb-2">Purpose:</p>
+            <p className="text-sm">
+              Logs are used exclusively for usage tracking, service optimization, and understanding how the platform is used for research purposes. This is not used for commercial purposes or shared with third parties.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-foreground mb-2">Data retention:</p>
+            <p className="text-sm">
+              Logs are retained for a reasonable period necessary for analytics and troubleshooting. Specific retention periods may vary based on operational needs.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-foreground mb-2">Your rights:</p>
+            <p className="text-sm">
+              If you have questions about data collection or wish to request information about your data, please contact us at{" "}
+              <a href="mailto:emilio.righi@crg.eu" className="text-primary underline-offset-4 hover:underline">
+                emilio.righi@crg.eu
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </>
     ),
