@@ -9,28 +9,34 @@ import os
 def create_app() -> FastAPI:
     app = FastAPI(title="Annotrieve API (FastAPI)")
 
-    # Configure CORS to allow requests from GitHub Pages and other origins
-    # The browser blocks responses if the Origin header doesn't match allowed origins
-    # When frontend is on GitHub Pages (emiliorighi.github.io), it makes requests to genome.crg.es
-    # The browser sends Origin: https://emiliorighi.github.io, which must be allowed
+    # Configure CORS for public research API
+    # Allows access from:
+    # 1. Programmatic access (scripts, pipelines) - no Origin header, handled by CORS middleware
+    # 2. Web frontend (genome.crg.es, GitHub Pages)
+    # 3. Genome browsers embedded in other web pages (any origin)
+    #
+    # For a public research API, allowing all origins is appropriate:
+    # - No authentication/credentials required
+    # - Read-only public data
+    # - Genome browsers need to work from any embedded context
+    # - Security risk is minimal (no sensitive operations)
     allowed_origins_env = os.getenv("CORS_ALLOWED_ORIGINS", "")
-    allowed_origins = [
-        "http://localhost:3000",  # Development
-        "https://emiliorighi.github.io",  # GitHub Pages - exact match
-        "https://genome.crg.es",  # Production
-    ]
     
-    # Add any additional origins from environment variable (comma-separated)
+    # If CORS_ALLOWED_ORIGINS is set, use specific origins (more restrictive)
+    # Otherwise, allow all origins for maximum compatibility with genome browsers
     if allowed_origins_env:
+        allowed_origins = [
+            "http://localhost:3000",  # Development
+            "https://emiliorighi.github.io",  # GitHub Pages - exact match
+            "https://genome.crg.es",  # Production
+        ]
+        # Add any additional origins from environment variable (comma-separated)
         allowed_origins.extend([origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()])
-    
-    # Use regex pattern to allow all GitHub Pages subdomains (more flexible)
-    # This handles any *.github.io subdomain, localhost variations, and genome.crg.es
-    # Pattern explanation:
-    # - https?://(localhost|127\.0\.0\.1)(:\d+)? - localhost with optional port
-    # - https://.*\.github\.io - any GitHub Pages subdomain
-    # - https://genome\.crg\.es - production domain
-    allow_origin_regex = r"https?://(localhost|127\.0\.0\.1)(:\d+)?|https://.*\.github\.io|https://genome\.crg\.es"
+        allow_origin_regex = None  # Use specific origins only
+    else:
+        # Allow all origins for public research API (genome browsers in any webpage)
+        allowed_origins = ["*"]
+        allow_origin_regex = None
     
     # CORS middleware processes all responses (including errors) and adds appropriate headers
     # It must be added before routes are registered
@@ -46,12 +52,22 @@ def create_app() -> FastAPI:
     # - The real fix is ensuring middleware processes ALL responses
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=allowed_origins,  # Exact matches (fastest, checked first)
-        allow_origin_regex=allow_origin_regex,  # Regex pattern for flexible matching (fallback)
+        allow_origins=allowed_origins,  # Specific origins or ["*"] for all origins
+        allow_origin_regex=allow_origin_regex,  # Regex pattern (None if using ["*"])
         allow_credentials=False,  # No authentication needed for public API - safer to disable credentials
         allow_methods=["GET", "POST", "OPTIONS", "HEAD"],  # Only allow methods actually used by the API
-        allow_headers=["*"],  # Allow all headers (needed for Content-Type, Accept, etc.)
-        expose_headers=["*"],  # Expose all headers to client
+        allow_headers=[
+            "Content-Type",      # For POST requests with JSON
+            "Accept",            # For content negotiation
+            "Range",             # For partial content requests (genome browsers)
+            "X-Requested-With",  # Common header for AJAX requests
+        ],
+        expose_headers=[
+            "Content-Length",    # For file downloads
+            "Content-Range",     # For Range requests (genome browsers)
+            "Content-Type",      # For content type information
+            "Cache-Control",     # For cache control information
+        ],
         max_age=86400,  # Cache preflight OPTIONS requests for 24 hours
     )
 

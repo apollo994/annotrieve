@@ -37,7 +37,6 @@ def update_db_stats():
     print("Updating taxon nodes stats")
     for taxon_node in TaxonNode.objects():
         annotations_count = GenomeAnnotation.objects(taxon_lineage__in=[taxon_node.taxid]).count()
-        print(f"Found {annotations_count} annotations for taxon node {taxon_node.scientific_name}")
         assemblies_count = GenomeAssembly.objects(taxon_lineage__in=[taxon_node.taxid]).count()
         organisms_count = Organism.objects(taxon_lineage__in=[taxon_node.taxid]).count()
         taxon_node.modify(
