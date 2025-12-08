@@ -54,12 +54,10 @@ export default function ApiDocsPage() {
           throw new Error(`Failed to fetch spec: ${res.status} ${res.statusText}`)
         }
         const text = await res.text()
-        console.log('Spec file fetched, length:', text.length)
         
         try {
           // Parse YAML to JSON object
           const parsed = yaml.load(text) as any
-          console.log('Spec parsed as YAML:', parsed?.openapi || parsed?.swagger)
           setSpec(parsed)
           setIsLoaded(true)
         } catch (e) {

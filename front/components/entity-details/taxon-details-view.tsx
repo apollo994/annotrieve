@@ -23,7 +23,6 @@ import { Bar } from 'react-chartjs-2'
 import { CategoryScale, LinearScale, BarElement } from 'chart.js'
 import Link from "next/link"
 import { buildEntityDetailsUrl } from "@/lib/utils"
-import { AnnotationsDistributionPlot } from "@/components/annotations-distribution-plot"
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend)
