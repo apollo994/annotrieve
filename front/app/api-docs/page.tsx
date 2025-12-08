@@ -208,7 +208,7 @@ export default function ApiDocsPage() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-full overflow-y-auto">
       <div className="overflow-hidden" style={{ minHeight: '600px', backgroundColor: COLORS.background, borderColor: COLORS.border }}>
         <RedocStandalone
           spec={spec}

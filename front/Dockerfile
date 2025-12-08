@@ -1,8 +1,15 @@
 FROM node:22-alpine AS builder
 
 WORKDIR /app
+
+# Copy package files first for better caching
+COPY package*.json ./
+RUN npm ci --legacy-peer-deps --prefer-offline --no-audit
+
+# Copy source code
 COPY . .
-RUN npm install --legacy-peer-deps
+
+# Build with memory optimizations
 RUN npm run build
 
 

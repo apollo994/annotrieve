@@ -3,12 +3,17 @@
 import { useCallback, useMemo, useState, useEffect, useRef, type ReactNode } from "react"
 import { createPortal } from "react-dom"
 import { useRouter } from "next/navigation"
-import { Database, Network, Filter } from "lucide-react"
-import { useAnnotationsFiltersStore } from "@/lib/stores/annotations-filters"
+import { Database, Network, Filter, Save, ChevronLeft, ChevronRight } from "lucide-react"
+import { useAnnotationsFiltersStore, type FiltersState } from "@/lib/stores/annotations-filters"
+import { useAnnotationSubsetsStore } from "@/lib/stores/annotation-subsets"
 import { useShownTooltipsStore } from "@/lib/stores/shown-tooltips"
 import { FilterChip } from "./active-filters/filter-chip"
 import { Button } from "@/components/ui/button"
-import { buildEntityDetailsUrl } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { buildEntityDetailsUrl, cn, getFiltersHash } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
+import { useUIStore } from "@/lib/stores/ui"
 
 interface ActiveFiltersProps {
   readOnly?: boolean
@@ -17,8 +22,19 @@ interface ActiveFiltersProps {
 export function ActiveFilters({ readOnly = false }: ActiveFiltersProps = {}) {
   const router = useRouter()
   const store = useAnnotationsFiltersStore()
+  const addSubset = useAnnotationSubsetsStore((state) => state.addSubset)
+  const subsets = useAnnotationSubsetsStore((state) => state.subsets)
+  const findSubsetByFiltersHash = useAnnotationSubsetsStore((state) => state.findSubsetByFiltersHash)
+  const lastLoadedSubsetId = useAnnotationSubsetsStore((state) => state.lastLoadedSubsetId)
+  const setLastLoadedSubsetId = useAnnotationSubsetsStore((state) => state.setLastLoadedSubsetId)
+  
+  // UI store for sidebar toggle
+  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen)
+  const isDesktop = useUIStore((state) => state.isDesktop)
+  const setIsSidebarOpen = useUIStore((state) => state.setIsSidebarOpen)
   const {
     selectedTaxons,
+    selectedOrganisms,
     selectedAssemblies,
     selectedBioprojects,
     selectedAssemblyLevels,
@@ -44,6 +60,17 @@ export function ActiveFilters({ readOnly = false }: ActiveFiltersProps = {}) {
     setFeatureSources,
     clearAllFilters,
   } = store
+
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
+  const [newSubsetName, setNewSubsetName] = useState("")
+  const [isSaving, setIsSaving] = useState(false)
+  
+  // Track last saved subset ID to disable save button until filters change
+  const lastSavedSubsetIdRef = useRef<string | null>(null)
+  
+  // Import the shared ref from filter-subsets-manager
+  // We'll use a dynamic import approach or add it to the store
+  // For now, let's add a method to the store to track last loaded
 
   const [tooltipKeys, setTooltipKeys] = useState<Set<string>>(new Set())
   const [tooltipPositions, setTooltipPositions] = useState<Map<string, { top: number; left: number }>>(new Map())
@@ -380,13 +407,159 @@ export function ActiveFilters({ readOnly = false }: ActiveFiltersProps = {}) {
 
   const hasActiveFilters = store.hasActiveFilters()
 
-  if (!hasActiveFilters) {
-    return null
+  // Compute current filters hash only when filters change
+  const currentFiltersHash = useMemo(() => {
+    const currentFilters: FiltersState = {
+      selectedTaxons,
+      selectedOrganisms,
+      selectedAssemblies,
+      selectedBioprojects,
+      selectedAssemblyLevels,
+      selectedAssemblyStatuses,
+      onlyRefGenomes,
+      biotypes,
+      featureTypes,
+      featureSources,
+      pipelines,
+      providers,
+      databaseSources,
+    }
+    return getFiltersHash(currentFilters)
+  }, [
+    selectedTaxons,
+    selectedOrganisms,
+    selectedAssemblies,
+    selectedBioprojects,
+    selectedAssemblyLevels,
+    selectedAssemblyStatuses,
+    onlyRefGenomes,
+    biotypes,
+    featureTypes,
+    featureSources,
+    pipelines,
+    providers,
+    databaseSources,
+  ])
+
+  // Check if current filters match any existing subset (only when hash or subsets change)
+  const matchingSubset = useMemo(() => {
+    return findSubsetByFiltersHash(currentFiltersHash)
+  }, [currentFiltersHash, findSubsetByFiltersHash, subsets])
+
+  // Check if save should be disabled
+  const isSaveDisabled = useMemo(() => {
+    // If filters match an existing subset, disable save
+    if (matchingSubset) {
+      return true
+    }
+    
+    return false
+  }, [matchingSubset])
+
+  // Reset last loaded subset ID when filters no longer match it
+  useEffect(() => {
+    if (lastLoadedSubsetId) {
+      if (!matchingSubset || matchingSubset.id !== lastLoadedSubsetId) {
+        // Filters no longer match the loaded subset (user modified them)
+        setLastLoadedSubsetId(null)
+      }
+    }
+  }, [matchingSubset, lastLoadedSubsetId, setLastLoadedSubsetId])
+
+  // Reset last saved subset ID when filters change (no longer match the saved subset)
+  useEffect(() => {
+    if (lastSavedSubsetIdRef.current && matchingSubset?.id !== lastSavedSubsetIdRef.current) {
+      // Filters no longer match the saved subset (user modified them)
+      lastSavedSubsetIdRef.current = null
+    }
+  }, [matchingSubset])
+
+  const handleSaveCurrent = () => {
+    setIsSaveDialogOpen(true)
+    setNewSubsetName("")
   }
+
+  const handleSaveSubset = () => {
+    const trimmedName = newSubsetName.trim()
+    if (!trimmedName) return
+
+    // Check for duplicate names (case-insensitive)
+    const nameExists = subsets.some(
+      subset => subset.name.toLowerCase() === trimmedName.toLowerCase()
+    )
+    if (nameExists) {
+      return // Don't save if name already exists
+    }
+
+    setIsSaving(true)
+    try {
+      // Get current filters only when saving, not on every render
+      const state = useAnnotationsFiltersStore.getState()
+      const currentFilters: FiltersState = {
+        selectedTaxons: state.selectedTaxons,
+        selectedOrganisms: state.selectedOrganisms,
+        selectedAssemblies: state.selectedAssemblies,
+        selectedBioprojects: state.selectedBioprojects,
+        selectedAssemblyLevels: state.selectedAssemblyLevels,
+        selectedAssemblyStatuses: state.selectedAssemblyStatuses,
+        onlyRefGenomes: state.onlyRefGenomes,
+        biotypes: state.biotypes,
+        featureTypes: state.featureTypes,
+        featureSources: state.featureSources,
+        pipelines: state.pipelines,
+        providers: state.providers,
+        databaseSources: state.databaseSources,
+      }
+      const savedId = addSubset(trimmedName, currentFilters)
+      // Track that we just saved this subset - button will stay disabled until filters change
+      lastSavedSubsetIdRef.current = savedId
+      setIsSaveDialogOpen(false)
+      setNewSubsetName("")
+    } catch (error) {
+      console.error("Error saving subset:", error)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const handleFiltersToggle = useCallback(() => {
+    if (isDesktop) {
+      setIsSidebarOpen(!isSidebarOpen)
+    } else {
+      setIsSidebarOpen(true)
+    }
+  }, [isDesktop, isSidebarOpen, setIsSidebarOpen])
+
+  // Check if name already exists (case-insensitive)
+  const isNameDuplicate = Boolean(
+    newSubsetName.trim() && subsets.some(
+      subset => subset.name.toLowerCase() === newSubsetName.trim().toLowerCase()
+    )
+  )
 
   return (
     <>
-      <div className="flex items-center gap-3 w-full overflow-x-auto">
+      <div className="flex items-center gap-3 w-full overflow-x-auto mb-2">
+        {/* Toggle Filter Button - always visible on extreme left (except when readOnly) */}
+        {!readOnly && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleFiltersToggle}
+            aria-pressed={isSidebarOpen}
+            title={
+              isSidebarOpen ? 'Hide filters sidebar' : 'Show filters sidebar'
+            }
+          >
+            {isSidebarOpen ? (
+              <ChevronLeft className="h-4 w-4" />
+            ) : (
+              <ChevronRight className="h-4 w-4" />
+            )}
+            Filters
+          </Button>
+        )}
+
         <div className="flex items-center gap-2 overflow-x-auto flex-1">
           {filterChips.map((chip) => {
             const showTooltip = tooltipKeys.has(chip.key) && chip.onClick
@@ -424,9 +597,35 @@ export function ActiveFilters({ readOnly = false }: ActiveFiltersProps = {}) {
           })}
         </div>
         {!readOnly && (
-          <Button variant="secondary" size="sm" className="h-7 px-2 text-xs flex-shrink-0" onClick={clearAllFilters}>
-            Clear all
-          </Button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleSaveCurrent}
+              disabled={!hasActiveFilters || isSaveDisabled}
+              title={
+                !hasActiveFilters
+                  ? "No filters to save"
+                  : isSaveDisabled 
+                    ? matchingSubset 
+                      ? `Filters match existing set: "${matchingSubset.name}"`
+                      : "Cannot save duplicate filters"
+                    : "Save current filters as a new set"
+              }
+            >
+              <Save className="h-4 w-4" />
+              Save Filters
+            </Button>
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              onClick={clearAllFilters}
+              disabled={!hasActiveFilters}
+              title={!hasActiveFilters ? "No filters to clear" : "Clear all filters"}
+            >
+              Clear all
+            </Button>
+          </div>
         )}
       </div>
       {typeof window !== 'undefined' && tooltipKeys.size > 0 && createPortal(
@@ -472,6 +671,62 @@ export function ActiveFilters({ readOnly = false }: ActiveFiltersProps = {}) {
         </>,
         document.body
       )}
+
+      {/* Save Dialog */}
+      <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="text-base">Save Filter Set</DialogTitle>
+            <DialogDescription className="text-sm">
+              Give this filter set a name so you can load it later or compare it with others.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-2">
+            <Input
+              placeholder="e.g., RefSeq annotations, Human genomes..."
+              value={newSubsetName}
+              onChange={(e) => setNewSubsetName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && newSubsetName.trim() && !isNameDuplicate) {
+                  handleSaveSubset()
+                }
+              }}
+              className={cn(
+                "w-full",
+                isNameDuplicate && "border-destructive focus-visible:ring-destructive"
+              )}
+              autoFocus
+            />
+            {isNameDuplicate && (
+              <p className="text-sm text-destructive">
+                A filter set with this name already exists
+              </p>
+            )}
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsSaveDialogOpen(false)}
+              disabled={isSaving}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSaveSubset}
+              disabled={!newSubsetName.trim() || isSaving || isNameDuplicate}
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

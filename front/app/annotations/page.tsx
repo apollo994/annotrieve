@@ -16,7 +16,6 @@ export default function AnnotationsPage() {
   // Detect legacy favorites query param so we can redirect users
   const searchParams = useSearchParams()
   const router = useRouter()
-  const shouldRedirectToFavorites = searchParams?.get('showFavs') === 'true'
   
   // Use UI store for sidebar state
   const {
@@ -62,19 +61,9 @@ export default function AnnotationsPage() {
     }
   }, [searchParams, router])
 
-  // Redirect legacy favorites query param to the dedicated favorites page
-  useEffect(() => {
-    if (shouldRedirectToFavorites) {
-      router.replace('/annotations/favorites')
-    }
-  }, [shouldRedirectToFavorites, router])
 
   // Fetch annotations
   useEffect(() => {
-    if (shouldRedirectToFavorites) {
-      return
-    }
-
     const fetchData = async () => {
       const params = buildAnnotationsParams(false, [])
       setLoading(true)
@@ -94,7 +83,6 @@ export default function AnnotationsPage() {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    shouldRedirectToFavorites,
     currentPage,
     itemsPerPage,
     sortOption,
@@ -138,18 +126,6 @@ export default function AnnotationsPage() {
   // Removed manual resize logic for sidebar; use responsive fixed widths instead
 
 
-  if (shouldRedirectToFavorites) {
-    return (
-      <>
-        <RightSidebar />
-        <div className="flex items-center justify-center h-[calc(100vh-4rem)] px-6">
-          <p className="text-sm text-muted-foreground">
-            Redirecting to your favorites…
-          </p>
-        </div>
-      </>
-    )
-  }
 
   return (
     <>
@@ -193,7 +169,7 @@ export default function AnnotationsPage() {
 
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto min-w-0 w-full">
-          <div className="w-full flex flex-col h-full">
+          <div className="w-full flex flex-col">
             {/* Active Filters */}
             <div className="px-6 pt-6 pb-2">
               <ActiveFilters />

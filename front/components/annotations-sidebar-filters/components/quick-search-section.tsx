@@ -13,8 +13,8 @@ interface QuickSearchSectionProps {
 
 export function QuickSearchSection({ models, onSelect }: QuickSearchSectionProps) {
   return (
-    <div className="px-5 py-5 border-b space-y-4">
-      <Label className="text-sm font-semibold flex items-center gap-2">
+    <div className="px-5 py-5 space-y-4">
+      <Label className="text-sm uppercase text-muted-foreground flex items-center gap-2">
         Quick Search
       </Label>
       <CommonSearchBar

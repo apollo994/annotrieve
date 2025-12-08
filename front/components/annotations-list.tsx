@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
-import { FileText, Loader2, ArrowUp, ArrowDown, PanelLeftClose, PanelLeftOpen, Database, BarChart3 } from "lucide-react"
+import { FileText, Loader2, ArrowUp, ArrowDown, Database, BarChart3 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { AnnotationsStatsDashboard } from "@/components/annotations-stats-dashboard"
 import { AnnotationCard } from "@/components/annotation-card"
@@ -63,19 +63,7 @@ export function AnnotationsList({ annotations, totalAnnotations, loading }: Anno
   const isSelected = (id: string) => isSelectedStore(id)
   const getSelectedAnnotations = useSelectedAnnotationsStore((state) => state.getSelectedAnnotations)
 
-  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen)
-  const isDesktop = useUIStore((state) => state.isDesktop)
-  const setIsSidebarOpen = useUIStore((state) => state.setIsSidebarOpen)
   const openRightSidebar = useUIStore((state) => state.openRightSidebar)
-
-
-  const handleFiltersToggle = useCallback(() => {
-    if (isDesktop) {
-      setIsSidebarOpen(!isSidebarOpen)
-    } else {
-      setIsSidebarOpen(true)
-    }
-  }, [isDesktop, isSidebarOpen, setIsSidebarOpen])
 
   const handleBrowseAssemblies = useCallback(() => {
     openRightSidebar('assemblies-list')
@@ -249,30 +237,13 @@ export function AnnotationsList({ annotations, totalAnnotations, loading }: Anno
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
 
       {/* Toolbar Header */}
-      <div className="flex-shrink-0 border-b border-border/60 bg-background/90 supports-[backdrop-filter]:bg-background/75 backdrop-blur">
-        <div className="px-3 sm:px-6 pt-3 pb-4">
+      <div className="flex-shrink-0 bg-background/90 supports-[backdrop-filter]:bg-background/75 backdrop-blur">
+        <div className="px-3 sm:px-6 pt-3">
           <div className="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-3">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 w-full md:w-auto">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 px-2 sm:px-3 gap-2 shrink-0"
-                onClick={handleFiltersToggle}
-                aria-pressed={isSidebarOpen}
-                title={
-                  isSidebarOpen ? 'Hide filters sidebar' : 'Show filters sidebar'
-                }
-              >
-                {isSidebarOpen ? (
-                  <PanelLeftClose className="h-4 w-4" />
-                ) : (
-                  <PanelLeftOpen className="h-4 w-4" />
-                )}
-                <span className="hidden md:inline">Filters</span>
-              </Button>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
@@ -299,12 +270,6 @@ export function AnnotationsList({ annotations, totalAnnotations, loading }: Anno
                 <BarChart3 className="h-4 w-4 shrink-0" />
                 <span className="hidden md:inline">Stats</span>
                 <span className="md:hidden">Stats</span>
-                <Badge 
-                  variant="default" 
-                  className="absolute -top-2 -right-2 h-5 px-1.5 text-[10px] font-semibold bg-accent text-accent-foreground border-2 border-background"
-                >
-                  NEW
-                </Badge>
               </Button>
               <Button
                 variant="outline"
@@ -354,19 +319,13 @@ export function AnnotationsList({ annotations, totalAnnotations, loading }: Anno
                   <ArrowDown className="h-4 w-4" />
                 )}
               </Button>
-              {loading && (
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground shrink-0">
-                  <Loader2 className="h-4 w-4 animate-spin shrink-0" />
-                  <span className="hidden sm:inline">Loading...</span>
-                </div>
-              )}
             </div>
           </div>
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
+      <div className="flex-1">
         <div className="px-6 py-4">
           <Dialog open={reportOpen} onOpenChange={setReportOpen}>
             <DialogContent className="max-w-xl">
@@ -436,10 +395,10 @@ export function AnnotationsList({ annotations, totalAnnotations, loading }: Anno
               {/* Infinite Scroll Trigger */}
               {hasMore && (
                 <div ref={loadMoreRef} className="flex justify-center py-4">
-                  {loadingMore && (
+                  {(loadingMore || (loading && currentPage > 1)) && (
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>Loading more...</span>
+                      <span>Loading more annotations...</span>
                     </div>
                   )}
                 </div>

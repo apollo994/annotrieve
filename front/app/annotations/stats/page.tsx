@@ -30,20 +30,8 @@ export default function AnnotationsStatsPage() {
   // Get filter values from store
   const buildAnnotationsParams = useAnnotationsFiltersStore((state) => state.buildAnnotationsParams)
   const hasActiveFilters = useAnnotationsFiltersStore((state) => state.hasActiveFilters)
-  const selectedTaxons = useAnnotationsFiltersStore((state) => state.selectedTaxons)
-  const selectedAssemblies = useAnnotationsFiltersStore((state) => state.selectedAssemblies)
-  const selectedBioprojects = useAnnotationsFiltersStore((state) => state.selectedBioprojects)
-  const selectedAssemblyLevels = useAnnotationsFiltersStore((state) => state.selectedAssemblyLevels)
-  const selectedAssemblyStatuses = useAnnotationsFiltersStore((state) => state.selectedAssemblyStatuses)
-  const onlyRefGenomes = useAnnotationsFiltersStore((state) => state.onlyRefGenomes)
-  const biotypes = useAnnotationsFiltersStore((state) => state.biotypes)
-  const featureTypes = useAnnotationsFiltersStore((state) => state.featureTypes)
-  const pipelines = useAnnotationsFiltersStore((state) => state.pipelines)
-  const providers = useAnnotationsFiltersStore((state) => state.providers)
-  const databaseSources = useAnnotationsFiltersStore((state) => state.databaseSources)
-  const featureSources = useAnnotationsFiltersStore((state) => state.featureSources)
 
-  // Fetch gene stats
+  // Fetch gene stats - only on mount, filters don't change on this page
   useEffect(() => {
     let cancelled = false
 
@@ -75,23 +63,10 @@ export default function AnnotationsStatsPage() {
     return () => {
       cancelled = true
     }
-  }, [
-    buildAnnotationsParams,
-    selectedTaxons,
-    selectedAssemblies,
-    selectedBioprojects,
-    selectedAssemblyLevels,
-    selectedAssemblyStatuses,
-    onlyRefGenomes,
-    biotypes,
-    featureTypes,
-    pipelines,
-    providers,
-    databaseSources,
-    featureSources,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Only fetch on mount, filters are read from store but don't change here
 
-  // Fetch transcript stats
+  // Fetch transcript stats - only on mount, filters don't change on this page
   useEffect(() => {
     let cancelled = false
 
@@ -123,21 +98,8 @@ export default function AnnotationsStatsPage() {
     return () => {
       cancelled = true
     }
-  }, [
-    buildAnnotationsParams,
-    selectedTaxons,
-    selectedAssemblies,
-    selectedBioprojects,
-    selectedAssemblyLevels,
-    selectedAssemblyStatuses,
-    onlyRefGenomes,
-    biotypes,
-    featureTypes,
-    pipelines,
-    providers,
-    databaseSources,
-    featureSources,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Only fetch on mount, filters are read from store but don't change here
 
   const handleBack = () => {
     router.push("/annotations")
@@ -201,7 +163,8 @@ export default function AnnotationsStatsPage() {
     return () => {
       cancelled = true
     }
-  }, [selectedGeneCategory, buildAnnotationsParams])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGeneCategory]) // Only react to category selection, filters are read from store but don't change here
 
   // Fetch transcript type details when selected
   useEffect(() => {
@@ -239,7 +202,8 @@ export default function AnnotationsStatsPage() {
     return () => {
       cancelled = true
     }
-  }, [selectedTranscriptType, buildAnnotationsParams])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTranscriptType]) // Only react to type selection, filters are read from store but don't change here
 
   const formatLabel = (str: string) => {
     return str.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())

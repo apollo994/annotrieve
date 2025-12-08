@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="h-full overflow-hidden">
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -55,15 +55,15 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full overflow-hidden`}
       >
         <ThemeProvider>
           <ReactQueryProvider>
             <BetaBannerProvider>
               <InsdcModalProvider />
-              <div className="min-h-screen flex flex-col">
+              <div className="min-h-screen flex flex-col h-full">
                 <AppHeader />
-                <main className="flex-1">
+                <main className="flex-1 overflow-y-auto">
                   {children}
                 </main>
                 <FavoritesFloatingButton />

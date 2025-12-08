@@ -19,6 +19,7 @@ import { QuickSearchSection } from "@/components/annotations-sidebar-filters/com
 import { FilterAccordionSection } from "@/components/annotations-sidebar-filters/components/filter-accordion-section"
 import { sortRanks, formatRankLabel } from "@/components/annotations-sidebar-filters/utils"
 import { CommonSearchResult } from "@/lib/types"
+import { FilterSubsetsManager } from "@/components/annotations-sidebar-filters/filter-subsets-manager"
 
 const FILTER_PARAM_EXCLUDE_MAP: Record<string, string> = {
   'biotype': 'biotypes',
@@ -143,7 +144,7 @@ function CollapsibleSection({
       resizeObserver = new ResizeObserver(() => updateHeight())
       resizeObserver.observe(node)
     } else if (globalWindow) {
-      ;(globalWindow as any).addEventListener("resize", updateHeight)
+      ; (globalWindow as any).addEventListener("resize", updateHeight)
       resizeListenerAttached = true
     }
 
@@ -151,7 +152,7 @@ function CollapsibleSection({
       if (resizeObserver) {
         resizeObserver.disconnect()
       } else if (resizeListenerAttached && globalWindow) {
-        ;(globalWindow as any).removeEventListener("resize", updateHeight)
+        ; (globalWindow as any).removeEventListener("resize", updateHeight)
       }
     }
   }, [shouldRenderContent])
@@ -164,7 +165,7 @@ function CollapsibleSection({
   }, [onToggle])
 
   return (
-    <div className="rounded-md border bg-card/60 overflow-hidden">
+    <div className="overflow-hidden">
       <div
         role="button"
         tabIndex={0}
@@ -191,7 +192,7 @@ function CollapsibleSection({
       <div
         id={contentId}
         aria-hidden={!isOpen}
-        className="border-t bg-muted/60 shadow-inner border-border/80 overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        className="bg-muted/60 shadow-inner0 overflow-hidden transition-[max-height] duration-300 ease-in-out"
         style={{ maxHeight: isOpen ? `${contentHeight}px` : 0 }}
       >
         <div ref={contentRef} className="p-4 space-y-3">
@@ -739,17 +740,17 @@ export function AnnotationsSidebarFilters() {
   // Reset pagination and fetch when search query changes or section opens
   useEffect(() => {
     if (!isBioprojectSectionOpen) return
-    
+
     // Avoid duplicate fetches for the same query
     const currentQuery = debouncedBioprojectSearchQuery.trim()
     if (lastFetchedQueryRef.current === currentQuery && bioprojects.length > 0) {
       return
     }
-    
+
     lastFetchedQueryRef.current = currentQuery
     setBioprojectOffset(0)
     setBioprojects([])
-    
+
     // Use the current values directly instead of the callback
     const fetch = async () => {
       if (loadingBioprojects) return
@@ -777,7 +778,7 @@ export function AnnotationsSidebarFilters() {
         setLoadingBioprojects(false)
       }
     }
-    
+
     fetch()
   }, [debouncedBioprojectSearchQuery, isBioprojectSectionOpen])
 
@@ -925,13 +926,14 @@ export function AnnotationsSidebarFilters() {
   return (
     <>
       <div className="w-full border-r bg-background h-full flex flex-col">
-        <QuickSearchSection
-          models={quickSearchModels}
-          onSelect={handleQuickSearchSelect}
-        />
+
         {/* Content */}
         <div className="flex-1 overflow-y-auto">
 
+          <QuickSearchSection
+            models={quickSearchModels}
+            onSelect={handleQuickSearchSelect}
+          />
           {/* Taxonomy Section */}
           <CollapsibleSection
             title="Taxonomy"
@@ -1224,6 +1226,9 @@ export function AnnotationsSidebarFilters() {
 
 
         </div>
+
+        {/* Sticky Filter Subsets Manager */}
+        <FilterSubsetsManager />
       </div>
 
     </>

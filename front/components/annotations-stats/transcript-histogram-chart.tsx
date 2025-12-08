@@ -87,7 +87,7 @@ export function TranscriptHistogramChart({ params = {}, selectedType: propSelect
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buildAnnotationsParams])
+  }, []) // Only fetch on mount, filters are read from store but don't change here
 
   // Fetch available metrics for selected transcript type
   useEffect(() => {
@@ -140,7 +140,7 @@ export function TranscriptHistogramChart({ params = {}, selectedType: propSelect
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedType, buildAnnotationsParams])
+  }, [selectedType]) // Only react to type selection, filters are read from store but don't change here
 
   // Fetch metric values when type and metric are selected
   useEffect(() => {
@@ -183,7 +183,7 @@ export function TranscriptHistogramChart({ params = {}, selectedType: propSelect
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedType, selectedMetric, buildAnnotationsParams])
+  }, [selectedType, selectedMetric]) // Only react to type/metric selection, filters are read from store but don't change here
 
   const types = useMemo(() => {
     if (!transcriptStats) return []

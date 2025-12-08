@@ -100,7 +100,7 @@ export function GeneHistogramChart({ params = {}, selectedCategory: propSelected
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buildAnnotationsParams, propSelectedCategory])
+  }, [propSelectedCategory]) // Only react to category prop, filters are read from store but don't change here
 
   // Fetch metric values when category and metric are selected
   useEffect(() => {
@@ -143,7 +143,7 @@ export function GeneHistogramChart({ params = {}, selectedCategory: propSelected
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, selectedMetric, buildAnnotationsParams])
+  }, [selectedCategory, selectedMetric]) // Only react to category/metric selection, filters are read from store but don't change here
 
 
   const metrics = geneStats?.metrics || []
