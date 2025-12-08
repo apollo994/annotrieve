@@ -9,3 +9,6 @@ celerybeat-schedule
 /server/static/tree.json
 test.py
 post_stats.py
+Pipfile.lock
+Pipfile
+test_logs/

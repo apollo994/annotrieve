@@ -7,12 +7,20 @@ services:
       - BASE_PATH=${BASE_PATH}
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:/data/annotrieve/files:ro
+      - /data/annotrieve/logs:/var/log/nginx  # Shared volume for analytics logs
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.annotrieve-nginx.rule=(Host(`genome.crg.es`) || Host(`genome.crg.cat`) || Host(`genome.crg.eu`)) && PathPrefix(`/annotrieve`)"
       - "traefik.http.routers.annotrieve-nginx.tls=true"
       - "traefik.http.routers.annotrieve-nginx.entrypoints=web_https"
       - "traefik.http.services.annotrieve-nginx.loadBalancer.server.port=80"
+      # Rate limiting middleware - protects against DoS while allowing research usage
+      # Per IP: 200 requests per minute (3/s) with burst of 30 (allows the client to make parallel requests)
+      #- "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.average=200"
+      #- "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.period=1m"
+      #- "traefik.http.middlewares.annotrieve-ratelimit.ratelimit.burst=30"
+      # Apply rate limiting to the router
+      #- "traefik.http.routers.annotrieve-nginx.middlewares=annotrieve-ratelimit"
     networks:
       - monstre
 
@@ -45,6 +53,7 @@ services:
     # Production uses Gunicorn (CMD in Dockerfile), override only if needed
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
+      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs for Celery
     env_file:
       - .env
     depends_on:
@@ -61,6 +70,7 @@ services:
     command: celery --app celery_app.celery_worker.app worker --loglevel=info --autoscale=2,1 --max-tasks-per-child=1
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
+      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs
     env_file:
       - .env
     depends_on:
@@ -76,6 +86,7 @@ services:
     command: celery --app celery_app.celery_worker.app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
+      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs
     env_file:
       - .env
     depends_on:

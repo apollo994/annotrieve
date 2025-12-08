@@ -1,103 +1,163 @@
 proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m;
 
+# Map-based extraction
+map $http_x_forwarded_for $real_client_ip {
+    ~^([^,\s]+) $1;         # Extract everything before first comma/space (leftmost IP)
+    default $remote_addr;    # Fallback to $remote_addr if X-Forwarded-For is missing
+}
+
+# JSON log format for analytics (API requests)
+log_format analytics_json escape=json '{'
+    '"time":"$time_iso8601",'
+    '"uri":"$request_uri",'
+    '"method":"$request_method",'
+    '"ip":"$real_client_ip",'
+    '"user_agent":"$http_user_agent",'
+    '"referer":"$http_referer",'
+    '"status":$status,'
+    '"request_time":$request_time'
+'}';
+
+# Map to exclude static assets from access.log
+map $request_uri $log_access {
+    ~^/annotrieve/_next/static/ 0;  # Exclude Next.js static files
+    ~^/annotrieve/_next/image 0;    # Exclude Next.js image optimization
+    ~/favicon\.ico$ 0;               # Exclude favicon
+    ~\.(js|css|png|jpg|jpeg|gif|ico|svg|woff2?|ttf|eot|webp|avif)$ 0;  # Exclude static file extensions
+    default 1;                       # Log everything else
+}
+
 server {
 
-    gzip            on;
-    gzip_types      text/tab-separated-values application/json application/jsonl text/plain;
+    gzip on;
+    gzip_types
+        text/plain
+        text/css
+        text/tab-separated-values
+        text/javascript
+        application/javascript
+        application/json
+        application/jsonl
+        application/xml
+        application/rss+xml
+        application/wasm
+        image/svg+xml 
+        font/ttf 
+        font/otf 
+        application/font-woff 
+        application/font-woff2;
 
     listen 80;
+    
+    # Error logging
+    error_log /var/log/nginx/error.log warn;
+    
+    # Disable default access.log (we use specific logs per location)
+    access_log off;
+    
+    # Security headers (minimal for public research API)
+    add_header X-Content-Type-Options "nosniff" always;  # Prevents MIME type sniffing (safe, doesn't block legitimate use)
 
     # Next.js frontend static files
     location /annotrieve/ {
+
+        # Log frontend requests (excluding static assets)
+        access_log /var/log/nginx/front.log analytics_json if=$log_access;
+        
         alias /usr/share/nginx/html/annotrieve/;
         try_files $uri $uri/ /annotrieve/index.html;
-        
-        # Enable gzip for frontend assets
-        gzip on;
-        gzip_types text/css application/javascript application/json text/html text/plain;
-        
-        # Cache static assets
+                
         location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
         
-        # Don't cache HTML files
         location ~* \.html$ {
             expires -1;
             add_header Cache-Control "no-cache, no-store, must-revalidate";
         }
     }
 
-    # Ensure trailing slash
     location = /annotrieve {
         return 301 /annotrieve/;
     }
 
-    # FastAPI service
     location /annotrieve/api/v0/ {
-        # strip: /annotrieve/api/v0/ → /
-        rewrite ^/annotrieve/api/v0/(.*)$ /$1 break;
+        
+        access_log /var/log/nginx/api.log analytics_json;
+
+        rewrite ^/annotrieve/api/v0/?(.*)$ /$1 break;
         proxy_pass http://annotrieve-fastapi:5000/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-For $http_x_forwarded_for;  # Pass through Traefik's X-Forwarded-For unchanged
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header Origin $http_origin;  # Pass Origin header to FastAPI for CORS
         client_max_body_size 100M;
         
-        # IMPORTANT: Let FastAPI handle CORS - do NOT add CORS headers here
-        # FastAPI's CORSMiddleware already adds the correct headers based on Origin
-        # Adding headers here creates duplicate Access-Control-Allow-Origin headers
-        # which causes browsers to reject the response
-        # OPTIONS requests are passed through to FastAPI which handles them correctly
+        # Proxy timeouts
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        
+        # Proxy buffer settings
+        proxy_buffering on;
+        proxy_buffer_size 4k;
+        proxy_buffers 8 4k;
+        proxy_busy_buffers_size 8k;
 
-        # Enable caching for GET requests (OPTIONS requests bypass cache)
         proxy_cache my_cache;
         proxy_cache_methods GET HEAD;
-        proxy_cache_key "$scheme$request_method$host$request_uri$is_args$args";
-        proxy_cache_valid 200 10m;  # Cache successful responses for 10 minutes
+        proxy_cache_key "$scheme$request_method$host$request_uri";
+        proxy_cache_lock on;
+        proxy_cache_lock_timeout 10s;
+        proxy_cache_lock_age 30s;
+        proxy_cache_background_update on;
+        proxy_cache_revalidate on;
+        
+        proxy_cache_valid 200 24h;  # Match FastAPI's max-age=86400 for cached endpoints
+        proxy_cache_valid 301 302 10m;  # Cache redirects briefly to reduce repeated hops
         proxy_cache_valid 404 1m;   # Cache 404s for 1 minute
-        proxy_cache_bypass $http_cache_control;  # Respect Cache-Control: no-cache
-        add_header X-Cache-Status $upstream_cache_status;  # Debug header
+        proxy_cache_bypass $http_cache_control;  # Bypass if Cache-Control: no-cache/no-store
+        proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+
     }
 
-    # Static file download endpoint
     location /annotrieve/files/ {
+        
+        # Log file downloads to separate log file
+        access_log /var/log/nginx/download.log analytics_json;
+        
         alias /data/annotrieve/files/;
-
+        
         autoindex off; # no directory listing
+        sendfile on;
+        tcp_nopush on;
+        aio on;
 
-        limit_except GET HEAD { deny all; }
-
-        # CORS headers for file downloads
-        add_header 'Access-Control-Allow-Origin' '*' always;
-        add_header 'Access-Control-Allow-Methods' 'GET, HEAD, OPTIONS' always;
-        add_header 'Access-Control-Allow-Headers' 'Range, Content-Type, Accept, Authorization' always;
-        add_header 'Access-Control-Expose-Headers' 'Content-Length, Content-Range, Content-Type' always;
-
-        # Handle preflight requests
         if ($request_method = 'OPTIONS') {
             add_header 'Access-Control-Allow-Origin' '*';
             add_header 'Access-Control-Allow-Methods' 'GET, HEAD, OPTIONS';
             add_header 'Access-Control-Allow-Headers' 'Range, Content-Type, Accept, Authorization';
             add_header 'Access-Control-Max-Age' 1728000;
-            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Type' 'text/plain; charset=UTF-8';
             add_header 'Content-Length' 0;
             return 204;
         }
+        
+        # Restrict to GET and HEAD only (OPTIONS handled above via early return)
+        limit_except GET HEAD { deny all; }
 
-        # Disable gzip for binary files
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, HEAD, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Range, Content-Type, Accept, Authorization' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length, Content-Range, Content-Type' always;
+        add_header 'Accept-Ranges' 'bytes' always;
+
         gzip off;
 
-        # Cache static files for 1 day
         expires 1d;
 
-        # Large files might need higher buffer/timeout
         client_max_body_size 1000M;
-        proxy_read_timeout 600s;
     }
-
-
-
 }
