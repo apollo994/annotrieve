@@ -88,7 +88,6 @@ export function HistogramChart({
       .value(d => d)
 
     const bins = histogram(validValues)
-    console.log(bins)
     if (bins.length === 0) return
 
     // Scales

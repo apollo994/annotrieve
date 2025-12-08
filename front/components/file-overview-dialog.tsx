@@ -329,7 +329,7 @@ export function FileOverviewSidebar({ annotation, open, onOpenChange }: FileOver
                       variant="outline"
                       size="sm"
                       className="h-9 px-4 rounded-r-none border-r border-r-border"
-                      onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.bgzipped_path}`)}
+                      onClick={() => handleDownload(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.bgzipped_path}`)}
                     >
                       <Download className="h-4 w-4 mr-1.5" />
                       Download BGZip
@@ -358,7 +358,7 @@ export function FileOverviewSidebar({ annotation, open, onOpenChange }: FileOver
                             size="sm"
                             className="h-6 px-2 text-xs"
                             onClick={() => {
-                              copyToClipboard(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')
+                              copyToClipboard(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')
                               setCopiedBgzip(true)
                               setTimeout(() => setCopiedBgzip(false), 2000)
                             }}
@@ -377,7 +377,7 @@ export function FileOverviewSidebar({ annotation, open, onOpenChange }: FileOver
                           </Button>
                         </div>
                         <code className="text-xs break-all text-foreground bg-muted px-2 py-1 rounded block">
-                          https://genome.crg.es/annotrieve/files/{annotation.indexed_file_info.bgzipped_path}
+                          https://genome.crg.es/annotrieve/files{annotation.indexed_file_info.bgzipped_path}
                         </code>
                       </div>
                     </div>
@@ -453,7 +453,7 @@ export function FileOverviewSidebar({ annotation, open, onOpenChange }: FileOver
                   )}
                   {annotation.indexed_file_info?.bgzipped_path && (
                     <DropdownMenuItem
-                      onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files/${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')}
+                      onClick={() => copyToClipboard(`https://genome.crg.es/annotrieve/files${annotation.indexed_file_info.bgzipped_path}`, 'bgzip')}
                     >
                       <Copy className="h-4 w-4 mr-2" />
                       <span>Copy BGZip URL</span>

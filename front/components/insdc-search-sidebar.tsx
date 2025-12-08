@@ -156,7 +156,6 @@ export function INSDCSearchModal({ open, onOpenChange, initialQuery = "" }: INSD
       }
 
       const data = await response.json()
-      console.log(`${database} response:`, data)
       
       const results: TaxonomyResult[] = []
       

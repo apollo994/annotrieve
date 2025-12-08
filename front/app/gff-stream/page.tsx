@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { ArrowLeft, AlertCircle, Download, Loader2 } from "lucide-react"
+import { ArrowLeft, AlertCircle, Loader2 } from "lucide-react"
 
 import {
   listAnnotations,

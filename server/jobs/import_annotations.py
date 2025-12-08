@@ -95,6 +95,10 @@ def process_annotations_pipeline(annotations: list[AnnotationToProcess], valid_l
             md5_checksum, file_size = annotation_service.process_annotation_file(annotation_to_process, tmp_subdir_path, full_bgzipped_path, existing_annotation_md5s)
             indexed_file_info = annotation_service.init_indexed_file_info(md5_checksum, file_size, relative_bgzipped_path, relative_csi_path)
             feature_summary = feature_summary_service.compute_features_summary(full_bgzipped_path)
+            #if it has no types or sources we skip the annotation as it means it is empty
+            if not feature_summary['types'] or not feature_summary['sources']:
+                raise Exception("Annotation has no types or sources, skipping...")
+                
             feature_stats = feature_stats_service.compute_features_statistics(full_bgzipped_path)   
             parsed_annotation = annotation_to_process.to_genome_annotation(
                 annotation_id=md5_checksum,
