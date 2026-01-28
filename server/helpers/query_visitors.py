@@ -50,6 +50,7 @@ ALLOWED_FIELDS_MAP = {
     'biotype':'features_summary.biotypes',
     'pipeline':'source_file_info.pipeline.name',
     'provider':'source_file_info.provider',
+    'attribute_key':'features_summary.attribute_keys',
 }
 ALLOWED_FIELDS_MAP_ASSEMBLY = {
     'organism_name':'organism_name',
