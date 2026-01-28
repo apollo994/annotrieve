@@ -1,14 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Sun, Moon } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Github, Sun, Moon, Shield, Menu, HelpCircle, BookOpen, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useBetaBanner } from "@/components/beta-banner-provider"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useUIStore } from "@/lib/stores/ui"
 
 export function AppHeader() {
-  const { toggleBanner } = useBetaBanner()
   const theme = useUIStore((state) => state.theme)
   const toggleTheme = useUIStore((state) => state.toggleTheme)
 
@@ -17,27 +21,9 @@ export function AppHeader() {
       <div className="flex items-center justify-center lg:justify-between flex-wrap px-6 py-4 gap-4">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <h1 className="text-2xl font-bold text-foreground whitespace-nowrap">Annotrieve</h1>
-          <Badge
-            variant="secondary"
-            className="text-xs font-semibold cursor-pointer hover:bg-secondary/80 transition-colors"
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              toggleBanner()
-            }}
-          >
-            BETA
-          </Badge>
         </Link>
 
-        <nav className="flex items-center gap-4">
-
-          <Link href="/faqs/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            FAQs
-          </Link>
-          <Link href="/api-docs/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            API
-          </Link>
+        <nav className="flex items-center gap-2">
           <Button
             variant="ghost"
             size="icon"
@@ -51,14 +37,57 @@ export function AppHeader() {
               <Moon className="h-5 w-5" />
             )}
           </Button>
-          <a
-            href="https://github.com/emiliorighi/annotrieve"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Github className="h-5 w-5" />
-          </a>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-9 w-9">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link href="/faqs/">
+                  <HelpCircle className="mr-2 h-4 w-4" />
+                  FAQs
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/api-docs/">
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  API Docs
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/privacy/">
+                  <Shield className="mr-2 h-4 w-4" />
+                  Privacy Policy
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <a
+                  href="https://forms.gle/yQWNKVhEJwAEFYaC6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  Feedback Form
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a
+                  href="https://github.com/emiliorighi/annotrieve"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub Repo
+                </a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
       </div>
     </header>

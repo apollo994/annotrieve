@@ -17,7 +17,7 @@ const DATABASE_NAMES = ['GenBank', 'Ensembl', 'RefSeq'] as const
 
 interface ReleaseDateData {
     date: Date
-    month: string
+    year: string
     Ensembl: number
     RefSeq: number
     GenBank: number
@@ -28,16 +28,16 @@ interface ReleaseDateChartProps {
     description?: ReactNode
 }
 
-// Helper function to format date to YYYY-MM for grouping
-function formatToMonth(dateString: string): string {
+// Helper function to format date to YYYY for grouping
+function formatToYear(dateString: string): string {
     try {
         const date = new Date(dateString)
         if (isNaN(date.getTime())) {
-            return dateString.substring(0, 7) // Fallback: take first 7 chars (YYYY-MM)
+            return dateString.substring(0, 4) // Fallback: take first 4 chars (YYYY)
         }
-        return date.toISOString().substring(0, 7) // YYYY-MM
+        return date.toISOString().substring(0, 4) // YYYY
     } catch {
-        return dateString.substring(0, 7)
+        return dateString.substring(0, 4)
     }
 }
 
@@ -112,30 +112,30 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
 
                 const results = await Promise.all(promises)
 
-                // Combine all data and group by month
-                const monthMap = new Map<string, { Ensembl: number; RefSeq: number; GenBank: number }>()
+                // Combine all data and group by year
+                const yearMap = new Map<string, { Ensembl: number; RefSeq: number; GenBank: number }>()
 
                 results.forEach((frequencies, index) => {
                     const dbSource = DATABASE_NAMES[index]
                     Object.entries(frequencies).forEach(([date, count]) => {
-                        const month = formatToMonth(date)
-                        if (!monthMap.has(month)) {
-                            monthMap.set(month, { Ensembl: 0, RefSeq: 0, GenBank: 0 })
+                        const year = formatToYear(date)
+                        if (!yearMap.has(year)) {
+                            yearMap.set(year, { Ensembl: 0, RefSeq: 0, GenBank: 0 })
                         }
-                        const monthData = monthMap.get(month)!
-                        monthData[dbSource] = (monthData[dbSource] || 0) + count
+                        const yearData = yearMap.get(year)!
+                        yearData[dbSource] = (yearData[dbSource] || 0) + count
                     })
                 })
 
-                // Convert to array and sort by year and month (ascending)
-                const sortedData: ReleaseDateData[] = Array.from(monthMap.entries())
-                    .map(([month, values]) => {
-                        // Convert YYYY-MM to Date object for time scale
-                        const [year, monthNum] = month.split('-').map(Number)
-                        const date = new Date(year, monthNum - 1, 1)
+                // Convert to array and sort by year (ascending)
+                const sortedData: ReleaseDateData[] = Array.from(yearMap.entries())
+                    .map(([year, values]) => {
+                        // Convert YYYY to Date object for time scale (January 1st of the year)
+                        const yearNum = Number(year)
+                        const date = new Date(yearNum, 0, 1)
                         return {
                             date,
-                            month,
+                            year,
                             ...values
                         }
                     })
@@ -234,12 +234,12 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
         <div className="container mx-auto px-4 py-16">
             <SectionHeader
                 title={title ?? "Annotation Release Timeline"}
-                description={description ?? (
-                    <>
-                        Track the evolution of annotation releases over time across different database sources.
-                        Each line represents the number of annotations released in that month.
-                    </>
-                )}
+                    description={description ?? (
+                        <>
+                            Track the evolution of annotation releases over time across different database sources.
+                            Each line represents the number of annotations released in that year.
+                        </>
+                    )}
                 icon={Calendar}
                 iconColor="text-indigo-600"
                 iconBgColor="bg-indigo-500/10"
@@ -258,20 +258,11 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
                         showMark: false,
                     }))}
                     xAxis={[{
-                        id: 'months',
+                        id: 'years',
                         data: data.map(d => d.date),
                         scaleType: 'time',
                         valueFormatter: (value: Date) => {
-                            const years = getYearsArray(data)
-                            // Check if this date is close to a year boundary (within 2 months)
-                            const isYearBoundary = years.some(year => {
-                                const diff = Math.abs(value.getTime() - year.getTime())
-                                return diff < 60 * 24 * 60 * 60 * 1000 // ~2 months
-                            })
-                            if (isYearBoundary) {
-                                return value.getFullYear().toString()
-                            }
-                            return value.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+                            return value.getFullYear().toString()
                         },
                         position: 'bottom',
                         tickInterval: getYearsArray(data),
