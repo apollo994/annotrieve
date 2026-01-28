@@ -50,7 +50,7 @@ export default function Home() {
               Explore how annotation releases have evolved over time across{" "}
               <span className="font-medium">Ensembl</span>,{" "}
               <span className="font-medium">NCBI RefSeq</span>, and{" "}
-              <span className="font-medium">NCBI GenBank</span>. The chart shows monthly annotation counts grouped by database source.
+              <span className="font-medium">NCBI GenBank</span>. The chart shows yearly annotation counts grouped by database source.
             </>
           }
         />
