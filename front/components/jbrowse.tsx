@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, memo } from 'react'
 import RefGetPlugin from 'jbrowse-plugin-refget-api'
 import {
   createViewState,
@@ -7,8 +7,9 @@ import {
   ViewModel,
 } from '@jbrowse/react-linear-genome-view2'
 import { getAssembledMolecules } from '@/lib/api/assemblies'
-import { listAnnotations } from '@/lib/api/annotations'
 import { getApiBase, getFilesBase, joinUrl } from '@/lib/config/env'
+import type { AnnotationRecord } from '@/lib/api/types'
+import { AlertCircle } from 'lucide-react'
 
 interface ChromosomeInterface {
   accession_version: string
@@ -19,7 +20,7 @@ interface ChromosomeInterface {
 
 interface JBrowseLinearGenomeViewComponentProps {
   accession: string
-  annotationIds?: string[]
+  annotations: AnnotationRecord[]
   selectedChromosome?: ChromosomeInterface | null
 }
 // Use relative URLs to leverage Next.js rewrites and avoid CORS issues
@@ -59,39 +60,29 @@ const configuration = {
   },
 }
 
-export default function JBrowseLinearGenomeViewComponent({ accession, annotationIds, selectedChromosome }: JBrowseLinearGenomeViewComponentProps) {
+function JBrowseLinearGenomeViewComponent({ accession, annotations, selectedChromosome }: JBrowseLinearGenomeViewComponentProps) {
   const [viewState, setViewState] = useState<ViewModel>()
   const [chromosomes, setChromosomes] = useState<any[]>([])
-  const [annotations, setAnnotations] = useState<any[]>([])
-  const [assemblyName, setAssemblyName] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
 
-  // Fetch data in parallel for better performance
+  // Derive assembly name from annotations (memoized to prevent unnecessary updates)
+  const assemblyName = useMemo(() => {
+    return annotations.length > 0 ? (annotations[0]?.assembly_name ?? '') : ''
+  }, [annotations])
+
+  // Fetch chromosomes data (only depends on accession, not annotations)
   useEffect(() => {
     let cancelled = false
     setIsLoading(true)
 
     async function fetchData() {
       try {
-        // Fetch both in parallel instead of sequentially
-        const [chromosomesResponse, annotationsResponse] = await Promise.all([
-          getAssembledMolecules(accession, 0, 100), // Reduced from 1000 to 100 for faster loading
-          listAnnotations({ assembly_accessions: accession, limit: 100 }) // Reduced from 1000 to 100
-        ])
+        const chromosomesResponse = await getAssembledMolecules(accession, 0, 100)
 
         if (cancelled) return
 
         const chromosomeResults = chromosomesResponse.results ?? []
-        const annotationResults = annotationsResponse.results ?? []
-
         setChromosomes(chromosomeResults)
-        setAssemblyName(annotationResults[0]?.assembly_name ?? '')
-
-        if (annotationIds && annotationIds.length > 0) {
-          setAnnotations(annotationResults.filter((annotation: any) => annotationIds.includes(annotation.annotation_id)))
-        } else {
-          setAnnotations(annotationResults)
-        }
       } catch (error) {
         console.error('Error fetching JBrowse data:', error)
       } finally {
@@ -101,25 +92,26 @@ export default function JBrowseLinearGenomeViewComponent({ accession, annotation
 
     fetchData()
     return () => { cancelled = true }
-  }, [accession, annotationIds])
+  }, [accession])
 
   // Memoize tracks to prevent recreation on every render
   const tracks = useMemo(() => {
+    if (!annotations || annotations.length === 0) return []
     return annotations.map((annotation) => ({
       type: 'FeatureTrack',
       trackId: annotation.annotation_id,
-      name: annotation.source_file_info.provider || `${annotation.source_file_info.database} - ${annotation.assembly_name}`,
+      name: annotation.source_file_info?.provider || `${annotation.source_file_info?.database} - ${annotation.assembly_name}`,
       assemblyNames: [annotation.assembly_name],
-      category: [annotation.source_file_info.database],
+      category: [annotation.source_file_info?.database || 'Unknown'],
           adapter: {
             type: "Gff3TabixAdapter",
             gffGzLocation: {
-              uri: joinUrl(filesBaseURL, annotation.indexed_file_info.bgzipped_path),
+              uri: joinUrl(filesBaseURL, (annotation.indexed_file_info as any)?.bgzipped_path || ''),
               locationType: "UriLocation",
             },
             index: {
               location: {
-                uri: joinUrl(filesBaseURL, annotation.indexed_file_info.csi_path),
+                uri: joinUrl(filesBaseURL, (annotation.indexed_file_info as any)?.csi_path || ''),
                 locationType: "UriLocation",
               },
               indexType: "CSI"
@@ -269,9 +261,28 @@ export default function JBrowseLinearGenomeViewComponent({ accession, annotation
     )
   }
 
+  // Check if this is a RefSeq assembly (GCF_ prefix)
+  const isRefSeqAssembly = accession.startsWith('GCF_')
+
   return (
-    <div className="w-full">
+    <div className="w-full space-y-4">
+      {isRefSeqAssembly && (
+        <div className="flex items-start gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 mt-0.5 flex-shrink-0" />
+          <div className="flex-1">
+            <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-1">
+              RefSeq Assembly Detected
+            </p>
+            <p className="text-sm text-yellow-700 dark:text-yellow-300">
+              Some of the genome browser features do not work for RefSeq assemblies as it uses a plugin to fetch FASTA sequences of GenBank (INSDC) assemblies.
+            </p>
+          </div>
+        </div>
+      )}
       <JBrowseLinearGenomeView viewState={viewState} />
     </div>
   )
 }
+
+// Memoize the component to prevent rerenders when props haven't changed
+export default memo(JBrowseLinearGenomeViewComponent)

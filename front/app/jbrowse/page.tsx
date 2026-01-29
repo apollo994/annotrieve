@@ -1,13 +1,13 @@
 "use client"
 
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useState, useEffect, useMemo } from "react"
 import JBrowseLinearGenomeViewComponent from "@/components/jbrowse"
 import { ChromosomeViewer } from "@/components/chromosome-viewer"
 import { getAssembly } from "@/lib/api/assemblies"
 import { listAnnotations } from "@/lib/api/annotations"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Building2, Dna, FileText, ChevronDown, ChevronUp, Hash, ArrowLeft } from "lucide-react"
+import { Calendar, Building2, Dna, FileText, ChevronDown, ChevronUp, Hash, ArrowLeft, Database } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import type { AssemblyRecord, AnnotationRecord } from "@/lib/api/types"
@@ -53,10 +53,11 @@ function JBrowseContent() {
       
       try {
         setIsLoading(true)
-        const [assemblyData, annotationsData] = await Promise.all([
-          getAssembly(accession),
-          listAnnotations({ assembly_accessions: accession, limit: 100 })
-        ])
+        // first we fetch the assembly
+        const assemblyData = await getAssembly(accession)
+        const assemblyAccessions = assemblyData.paired_assembly_accession ? [accession, assemblyData.paired_assembly_accession].join(',') : accession
+        //then we fetch the annotations
+        const annotationsData = await listAnnotations({ assembly_accessions: assemblyAccessions, limit: 100 })
         
         setAssembly(assemblyData)
         setAnnotations(annotationsData.results ?? [])
@@ -69,6 +70,11 @@ function JBrowseContent() {
     
     fetchData()
   }, [accession])
+
+  // Memoize filtered annotations to prevent unnecessary rerenders
+  const selectedAnnotations = useMemo(() => {
+    return annotations.filter((annotation) => selectedAnnotationIds.includes(annotation.annotation_id as string))
+  }, [annotations, selectedAnnotationIds])
 
   // Show loading while initializing
   if (!isInitialized) {
@@ -144,6 +150,13 @@ function JBrowseContent() {
                       {assembly.release_date ? new Date(assembly.release_date).toLocaleDateString() : 'N/A'}
                     </span>
                   </div>
+                  {assembly.paired_assembly_accession && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <Database className="h-4 w-4 text-muted-foreground" />
+                      <span className="font-medium text-foreground">Paired Assembly:</span>
+                      <span className="text-muted-foreground">{assembly.paired_assembly_accession}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -195,15 +208,22 @@ function JBrowseContent() {
                               <Badge variant="accent" className="text-xs">
                                 {annotation.source_file_info?.provider || 'Unknown Provider'}
                               </Badge>
+                              {annotation.assembly_accession === assembly.paired_assembly_accession && (
+                              <Badge className="text-xs font-semibold">
+                                From Paired Assembly
+                              </Badge>
+                            )}
                             </div>
+
                             {annotation.source_file_info?.release_date && (
                               <div className="flex items-center gap-1.5 text-xs text-muted-foreground whitespace-nowrap">
                                 <Calendar className="h-3 w-3" />
                                 {new Date(annotation.source_file_info.release_date).toLocaleDateString()}
                               </div>
                             )}
+  
                           </div>
-
+                          
                           {/* Gene Counts */}
                           {hasGeneCounts && (
                             <div className="flex items-center gap-3 mb-3 px-3 py-2 bg-accent/5 rounded-lg border border-accent/20">
@@ -234,13 +254,6 @@ function JBrowseContent() {
                             </div>
                           )}
 
-                          {/* MD5 Checksum */}
-                          {annotation.md5_checksum && (
-                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                              <Hash className="h-3 w-3" />
-                              <span className="font-mono">{annotation.md5_checksum.slice(0, 16)}...</span>
-                            </div>
-                          )}
                         </button>
                       )
                     })}
@@ -265,7 +278,7 @@ function JBrowseContent() {
           >
             <JBrowseLinearGenomeViewComponent 
               accession={accession} 
-              annotationIds={selectedAnnotationIds}
+              annotations={selectedAnnotations}
               selectedChromosome={selectedChromosome}
             />
           </Suspense>
