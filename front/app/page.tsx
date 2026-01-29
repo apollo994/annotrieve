@@ -6,6 +6,7 @@ import { TopAnnotations } from "@/components/top-annotated-records"
 import { DatabaseFrequencies } from "@/components/database-frequencies"
 import { ReleaseDateChart } from "@/components/release-date-chart"
 import { FeaturesSection } from "@/components/features-section"
+import { TreeOfLifeChart } from "@/components/tree-of-life-chart"
 import { SectionWrapper } from "@/components/ui/section-wrapper"
 
 
@@ -37,6 +38,19 @@ export default function Home() {
               <span className="font-medium">Ensembl</span>,{" "}
               <span className="font-medium">NCBI RefSeq</span>, and{" "}
               <span className="font-medium">NCBI GenBank</span>. Explore the current distribution and download the raw TSVs.
+            </>
+          }
+        />
+      </SectionWrapper>
+
+      <SectionWrapper id="tree-of-life" backgroundVariant="muted">
+        <TreeOfLifeChart
+          title="Navigate the eukaryotic tree of life"
+          description={
+            <>
+              Discover how genome annotations are distributed across eukaryotic lineages. 
+              Start from the root and drill down through taxonomic groups to explore 
+              annotation diversity—each slice represents a major branch with its total annotation count.
             </>
           }
         />
