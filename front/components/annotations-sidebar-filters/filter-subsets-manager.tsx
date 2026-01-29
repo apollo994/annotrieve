@@ -216,7 +216,6 @@ export function FilterSubsetsManager() {
             </CollapsibleTrigger>
             {subsets.length >= 2 && (
               <Button
-                variant="ghost"
                 size="sm"
                 className="h-6 px-2 text-xs font-semibold"
                 onClick={handleCompare}
