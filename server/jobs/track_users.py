@@ -143,8 +143,7 @@ def get_single_ip_country(ip: str) -> str:
         )
         if response.status_code == 200:
             data = response.json()
-            if data.get('status') == 'success':
-                return data.get('country', 'Unknown')
+            return data.get('country', 'Unknown')
     except Exception as e:
         print(f"Error fetching country for {ip}: {e}")
     return 'Unknown'
@@ -163,12 +162,8 @@ def update_user_stats(ip: str, country: str, visit_times: List[datetime]):
     user = UserAnalytics.objects(fingerprint=fingerprint).first()
     
     if user:
-        # Update first_visit if this is earlier (preserve the earliest)
-        if not user.first_visit or first_visit < user.first_visit:
-            user.first_visit = first_visit
         # Update last_visit if this is later
-        if not user.last_visit or last_visit > user.last_visit:
-            user.last_visit = last_visit
+        user.last_visit = last_visit
         # Overwrite visit count with current count from log file
         user.visits_count = visits_count
         # Update country (in case geolocation database was updated/corrected)

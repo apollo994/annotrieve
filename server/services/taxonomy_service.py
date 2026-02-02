@@ -52,7 +52,8 @@ def get_flattened_tree():
     taxon_coll = TaxonNode._get_collection()
 
     parent_by_child = {}
-    for doc in taxon_coll.find({}, {"taxid": 1, "children": 1}):
+    #skip cellular organism we use Eukaryota as root
+    for doc in taxon_coll.find({"taxid__ne": "131567"}, {"taxid": 1, "children": 1}):
         parent_taxid = doc["taxid"]
         for child_taxid in doc.get("children", []):
             parent_by_child[child_taxid] = parent_taxid
@@ -66,7 +67,7 @@ def get_flattened_tree():
         "organisms_count": 1,
         "_id": 0
     }
-    for doc in taxon_coll.find({}, projection):
+    for doc in taxon_coll.find({"taxid__ne": "131567"}, projection):
         taxid = doc["taxid"]
         rows.append([
             taxid,
