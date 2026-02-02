@@ -107,7 +107,7 @@ def get_countries_for_ips(ip_list: List[str]) -> Dict[str, str]:
             for i, result in enumerate(results):
                 if i < len(ip_list):
                     ip = ip_list[i]
-                    if isinstance(result, dict) and result.get('status') == 'success':
+                    if isinstance(result, dict):
                         countries[ip] = result.get('country', 'Unknown')
                     else:
                         countries[ip] = 'Unknown'
