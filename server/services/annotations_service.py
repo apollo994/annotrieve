@@ -16,7 +16,6 @@ from db.embedded_documents import GFFStats
 
 def get_annotations(args: dict, field: str = None, response_type: str = 'metadata', background_tasks: Optional[BackgroundTasks] = None):
     try:
-        #drop_all_collections()
         limit = args.pop('limit', 20)
         offset = args.pop('offset', 0)
         fields = args.pop('fields', None)
@@ -26,8 +25,6 @@ def get_annotations(args: dict, field: str = None, response_type: str = 'metadat
             return query_visitors_helper.get_frequencies(annotations, field, type='annotation')
         elif response_type == 'tsv':
             return stream_annotation_tsv(annotations)
-        #elif response_type == 'tar':
-        #    return download_tar_package(annotations, background_tasks)
         else:
             if fields:
                 annotations = annotations.only(*fields.split(',') if isinstance(fields, str) else fields)
@@ -36,7 +33,6 @@ def get_annotations(args: dict, field: str = None, response_type: str = 'metadat
     except HTTPException as e:
         raise e
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=500, detail=f"Error fetching annotations: {e}")
 
 def stream_annotation_tsv(annotations):

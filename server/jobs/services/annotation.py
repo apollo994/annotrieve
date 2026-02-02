@@ -11,7 +11,6 @@ from mongoengine import Q
 from helpers import file as file_helper
 from .classes import AnnotationToProcess
 from helpers import pysam_helper
-from .utils import create_batches
 
 PIPELINE_VERSION = os.getenv('PIPELINE_VERSION', '1.0.0')
 PIPELINE_METHOD = os.getenv('PIPELINE_METHOD', 'sort | bgzip | tabix')

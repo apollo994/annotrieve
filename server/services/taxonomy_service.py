@@ -46,3 +46,45 @@ def get_ancestors(taxid: str):
         "results": ancestors,
         "total": len(ancestors)
     }
+
+def get_flattened_tree():
+
+    taxon_coll = TaxonNode._get_collection()
+
+    parent_by_child = {}
+    for doc in taxon_coll.find({}, {"taxid": 1, "children": 1}):
+        parent_taxid = doc["taxid"]
+        for child_taxid in doc.get("children", []):
+            parent_by_child[child_taxid] = parent_taxid
+
+    rows = []
+    projection = {
+        "taxid": 1,
+        "scientific_name": 1,
+        "annotations_count": 1,
+        "assemblies_count": 1,
+        "organisms_count": 1,
+        "_id": 0
+    }
+    for doc in taxon_coll.find({}, projection):
+        taxid = doc["taxid"]
+        rows.append([
+            taxid,
+            parent_by_child.get(taxid),  # None if root
+            doc.get("scientific_name"),
+            doc.get("annotations_count", 0),
+            doc.get("assemblies_count", 0),
+            doc.get("organisms_count", 0)
+        ])
+
+    return {
+        "fields": [
+            "taxid",
+            "parent_taxid",
+            "scientific_name",
+            "annotations_count",
+            "assemblies_count",
+            "organisms_count"
+        ],
+        "rows": rows
+    }

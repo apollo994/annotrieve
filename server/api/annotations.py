@@ -194,6 +194,9 @@ async def stream_annotation_gff(md5_checksum: str, commons: Dict[str, Any] = Dep
     """
     return annotations_service.stream_annotation_tabix(md5_checksum, **commons)
 
+
+
+
 @router.get("/annotations/{md5_checksum}/contigs")
 async def get_contigs(md5_checksum: str):
     """

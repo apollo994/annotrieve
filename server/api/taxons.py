@@ -31,6 +31,10 @@ async def get_taxons(commons: CommonQueryParams = Depends(), payload: Optional[d
     else:
         params = commons.__dict__
     return taxonomy_service.get_taxon_nodes(**params)
+    
+@router.get("/taxons/flattened-tree")
+async def get_flattened_tree():
+    return taxonomy_service.get_flattened_tree()
 
 @router.get("/taxons/{taxid}")
 async def get_taxon(taxid: str):
@@ -47,3 +51,4 @@ async def get_taxon_children(taxid: str):
 @router.get("/taxons/{taxid}/ancestors")
 async def get_taxon_ancestors(taxid: str):
     return taxonomy_service.get_ancestors(taxid)
+
