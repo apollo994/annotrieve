@@ -50,7 +50,7 @@ services:
     # Production uses Gunicorn (CMD in Dockerfile), override only if needed
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
-      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs for Celery
+      - /data/annotrieve/logs:${LOCAL_LOGS_PATH}:ro  # Read-only access to nginx logs for Celery
     env_file:
       - .env
     depends_on:
@@ -67,7 +67,7 @@ services:
     command: celery --app celery_app.celery_worker.app worker --loglevel=info --autoscale=2,1 --max-tasks-per-child=1
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
-      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs
+      - /data/annotrieve/logs:${LOCAL_LOGS_PATH}:ro  # Read-only access to nginx logs
     env_file:
       - .env
     depends_on:
@@ -83,7 +83,7 @@ services:
     command: celery --app celery_app.celery_worker.app beat --loglevel=info --schedule=/tmp/celerybeat-schedule
     volumes:
       - ${ANNOTATIONS_DATA_PATH}:${LOCAL_ANNOTATIONS_DIR}
-      - /data/annotrieve/logs:/var/log/nginx:ro  # Read-only access to nginx logs
+      - /data/annotrieve/logs:${LOCAL_LOGS_PATH}:ro  # Read-only access to nginx logs
     env_file:
       - .env
     depends_on:

@@ -30,6 +30,54 @@ def update_assembly_fields():
     """
     pass
 
+@shared_task(name='update_assemblies_from_ncbi', ignore_result=False)
+def update_assemblies_from_ncbi():
+    """
+    Periodically update the assemblies in the database, this is done by fetching the assemblies from the NCBI and updating the database with the new fields 
+    """
+    #fetch assemblies accessions to update from the db
+    accessions = GenomeAssembly.objects().scalar('assembly_accession')
+    batches = create_batches(accessions, 1000)
+    files_to_delete = []
+    try:
+        for idx, batch in enumerate(batches):
+            assemblies_path = os.path.join(TMP_DIR, f'assemblies_to_update_{idx}_{len(batch)}.txt')
+            files_to_delete.append(assemblies_path)
+            with open(assemblies_path, 'w') as f:
+                for accession in batch:
+                    f.write(accession + '\n')
+            cmd = ['genome', 'accession', '--inputfile', assemblies_path]
+            ncbi_report = ncbi_datasets_client.get_data_from_ncbi(cmd)
+            if not ncbi_report:
+                print(f"No report found for {assemblies_path}")
+                continue
+            for assembly in ncbi_report.get('reports', []):
+                assembly_info = assembly.get('assembly_info', dict())
+                organism_info = assembly.get('organism', dict())
+                taxid = str(organism_info.get('tax_id'))
+                if not assembly_info:
+                    print(f"Missing assembly info for {assembly.get('accession')}")
+                    continue
+                #fields to update are assembly status, refseq category and scientific name (took from the organism in the db)
+                organism = Organism.objects(taxid=taxid).first()
+                if not organism:
+                    print(f"Missing organism for {assembly.get('accession')}")
+                    continue
+                assembly_object = GenomeAssembly.objects(assembly_accession=assembly.get('accession')).first()
+                if not assembly_object:
+                    print(f"Missing assembly object for {assembly.get('accession')}")
+                    continue
+                assembly_object.modify(assembly_status=assembly_info.get('assembly_status'), refseq_category=assembly_info.get('refseq_category'), organism_name=organism.organism_name)
+
+    except Exception as e:
+        print(f"Error updating assemblies: {e}")
+        raise e
+    finally:
+        #delete the tmp files
+        for file_to_delete in files_to_delete:
+            if os.path.exists(file_to_delete):
+                os.remove(file_to_delete)
+        print("Updated assemblies")
 
 @shared_task(name='update_feature_stats', ignore_result=False)
 def update_feature_stats():

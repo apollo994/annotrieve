@@ -2,7 +2,8 @@ from fastapi import HTTPException
 import os
 import secrets
 from jobs.import_annotations import import_annotations
-from jobs.updates import update_feature_stats, update_stats, update_taxonomy
+from jobs.updates import update_feature_stats, update_stats, update_taxonomy, update_assemblies_from_ncbi
+from jobs.track_users import track_unique_users_by_country
 
 
 def _validate_auth_key(auth_key: str) -> None:
@@ -15,6 +16,13 @@ def _validate_auth_key(auth_key: str) -> None:
     if not secrets.compare_digest(auth_key, expected_key):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
+def trigger_track_unique_users_by_country(auth_key: str):
+    """
+    Track unique users by country
+    """
+    _validate_auth_key(auth_key)
+    track_unique_users_by_country.delay()
+    return {"message": "Track unique users by country task triggered"}
 
 def trigger_annotation_feature_stats_update(auth_key: str):
     """
@@ -24,6 +32,14 @@ def trigger_annotation_feature_stats_update(auth_key: str):
     #queue both tasks
     update_feature_stats.delay()
     return {"message": "Update feature stats task triggered"}
+
+def trigger_update_assemblies_from_ncbi(auth_key: str):
+    """
+    Trigger update assemblies from NCBI
+    """
+    _validate_auth_key(auth_key)
+    update_assemblies_from_ncbi.delay()
+    return {"message": "Update assemblies from NCBI task triggered"}
 
 def trigger_import_annotations(auth_key: str):
     """

@@ -17,6 +17,7 @@ DEFAULT_FIELD_MAP: Dict[str, str] = {
     "md5_checksums": "annotation_id__in",
     "feature_types": "features_summary__types__in",
     "feature_sources": "features_summary__sources__in",
+    "attribute_keys": "features_summary__attribute_keys__in",
     "biotypes": "features_summary__biotypes__in",
     "has_stats": "features_statistics__exists",
     "pipelines": "source_file_info__pipeline__name__in",

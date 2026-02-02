@@ -42,20 +42,6 @@ export default function Home() {
           }
         />
       </SectionWrapper>
-
-      <SectionWrapper id="tree-of-life" backgroundVariant="muted">
-        <TreeOfLifeChart
-          title="Navigate the eukaryotic tree of life"
-          description={
-            <>
-              Discover how genome annotations are distributed across eukaryotic lineages. 
-              Start from the root and drill down through taxonomic groups to explore 
-              annotation diversity—each slice represents a major branch with its total annotation count.
-            </>
-          }
-        />
-      </SectionWrapper>
-
       <SectionWrapper id="release-timeline" backgroundVariant="muted">
         <ReleaseDateChart
           title="Annotation release timeline"
@@ -69,8 +55,20 @@ export default function Home() {
           }
         />
       </SectionWrapper>
+      {/* <SectionWrapper id="tree-of-life" backgroundVariant="default">
+        <TreeOfLifeChart
+          title="Navigate the eukaryotic tree of life"
+          description={
+            <>
+              Discover how genome annotations are distributed across eukaryotic lineages. 
+              Start from the root and drill down through taxonomic groups to explore 
+              annotation diversity—each slice represents a major branch with its total annotation count.
+            </>
+          }
+        />
+      </SectionWrapper> */}
 
-      <SectionWrapper id="latest-releases" backgroundVariant="muted">
+      <SectionWrapper id="latest-releases" backgroundVariant="default">
         <LatestReleases
           title="Explore recent releases"
           description="Browse newly released assemblies and jump straight into their annotations."

@@ -53,6 +53,32 @@ class GenomeAssembly(DynamicDocument):
         ],
     }
 
+class UserAnalytics(DynamicDocument):
+    fingerprint = StringField(required=True, unique=True) #hmac of the user's IP address to ensure full anonymity
+    country = StringField(required=True)
+    first_visit = DateTimeField()
+    last_visit = DateTimeField()
+    visits_count = IntField()
+    meta = {
+        'indexes': [
+            'country',
+            'fingerprint',
+            'first_visit',
+            'last_visit',
+        ]
+    }
+    def parse_iso_date(iso_date: str) -> datetime:
+        """
+        Parse an ISO date string to a datetime object
+        """
+        return datetime.fromisoformat(iso_date)
+
+    def to_iso_date(self, date: datetime) -> str:
+        """
+        Convert a datetime object to an ISO date string
+        """
+        return date.isoformat().split('T')[0]
+
 class BioProject(DynamicDocument):
     accession = StringField(required=True, unique=True)
     title = StringField(required=True)
