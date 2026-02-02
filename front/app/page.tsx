@@ -6,7 +6,8 @@ import { TopAnnotations } from "@/components/top-annotated-records"
 import { DatabaseFrequencies } from "@/components/database-frequencies"
 import { ReleaseDateChart } from "@/components/release-date-chart"
 import { FeaturesSection } from "@/components/features-section"
-import { TreeOfLifeChart } from "@/components/tree-of-life-chart"
+import { TreeOfLifeD3 } from "@/components/tree-of-life-d3"
+import { UserAnalyticsMap } from "@/components/user-analytics-map"
 import { SectionWrapper } from "@/components/ui/section-wrapper"
 
 
@@ -55,20 +56,22 @@ export default function Home() {
           }
         />
       </SectionWrapper>
-      {/* <SectionWrapper id="tree-of-life" backgroundVariant="default">
-        <TreeOfLifeChart
-          title="Navigate the eukaryotic tree of life"
+      
+      <SectionWrapper id="tree-of-life" backgroundVariant="default">
+        <TreeOfLifeD3
+          title="Interactive taxonomy tree"
           description={
             <>
-              Discover how genome annotations are distributed across eukaryotic lineages. 
-              Start from the root and drill down through taxonomic groups to explore 
-              annotation diversity—each slice represents a major branch with its total annotation count.
+              Explore the complete hierarchical tree of life of the annotated organisms with an interactive circle packing visualization. 
+              Nested circles represent taxonomic relationships, with <strong> each circle size </strong> reflecting the number of annotations. 
+              <strong> Zoom with scroll</strong>, <strong>pan by dragging</strong>, 
+              and <strong>click nodes</strong> to explore their annotations in detail.
             </>
           }
         />
-      </SectionWrapper> */}
+      </SectionWrapper>
 
-      <SectionWrapper id="latest-releases" backgroundVariant="default">
+      <SectionWrapper id="latest-releases" backgroundVariant="muted">
         <LatestReleases
           title="Explore recent releases"
           description="Browse newly released assemblies and jump straight into their annotations."
@@ -82,6 +85,19 @@ export default function Home() {
           description="See organisms, classes, and assemblies with the most annotations and start exploring from there."
         />
       </SectionWrapper>
+{/* 
+      <SectionWrapper id="user-analytics" backgroundVariant="muted">
+        <UserAnalyticsMap
+          title="Global User Analytics"
+          description={
+            <>
+              Interactive map showing the geographic distribution of unique users accessing Annotrieve. 
+              Each user is identified by a unique fingerprint. <strong>Hover over countries</strong> to see 
+              detailed statistics, and <strong>zoom and pan</strong> to explore the map.
+            </>
+          }
+        />
+      </SectionWrapper> */}
 
     </>
   )

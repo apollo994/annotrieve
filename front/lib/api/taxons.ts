@@ -30,3 +30,12 @@ export function getTaxonAncestors(taxid: string) {
 export function getTaxonRankFrequencies() {
   return apiGet<Record<string, number>>('/taxons/frequencies/rank')
 }
+
+export interface FlattenedTreeResponse {
+  fields: string[]
+  rows: [string, string | null, string, number, number, number][]
+}
+
+export function getFlattenedTree() {
+  return apiGet<FlattenedTreeResponse>('/taxons/flattened-tree')
+}
