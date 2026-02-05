@@ -6,6 +6,7 @@ from helpers import pysam_helper
 from helpers import constants as constants_helper
 from helpers import annotation as annotation_helper
 from helpers import feature_stats as feature_stats_helper
+from helpers import pipelines as pipelines_helper
 from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap
 from fastapi.responses import StreamingResponse
 from fastapi import HTTPException, BackgroundTasks
@@ -199,3 +200,25 @@ def get_transcript_type_metric_values(transcript_type: str, metric: str, include
     annotations = annotation_helper.get_annotation_records(**params)
     return feature_stats_helper.get_transcript_type_metric_values(transcript_type, metric, annotations, include_annotations)
 
+
+def get_annotations_aggregates_by_taxon_rank(rank: str):
+    """
+    Get annotations aggregates by taxon at the given rank. Returns one record per taxon
+    at that rank (e.g. ~20 for rank "class") with average coding/non_coding/pseudogene
+    counts and annotation count.
+    """
+    cursor = GenomeAnnotation.objects.aggregate(pipelines_helper.aggregate_by_taxon_pipeline(rank))
+    #for scalability we unpack in a list of lists with a fields list describing the structure of the records
+    fields = [
+        "taxid",
+        "taxon_name",
+        "avg_coding_genes_count",
+        "avg_non_coding_genes_count",
+        "avg_pseudogenes_count",
+        "count",
+    ]
+    values = [[*record.values()] for record in cursor]
+    return {
+        "fields": fields,
+        "rows": values,
+    }

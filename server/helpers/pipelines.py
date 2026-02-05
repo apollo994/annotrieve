@@ -255,3 +255,71 @@ def transcript_type_metric_values_pipeline(field_path: str):
             }
         }
     ]
+
+
+
+def aggregate_by_taxon_pipeline(rank: str):
+    """
+    Aggregate annotation gene-category counts by taxon at the given rank.
+    Returns per-taxon: avg coding/non_coding/pseudogene counts and annotation count.
+    Uses $lookup with pipeline so we only resolve the one taxon at the requested rank
+    per annotation (avoids N × lineage_length document expansion).
+    """
+    pipeline = [
+        # Resolve only the taxon at the requested rank (one lookup per annotation)
+        # Collection name must match MongoEngine's TaxonNode (snake_case: taxon_node)
+        {
+            "$lookup": {
+                "from": "taxon_node",
+                "let": {"lineage": "$taxon_lineage", "rank_filter": rank},
+                "pipeline": [
+                    {
+                        "$match": {
+                            "$expr": {
+                                "$and": [
+                                    {"$in": ["$taxid", "$$lineage"]},
+                                    {"$eq": ["$rank", "$$rank_filter"]},
+                                ]
+                            }
+                        }
+                    },
+                    {"$limit": 1},
+                ],
+                "as": "taxon",
+            }
+        },
+        {"$unwind": {"path": "$taxon", "preserveNullAndEmptyArrays": False}},
+        {
+            "$group": {
+                "_id": "$taxon.taxid",
+                "taxon_name": {"$first": "$taxon.scientific_name"},
+                "avg_coding_genes_count": {
+                    "$avg": {
+                        "$ifNull": [
+                            "$features_statistics.gene_category_stats.coding.total_count",
+                            0,
+                        ]
+                    }
+                },
+                "avg_non_coding_genes_count": {
+                    "$avg": {
+                        "$ifNull": [
+                            "$features_statistics.gene_category_stats.non_coding.total_count",
+                            0,
+                        ]
+                    }
+                },
+                "avg_pseudogenes_count": {
+                    "$avg": {
+                        "$ifNull": [
+                            "$features_statistics.gene_category_stats.pseudogene.total_count",
+                            0,
+                        ]
+                    }
+                },
+                "count": {"$sum": 1},
+            }
+        },
+        {"$sort": {"taxon_name": 1}},
+    ]
+    return pipeline

@@ -58,6 +58,14 @@ async def get_annotation_errors(offset: int = 0, limit: int = 20):
     """
     return annotations_service.get_annotation_errors(offset, limit)
 
+
+@router.get("/annotations/aggregates/taxons")
+async def get_annotations_aggregates_by_taxon_rank(rank: str):
+    """
+    Get annotations aggregates, group by a given field (for the moment only taxon), rank and fields. Fields are comma separated list of dot-notation fields to include in the aggregation.
+    """
+    return annotations_service.get_annotations_aggregates_by_taxon_rank(rank)
+
 @router.get("/annotations/gene-stats")
 @router.post("/annotations/gene-stats")
 async def get_gene_stats(commons: Dict[str, Any] = Depends(params_helper.common_params), payload: Optional[Dict[str, Any]] = Body(None)):
