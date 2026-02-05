@@ -7,7 +7,7 @@ from helpers import constants as constants_helper
 from helpers import annotation as annotation_helper
 from helpers import feature_stats as feature_stats_helper
 from helpers import pipelines as pipelines_helper
-from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap
+from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap, TaxonNode
 from fastapi.responses import StreamingResponse
 from fastapi import HTTPException, BackgroundTasks
 from typing import Optional, Dict, Any
@@ -207,15 +207,16 @@ def get_annotations_aggregates_by_taxon_rank(rank: str):
     at that rank (e.g. ~20 for rank "class") with average coding/non_coding/pseudogene
     counts and annotation count.
     """
-    cursor = GenomeAnnotation.objects.aggregate(pipelines_helper.aggregate_by_taxon_pipeline(rank))
+    # Pipeline runs on taxon_node (one lookup per taxon into annotations) for scale
+    cursor = TaxonNode.objects.aggregate(pipelines_helper.aggregate_by_taxon_pipeline(rank))
     #for scalability we unpack in a list of lists with a fields list describing the structure of the records
     fields = [
-        "taxid",
-        "taxon_name",
+        "count",
         "avg_coding_genes_count",
         "avg_non_coding_genes_count",
         "avg_pseudogenes_count",
-        "count",
+        "taxid",
+        "scientific_name",
     ]
     values = [[*record.values()] for record in cursor]
     return {

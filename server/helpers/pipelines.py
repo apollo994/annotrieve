@@ -258,68 +258,129 @@ def transcript_type_metric_values_pipeline(field_path: str):
 
 
 
+# Collection names for $lookup (MongoEngine default snake_case)
+GENOME_ANNOTATION_COLLECTION = "genome_annotation"
+
+
 def aggregate_by_taxon_pipeline(rank: str):
     """
     Aggregate annotation gene-category counts by taxon at the given rank.
     Returns per-taxon: avg coding/non_coding/pseudogene counts and annotation count.
-    Uses $lookup with pipeline so we only resolve the one taxon at the requested rank
-    per annotation (avoids N × lineage_length document expansion).
+
+    Optimized for scale: runs on taxon_node (e.g. ~8k docs at rank "class") and does
+    one $lookup per taxon into genome_annotation (indexed by taxon_lineage), instead
+    of one lookup per annotation (~14k). Run with TaxonNode.objects.aggregate(...).
     """
-    pipeline = [
-        # Resolve only the taxon at the requested rank (one lookup per annotation)
-        # Collection name must match MongoEngine's TaxonNode (snake_case: taxon_node)
+    return [
+        {"$match": {"rank": rank}},
         {
             "$lookup": {
-                "from": "taxon_node",
-                "let": {"lineage": "$taxon_lineage", "rank_filter": rank},
+                "from": GENOME_ANNOTATION_COLLECTION,
+                "let": {"taxid": "$taxid"},
                 "pipeline": [
+                    {"$match": {"$expr": {"$in": ["$$taxid", "$taxon_lineage"]}}},
                     {
-                        "$match": {
-                            "$expr": {
-                                "$and": [
-                                    {"$in": ["$taxid", "$$lineage"]},
-                                    {"$eq": ["$rank", "$$rank_filter"]},
-                                ]
-                            }
+                        "$project": {
+                            "_id": 0,
+                            "coding": "$features_statistics.gene_category_stats.coding.total_count",
+                            "non_coding": "$features_statistics.gene_category_stats.non_coding.total_count",
+                            "pseudogene": "$features_statistics.gene_category_stats.pseudogene.total_count",
                         }
                     },
-                    {"$limit": 1},
                 ],
-                "as": "taxon",
+                "as": "annotations",
             }
         },
-        {"$unwind": {"path": "$taxon", "preserveNullAndEmptyArrays": False}},
         {
-            "$group": {
-                "_id": "$taxon.taxid",
-                "taxon_name": {"$first": "$taxon.scientific_name"},
+            "$addFields": {
+                "count": {"$size": "$annotations"},
                 "avg_coding_genes_count": {
-                    "$avg": {
-                        "$ifNull": [
-                            "$features_statistics.gene_category_stats.coding.total_count",
-                            0,
-                        ]
-                    }
+                    "$round": [
+                        {
+                            "$avg": {
+                                "$map": {
+                                    "input": {
+                                        "$filter": {
+                                            "input": "$annotations",
+                                            "as": "a",
+                                            "cond": {
+                                                "$and": [
+                                                    {"$ne": ["$$a.coding", None]},
+                                                    {"$ne": [{"$type": "$$a.coding"}, "missing"]},
+                                                ]
+                                            },
+                                        }
+                                    },
+                                    "as": "b",
+                                    "in": "$$b.coding",
+                                }
+                            }
+                        },
+                        2,
+                    ]
                 },
                 "avg_non_coding_genes_count": {
-                    "$avg": {
-                        "$ifNull": [
-                            "$features_statistics.gene_category_stats.non_coding.total_count",
-                            0,
-                        ]
-                    }
+                    "$round": [
+                        {
+                            "$avg": {
+                                "$map": {
+                                    "input": {
+                                        "$filter": {
+                                            "input": "$annotations",
+                                            "as": "a",
+                                            "cond": {
+                                                "$and": [
+                                                    {"$ne": ["$$a.non_coding", None]},
+                                                    {"$ne": [{"$type": "$$a.non_coding"}, "missing"]},
+                                                ]
+                                            },
+                                        }
+                                    },
+                                    "as": "b",
+                                    "in": "$$b.non_coding",
+                                }
+                            }
+                        },
+                        2,
+                    ]
                 },
                 "avg_pseudogenes_count": {
-                    "$avg": {
-                        "$ifNull": [
-                            "$features_statistics.gene_category_stats.pseudogene.total_count",
-                            0,
-                        ]
-                    }
+                    "$round": [
+                        {
+                            "$avg": {
+                                "$map": {
+                                    "input": {
+                                        "$filter": {
+                                            "input": "$annotations",
+                                            "as": "a",
+                                            "cond": {
+                                                "$and": [
+                                                    {"$ne": ["$$a.pseudogene", None]},
+                                                    {"$ne": [{"$type": "$$a.pseudogene"}, "missing"]},
+                                                ]
+                                            },
+                                        }
+                                    },
+                                    "as": "b",
+                                    "in": "$$b.pseudogene",
+                                }
+                            }
+                        },
+                        2,
+                    ]
                 },
-                "count": {"$sum": 1},
             }
         },
+        {
+            "$project": {
+                "_id": "$taxid",
+                "taxon_name": "$scientific_name",
+                "avg_coding_genes_count": 1,
+                "avg_non_coding_genes_count": 1,
+                "avg_pseudogenes_count": 1,
+                "count": 1,
+            }
+        },
+        {"$match": {"count": {"$gt": 0}}},
         {"$sort": {"taxon_name": 1}},
     ]
-    return pipeline
