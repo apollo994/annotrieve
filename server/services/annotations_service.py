@@ -207,16 +207,14 @@ def get_annotations_aggregates_by_taxon_rank(rank: str):
     at that rank (e.g. ~20 for rank "class") with average coding/non_coding/pseudogene
     counts and annotation count.
     """
-    # Pipeline runs on taxon_node (one lookup per taxon into annotations) for scale
-    cursor = TaxonNode.objects.aggregate(pipelines_helper.aggregate_by_taxon_pipeline(rank))
-    #for scalability we unpack in a list of lists with a fields list describing the structure of the records
+    cursor = GenomeAnnotation.objects.aggregate(pipelines_helper.aggregate_by_taxon_pipeline(rank))
     fields = [
-        "count",
+        "taxid",
+        "taxon_name",
         "avg_coding_genes_count",
         "avg_non_coding_genes_count",
         "avg_pseudogenes_count",
-        "taxid",
-        "scientific_name",
+        "count",
     ]
     values = [[*record.values()] for record in cursor]
     return {
