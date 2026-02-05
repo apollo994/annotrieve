@@ -211,10 +211,11 @@ def get_annotations_aggregates_by_taxon_rank(rank: str):
     fields = [
         "taxid",
         "taxon_name",
+        "annotations_count",
         "avg_coding_genes_count",
         "avg_non_coding_genes_count",
         "avg_pseudogenes_count",
-        "count",
+
     ]
     values = [[*record.values()] for record in cursor]
     return {
