@@ -8,9 +8,9 @@ beat_schedule = {
         'schedule': crontab(day_of_week=6, hour=0, minute=0),  # Every Saturday at midnight
         'options': {'expires': 3600}  # Expire after 1 hour if not started
     },
-    'update_assemblies_from_ncbi': {
-        'task': 'update_taxonomy',  # Task name as defined in @shared_task decorator
-        'schedule': crontab(day_of_week=1, hour=0, minute=0),  # Every Monday at 00:00
+    'update-records': {
+        'task': 'update_records',  # Task name as defined in @shared_task decorator
+        'schedule': crontab(day_of_week=0, hour=3, minute=0),  # Every Sunday at 03:00
         'options': {'expires': 3600}  # Expire after 1 hour if not started
     },
     'track-unique-users-by-country-daily': {
@@ -18,9 +18,4 @@ beat_schedule = {
         'schedule': crontab(hour=0, minute=0),  # Every day at midnight
         'options': {'expires': 3600}  # Expire after 1 hour if not started
     },
-    'update-assemblies-from-ncbi-monthly': {
-        'task': 'update_assemblies_from_ncbi',  # Task name as defined in @shared_task decorator
-        'schedule': crontab(day_of_month=1, hour=0, minute=0),  # Every first day of the month at 00:00
-        'options': {'expires': 3600}  # Expire after 1 hour if not started
-    }
 } 

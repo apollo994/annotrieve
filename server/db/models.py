@@ -1,5 +1,5 @@
 from datetime import datetime
-from .embedded_documents import AssemblyStats, SourceFileInfo, IndexedFileInfo, FeatureOverview, GFFStats
+from .embedded_documents import AssemblyStats, SourceFileInfo, IndexedFileInfo, FeatureOverview, GFFStats, TaxonAnnotationStats
 from mongoengine import (
     Document,
     DynamicDocument,
@@ -220,6 +220,7 @@ class TaxonNode(Document):
     assemblies_count = IntField()
     annotations_count = IntField()
     organisms_count = IntField() #how many leaves are down from this node
+    stats = EmbeddedDocumentField(TaxonAnnotationStats)
     meta = {
         'indexes': [
             'taxid', 'scientific_name','children','rank'

@@ -12,23 +12,23 @@ async def trigger_import_annotations(x_auth_key: str = Header(..., alias="X-Auth
     """
     return jobs_service.trigger_import_annotations(x_auth_key)
 
-@router.post("/jobs/update/stats")
-async def trigger_update_stats(x_auth_key: str = Header(..., alias="X-Auth-Key")):
+@router.post("/jobs/update/records")
+async def trigger_update_records(x_auth_key: str = Header(..., alias="X-Auth-Key")):
     """
-    Trigger update stats job
+    Trigger update records job
     
     Requires X-Auth-Key header for authentication.
     """
-    return jobs_service.trigger_update_stats(x_auth_key)
+    return jobs_service.trigger_update_records(x_auth_key)
 
-@router.post("/jobs/update/annotations/feature-stats")
-async def trigger_update_annotations_feature_stats(x_auth_key: str = Header(..., alias="X-Auth-Key")):
+@router.post("/jobs/update/taxonomy/stats")
+async def trigger_update_taxonomy_stats(x_auth_key: str = Header(..., alias="X-Auth-Key")):
     """
-    Trigger update annotations feature stats job
+    Trigger update taxonomy stats job
     
     Requires X-Auth-Key header for authentication.
     """
-    return jobs_service.trigger_annotation_feature_stats_update(x_auth_key)
+    return jobs_service.trigger_update_taxonomy_stats(x_auth_key)
 
 @router.post("/jobs/update/assemblies")
 async def trigger_update_assemblies(x_auth_key: str = Header(..., alias="X-Auth-Key")):
@@ -47,13 +47,3 @@ async def trigger_update_analytics(x_auth_key: str = Header(..., alias="X-Auth-K
     Requires X-Auth-Key header for authentication.
     """
     return jobs_service.trigger_track_unique_users_by_country(x_auth_key)
-
-@router.post("/jobs/update/taxonomy")
-async def trigger_update_taxonomy(x_auth_key: str = Header(..., alias="X-Auth-Key")):
-    """
-    Trigger update taxonomy job
-    This is done by fetching the ENA/EBI taxonomy and updating the database with the new taxonomy and lineages
-    
-    Requires X-Auth-Key header for authentication.
-    """
-    return jobs_service.trigger_update_taxonomy(x_auth_key)

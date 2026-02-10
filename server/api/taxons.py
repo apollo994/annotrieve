@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Body
+from fastapi import APIRouter, Depends, Body,HTTPException
 from typing import Optional
 from services import taxonomy_service   
 
@@ -33,8 +33,11 @@ async def get_taxons(commons: CommonQueryParams = Depends(), payload: Optional[d
     return taxonomy_service.get_taxon_nodes(**params)
     
 @router.get("/taxons/flattened-tree")
-async def get_flattened_tree():
-    return taxonomy_service.get_flattened_tree()
+async def get_flattened_tree(format: str = "json"):
+    """Return flattened taxonomy tree. format: 'json' (default) or 'tsv'."""
+    if format and format.lower() not in ("json", "tsv"):
+        raise HTTPException(status_code=400, detail="format must be 'json' or 'tsv'")
+    return taxonomy_service.get_flattened_tree(format=format)
 
 @router.get("/taxons/{taxid}")
 async def get_taxon(taxid: str):

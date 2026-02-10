@@ -1,273 +1,193 @@
 from celery import shared_task
-from db.models import GenomeAssembly, GenomeAnnotation, AnnotationSequenceMap, BioProject, GFFStats, Organism, TaxonNode
-from clients import ncbi_datasets as ncbi_datasets_client
+from db.models import GenomeAssembly, GenomeAnnotation,  Organism
 import os
 from .services import assembly as assembly_service
 from .services.utils import create_batches
 from .services import stats as stats_service
-from .services import feature_stats as feature_stats_service
-from helpers import file as file_helper
+from .services import annotation as annotation_service
 from .services import taxonomy as taxonomy_service
-
 
 TMP_DIR = "/tmp"
 
 ANNOTATIONS_PATH = os.getenv('LOCAL_ANNOTATIONS_DIR')
 
+@shared_task(name='update_taxon_stats', ignore_result=False)
+def update_taxon_stats():
+    """
+    Update the taxon stats for the annotations, nice and slow operation.
+    Currently only gene counts are computed
+    """
+    stats_service.update_taxon_gene_stats()
 
-@shared_task(name='update_stats', ignore_result=False)
-def update_stats():
-    """
-    Update the stats for the assemblies and annotations
-    """
-    stats_service.update_db_stats()
 
-
-@shared_task(name='update_assembly_fields', ignore_result=False)
-def update_assembly_fields():
+def fetch_new_organisms_from_assembly_taxids(assembly_taxids: list[str]):
     """
-    Update the fields for the assemblies
+    Fetch the new organisms from the assembly taxids and update taxonomy and assemblies related to them
+    - assembly_taxids: list of assembly taxids to process
     """
-    pass
-
-@shared_task(name='update_assemblies_from_ncbi', ignore_result=False)
-def update_assemblies_from_ncbi():
-    """
-    Periodically update the assemblies in the database, this is done by fetching the assemblies from the NCBI and updating the database with the new fields 
-    """
-    #fetch assemblies accessions to update from the db
-    accessions = GenomeAssembly.objects().scalar('assembly_accession')
-    batches = create_batches(accessions, 1000)
-    files_to_delete = []
-    try:
-        for idx, batch in enumerate(batches):
-            assemblies_path = os.path.join(TMP_DIR, f'assemblies_to_update_{idx}_{len(batch)}.txt')
-            files_to_delete.append(assemblies_path)
-            with open(assemblies_path, 'w') as f:
-                for accession in batch:
-                    f.write(accession + '\n')
-            cmd = ['genome', 'accession', '--inputfile', assemblies_path]
-            ncbi_report = ncbi_datasets_client.get_data_from_ncbi(cmd)
-            if not ncbi_report:
-                print(f"No report found for {assemblies_path}")
-                continue
-            for assembly in ncbi_report.get('reports', []):
-                assembly_info = assembly.get('assembly_info', dict())
-                organism_info = assembly.get('organism', dict())
-                taxid = str(organism_info.get('tax_id'))
-                if not assembly_info:
-                    print(f"Missing assembly info for {assembly.get('accession')}")
-                    continue
-                #fields to update are assembly status, refseq category and scientific name (took from the organism in the db)
-                organism = Organism.objects(taxid=taxid).first()
-                if not organism:
-                    print(f"Missing organism for {assembly.get('accession')}")
-                    continue
-                assembly_object = GenomeAssembly.objects(assembly_accession=assembly.get('accession')).first()
-                if not assembly_object:
-                    print(f"Missing assembly object for {assembly.get('accession')}")
-                    continue
-                assembly_object.modify(assembly_status=assembly_info.get('assembly_status'), refseq_category=assembly_info.get('refseq_category'), organism_name=organism.organism_name)
-
-    except Exception as e:
-        print(f"Error updating assemblies: {e}")
-        raise e
-    finally:
-        #delete the tmp files
-        for file_to_delete in files_to_delete:
-            if os.path.exists(file_to_delete):
-                os.remove(file_to_delete)
-        print("Updated assemblies")
-
-@shared_task(name='update_feature_stats', ignore_result=False)
-def update_feature_stats():
-    """
-    Update the feature stats for all the annotations
-    """
-    annotations = GenomeAnnotation.objects()
-    for annotation in annotations:
-        if annotation.features_statistics:
-            feat_stats = annotation.features_statistics
-            gene_category_stats = feat_stats.gene_category_stats if feat_stats.gene_category_stats else {}
-            transcript_type_stats = feat_stats.transcript_type_stats if feat_stats.transcript_type_stats else {}
-            #remove old fields for backwards compatibility by directly modifying the document
-            annotation.modify(features_statistics=GFFStats(gene_category_stats=gene_category_stats, transcript_type_stats=transcript_type_stats))
-        else:
-        #get full bgzipped path from the indexed file info
-            bgzipped_path = file_helper.get_annotation_file_path(annotation)
-            feature_stats = feature_stats_service.compute_features_statistics(bgzipped_path)
-            annotation.modify(features_statistics=feature_stats)
-
-@shared_task(name='update_bioprojects', ignore_result=False)
-def update_bioprojects():
-    """
-    Import the bioprojects and update assemblies and annotations
-    """
-    accessions = GenomeAssembly.objects().scalar('assembly_accession')
-    batches = create_batches(accessions, 5000)
-    files_to_delete = []
-    all_bp_accessions = set()
-    bioprojects_to_save = dict() #accession: BioProject to ensure we don't save the same bioproject multiple times
-    assembly_to_bp_accessions = dict() #assembly_accession: list[bioproject_accessions]
-    for idx, accessions_batch in enumerate(batches):
-        assemblies_path = os.path.join(TMP_DIR, f'assemblies_to_update_{idx}_{len(accessions_batch)}.txt')
-        files_to_delete.append(assemblies_path)
-        with open(assemblies_path, 'w') as f:
-            for accession in accessions_batch: 
-                f.write(accession + '\n')
-        cmd = ['genome', 'accession', '--inputfile', assemblies_path]
-        ncbi_report = ncbi_datasets_client.get_data_from_ncbi(cmd)
-        report = ncbi_report.get('reports', [])    
-        if not report:
-            print(f"No report found for {assemblies_path}")
-        for assembly in report:
-            assembly_accession = assembly.get('accession')
-            bioproject_accessions = assembly_service.parse_bioprojects(assembly.get('assembly_info', {}), bioprojects_to_save)
-            assembly_to_bp_accessions[assembly_accession] = bioproject_accessions
-            all_bp_accessions.update(bioproject_accessions)
+    new_taxids = taxonomy_service.get_new_organisms_taxids(assembly_taxids)
+    if not new_taxids:
+        return 
+    #filter out those without lineage
+    new_organisms_to_process = [organism for organism in taxonomy_service.fetch_new_organisms(new_taxids, TMP_DIR) if organism.taxon_lineage]
+    if not new_organisms_to_process:
+        return 
     
-    #filter out existing bioprojects
-    existing_bioprojects = BioProject.objects(accession__in=list(all_bp_accessions)).scalar('accession')
-    new_bioprojects = all_bp_accessions - set(existing_bioprojects)
-    bioprojects_to_save = {accession: bioproject for accession, bioproject in bioprojects_to_save.items() if accession in new_bioprojects}
-    #insert the bioprojects to the database
-    if not new_bioprojects:
-        print("No new bioprojects to insert")
+    saved_taxids = taxonomy_service.save_organisms(new_organisms_to_process) #save the new organisms
+    if not saved_taxids:
+        return 
+    
+    taxonomy_service.save_taxons([o for o in new_organisms_to_process if o.taxon_id in saved_taxids]) #save the new taxons
+
+    #update assemblies with new organism data
+    # Note: Hierarchy will be rebuilt from all lineages by rebuild_taxon_hierarchy_from_lineages()
+    saved_organisms = Organism.objects(taxid__in=saved_taxids)
+    for organism in saved_organisms:
+        payload = dict(taxon_lineage=organism.taxon_lineage, organism_name=organism.organism_name)
+        GenomeAssembly.objects(taxid=organism.taxid).update(**payload)
+
+
+def update_stale_annotations(assembly_taxids: list[str]) -> None:
+    """
+    Update the taxonomy for the stale annotations given a list of assembly taxids
+    - assembly_taxids: list of assembly taxids to process
+    """
+    annotations_with_stale_taxids = GenomeAnnotation.objects(taxid__nin=assembly_taxids)
+    if annotations_with_stale_taxids.count() == 0:
+        return 
+    
+    # Use aggregation to get assembly accessions and annotation IDs efficiently
+    # This avoids loading all annotation documents into memory
+    pipeline = [
+        {"$group": {
+            "_id": "$assembly_accession",
+            "annotation_ids": {"$push": "$annotation_id"}
+        }}
+    ]
+    
+    assemblies_not_found = set()
+    annotations_by_assembly = {}
+    
+    for row in annotations_with_stale_taxids.aggregate(*pipeline):
+        acc = row["_id"]
+        annotation_ids = row["annotation_ids"]
+        annotations_by_assembly[acc] = annotation_ids
+    
+    if not annotations_by_assembly:
         return
-    try:
-        BioProject.objects.insert(list(bioprojects_to_save.values()))
-        for assembly_accession, bioproject_accessions in assembly_to_bp_accessions.items():
-            GenomeAssembly.objects(assembly_accession=assembly_accession).update(bioprojects=bioproject_accessions)
-        print(f"Updated {len(assembly_to_bp_accessions)} assemblies with new bioprojects")
-
-        #update bp counts 
-
-        for bp in BioProject.objects():
-            bp.modify(assemblies_count=GenomeAssembly.objects(bioprojects__in=[bp.accession]).count())
     
-    #update Bioprojects counts
-    except Exception as e:
-        print(f"Error inserting bioprojects: {e}")
-        raise e
-    finally:
-        #delete the tmp files
-        for file_to_delete in files_to_delete:
-            os.remove(file_to_delete)
-        print("Updated bioprojects")
+    # Build assembly lookup for all related assemblies
+    related_assembly_accessions = list(annotations_by_assembly.keys())
+    assembly_map = assembly_service.build_assembly_lookup(related_assembly_accessions)
 
-
-@shared_task(name='update_annotation_fields', ignore_result=False)
-def update_annotation_fields():
-    """
-    Update the fields for the annotations
-    """
-    annotations = GenomeAnnotation.objects()
-    for annotation in annotations:
-        mapped_regions = AnnotationSequenceMap.objects(annotation_id=annotation.annotation_id).scalar('sequence_id')
-        if not mapped_regions:
+    for acc, ann_ids in annotations_by_assembly.items():
+        assembly = assembly_map.get(acc)
+        if not assembly:
+            assemblies_not_found.add(acc)
             continue
-        annotation.modify(mapped_regions=mapped_regions)
+        update_payload = dict(
+            taxid=assembly.taxid,
+            organism_name=assembly.organism_name,
+            taxon_lineage=assembly.taxon_lineage
+        )
+        GenomeAnnotation.objects(annotation_id__in=ann_ids).update(**update_payload)
+
+    if assemblies_not_found:
+        annotation_service.delete_annotations(
+            query=dict(assembly_accession__in=list(assemblies_not_found)),
+            annotations_path=ANNOTATIONS_PATH
+        )
 
 
-
-@shared_task(name='ensure_indexes', ignore_result=False)
-def ensure_indexes():
+def update_records_with_empty_taxon_lineage_fallback(model: GenomeAssembly | GenomeAnnotation):
     """
-    Ensure the indexes are created
+    Update the documents with empty taxon lineage fallback
+    - model: GenomeAssembly | GenomeAnnotation
     """
-    for doc in [GenomeAnnotation, GenomeAssembly]:
-        doc.ensure_indexes()
-
-@shared_task(name='check_orphan_files', ignore_result=False)
-def check_orphan_files():
-    """
-    Scan the annotations directory and clean up potentially orphaned files:
-    Dir structure is the following:
-    - <taxid>
-      - <assembly_accession>
-        - <annotation_id>.gff.gz
-        - <annotation_id>.gff.gz.csi
+    documents_with_empty_taxon_lineage = model.objects(taxon_lineage=[])
+    if documents_with_empty_taxon_lineage.count() > 0:
+        related_taxids = set(documents_with_empty_taxon_lineage.scalar('taxid'))
+        related_organisms = Organism.objects(taxid__in=list(related_taxids))
+        for organism in related_organisms:
+            if organism.taxon_lineage:
+                update_payload = dict(taxon_lineage=organism.taxon_lineage, organism_name=organism.organism_name)
+                model.objects(taxid=organism.taxid).update(**update_payload)
     
+
+def update_taxonomy_from_ebi():
     """
-    orphan_files = []
-    files_to_verify = []
-    for taxid in os.listdir(ANNOTATIONS_PATH):
-        if not os.path.isdir(os.path.join(ANNOTATIONS_PATH, taxid)):
-            continue
-        for assembly_accession in os.listdir(os.path.join(ANNOTATIONS_PATH, taxid)):
-            if not os.path.isdir(os.path.join(ANNOTATIONS_PATH, taxid, assembly_accession)):
-                continue
-            for file in os.listdir(os.path.join(ANNOTATIONS_PATH, taxid, assembly_accession)):
-                if file.endswith(".gff.gz"):
-                    bgzipped_path = f"/{taxid}/{assembly_accession}/{file}"
-                    files_to_verify.append(bgzipped_path)
-    #check if the related annotation exists in the database (batches of 1k)
-    batches = create_batches(files_to_verify, 1000)
+    Update the taxonomy from EBI
+    """
+    #UPDATE ORGANISMS
+    # Stream taxids instead of loading all into memory
+    all_taxids = Organism.objects().scalar('taxid')
+    batches = create_batches(list(all_taxids), 5000)
     for batch in batches:
-        annotations = GenomeAnnotation.objects(indexed_file_info__bgzipped_path__in=batch).scalar('indexed_file_info__bgzipped_path')
-        for annotation in annotations:
-            if annotation.indexed_file_info.bgzipped_path not in batch:
-                orphan_files.append(annotation.indexed_file_info.bgzipped_path)
-    
-    
-    
-    print(f"Found {len(orphan_files)} orphan files")
-    return orphan_files
+        organisms_to_process = taxonomy_service.fetch_new_organisms(batch, TMP_DIR)
+        existing_organisms_map = {
+            organism.taxid: organism for organism in Organism.objects(taxid__in=batch)
+        }
+        for organism in organisms_to_process:
+            if not organism.taxon_lineage or organism.taxon_id not in existing_organisms_map:
+                continue # broken organism, skip, try next iteration
+            existing_organism = existing_organisms_map[organism.taxon_id]
+            #check what changed and update accordingly
+            payload, payload_of_related_documents = taxonomy_service.process_organism(organism, existing_organism)
+            if payload:
+                existing_organism.modify(**payload)
+            if payload_of_related_documents:
+                GenomeAssembly.objects(taxid=organism.taxon_id).update(**payload_of_related_documents) #update the assemblies related to the organism
+                GenomeAnnotation.objects(taxid=organism.taxon_id).update(**payload_of_related_documents) #update the annotations related to the organism
 
 
-@shared_task(name='update_taxonomy', ignore_result=False)
-def update_taxonomy():
+@shared_task(name='update_records', ignore_result=False)
+def update_records():
     """
-    Periodically update the taxonomy in the database mirroring the ENA taxonomy
-    This is done by fetching the ENA/EBI taxonomy and updating the database with the new taxonomy and lineages
+    Function to update records in the db.Uses assembly taxids as the source of truth for taxons, organisms and annotations
+    - Update assemblies from NCBI
+    - Update taxons, organisms and annotations from assembly taxids
+    - Update db counts and taxon gene counts stats
     """
-    organisms_taxids = Organism.objects().scalar('taxid')
-    organisms_to_process = taxonomy_service.fetch_new_organisms(list(organisms_taxids), TMP_DIR, 5000)
+    #UPDATE ASSEMBLIES FROM NCBI
+    assembly_accessions = list(GenomeAssembly.objects().scalar('assembly_accession'))
+    if not assembly_accessions:
+        print("No assemblies found, skipping update")
+        return
+    assembly_service.update_assemblies_from_ncbi(assembly_accessions, TMP_DIR, 1000)
     
-    for organism in organisms_to_process:
-        #update lineage, scientific name and common name
-        taxon_lineage = organism.taxon_lineage
-        if not taxon_lineage:
-            #skip those without a lineage, potentially malformed organisms
-            continue
-        #update organisms in the db
-        old_organism = Organism.objects(taxid=organism.taxon_id).first()
-        name_changed = old_organism.organism_name != organism.organism_name
-        old_organism.modify(taxon_lineage=taxon_lineage, organism_name=organism.organism_name, common_name=organism.common_name)
-        
-        #update name in related assemblies and annotations
-        update_payload = dict(taxon_lineage=taxon_lineage)
-        if name_changed:
-            update_payload['organism_name'] = organism.organism_name
-        GenomeAssembly.objects(taxid=organism.taxon_id).update(**update_payload)
-        GenomeAnnotation.objects(taxid=organism.taxon_id).update(**update_payload)
+    #free up memory
+    del assembly_accessions
 
-        #check if all the taxons already exists in the db and save the new ones
-        existing_taxons = TaxonNode.objects(taxid__in=taxon_lineage)
-        new_taxons = set(taxon_lineage) - set(existing_taxons.scalar('taxid'))
-        if new_taxons:
-            taxons_to_save = [taxon for taxon in organism.parsed_taxon_lineage if taxon.taxid in new_taxons]
-            try:
-                TaxonNode.objects.insert(taxons_to_save)
-                print(f"Saved {len(taxons_to_save)} new taxons")
-                #update new taxons counts
-            except Exception as e:
-                print(f"Error saving new taxons: {e}")
-                raise e
-            #update new taxons counts
-            for taxon in taxons_to_save:
-                taxon.modify(
-                    assemblies_count=GenomeAssembly.objects(taxon_lineage__in=[taxon.taxid]).count(),
-                    annotations_count=GenomeAnnotation.objects(taxon_lineage__in=[taxon.taxid]).count(),
-                    organisms_count=Organism.objects(taxon_lineage__in=[taxon.taxid]).count()
-                )
-        # Update the existing taxons with the new rank and scientific name
-        taxon_lineage_lookup = {item.taxid: item for item in organism.parsed_taxon_lineage}
-        for taxon in existing_taxons:
-            if taxon.taxid in taxon_lineage_lookup:
-                lineage_item = taxon_lineage_lookup[taxon.taxid]
-                taxon.modify(scientific_name=lineage_item.scientific_name, rank=lineage_item.rank)
+    assembly_taxids = list(set(GenomeAssembly.objects().scalar('taxid')))
+    if not assembly_taxids:
+        print("No assembly taxids found, skipping taxonomy updates")
+        return
+    
+    #FETCH NEW ORGANISMS FROM ASSEMBLY TAXIDS AND UPDATE TAXONOMY AND ASSEMBLIES RELATED TO THEM
+    fetch_new_organisms_from_assembly_taxids(assembly_taxids)
+    
+    #UPDATE STALE ANNOTATIONS WITH THE NEW TAXONOMY AND ASSEMBLIES RELATED TO THEM
+    update_stale_annotations(assembly_taxids)
+    
+    #free up memory
+    del assembly_taxids
 
-        #reload taxons and update the hierarchy
-        ordered_taxons = taxonomy_service.get_ordered_taxons(taxon_lineage)
-        taxonomy_service.update_taxon_hierarchy(ordered_taxons)
+    #FALLBACK UPDATE FOR ASSEMBLIES AND ANNOTATIONS WITH EMPTY TAXON LINEAGE
+    update_records_with_empty_taxon_lineage_fallback(GenomeAssembly)
+    update_records_with_empty_taxon_lineage_fallback(GenomeAnnotation)
+
+    #UPDATE ALL TAXONOMY FROM EBI
+    update_taxonomy_from_ebi()
+
+    #REBUILD TAXON HIERARCHY FROM ALL EXISTING LINEAGES
+    # This ensures parent-child relationships are correct based on current lineages in assemblies/annotations/organisms
+    # Must run BEFORE stats update to ensure hierarchy is correct before taxons are deleted
+    taxonomy_service.rebuild_taxon_hierarchy_from_lineages()
+
+    #UPDATE DB COUNTS AND TAXON GENE COUNTS STATS
+    # This will:
+    # 1. Update taxon counts (annotations_count, assemblies_count, organisms_count)
+    # 2. Delete taxons without annotations
+    # 3. Update parent taxons to remove deleted taxids from their children lists (via pull_all__children)
+    stats_service.update_db_stats()
+    stats_service.update_taxon_gene_stats()

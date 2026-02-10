@@ -2,7 +2,7 @@ from fastapi import HTTPException
 import os
 import secrets
 from jobs.import_annotations import import_annotations
-from jobs.updates import update_feature_stats, update_stats, update_taxonomy, update_assemblies_from_ncbi
+from jobs.updates import update_taxon_stats, update_records
 from jobs.track_users import track_unique_users_by_country
 
 
@@ -24,22 +24,13 @@ def trigger_track_unique_users_by_country(auth_key: str):
     track_unique_users_by_country.delay()
     return {"message": "Track unique users by country task triggered"}
 
-def trigger_annotation_feature_stats_update(auth_key: str):
+def trigger_update_records(auth_key: str):
     """
-    Update the features_statistics field of all the annotations
-    """
-    _validate_auth_key(auth_key)
-    #queue both tasks
-    update_feature_stats.delay()
-    return {"message": "Update feature stats task triggered"}
-
-def trigger_update_assemblies_from_ncbi(auth_key: str):
-    """
-    Trigger update assemblies from NCBI
+    Trigger update records
     """
     _validate_auth_key(auth_key)
-    update_assemblies_from_ncbi.delay()
-    return {"message": "Update assemblies from NCBI task triggered"}
+    update_records.delay()
+    return {"message": "Update records task triggered"}
 
 def trigger_import_annotations(auth_key: str):
     """
@@ -49,19 +40,10 @@ def trigger_import_annotations(auth_key: str):
     import_annotations.delay()
     return {"message": "Import annotations task triggered"}
 
-def trigger_update_stats(auth_key: str):
+def trigger_update_taxonomy_stats(auth_key: str):
     """
-    Update db stats
-    """
-    _validate_auth_key(auth_key)
-    update_stats.delay()
-    return {"message": "Update stats task triggered"}
-
-
-def trigger_update_taxonomy(auth_key: str):
-    """
-    Update the taxonomy in the database
+    Update the taxonomy stats in the database
     """
     _validate_auth_key(auth_key)
-    update_taxonomy.delay()
-    return {"message": "Update taxonomy task triggered"}
+    update_taxon_stats.delay()
+    return {"message": "Update taxonomy stats task triggered"}

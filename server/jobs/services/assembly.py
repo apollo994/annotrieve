@@ -1,11 +1,12 @@
 import os
 from db.models import BioProject, GenomeAssembly, AssemblyStats, GenomicSequence
 from clients import ncbi_datasets as ncbi_datasets_client
-from .classes import AnnotationToProcess, AssemblyReportSequence, AssemblyToProcess
+from .classes import AnnotationToProcess, AssemblyReportSequence
 from .utils import create_batches
 import asyncio
 import aiohttp
 from typing import Iterator
+import time
 
 
 def get_existing_accessions(accessions: list[str]) -> list[str]:
@@ -341,3 +342,76 @@ def parse_assembly_from_ncbi(assembly_dict: dict, valid_lineages: dict[str, list
         submitter=assembly_info.get('submitter'),
         bioprojects=bp_accessions,
     )
+
+
+def update_assemblies_from_ncbi_report(ncbi_report: dict):
+    """
+    Update the assemblies from the NCBI report
+    """
+    results = ncbi_report.get('reports', [])
+    accessions = [assembly.get('accession') for assembly in results]
+    acc_to_ass_map = {ass.assembly_accession: ass for ass in GenomeAssembly.objects(assembly_accession__in=accessions)}
+    for assembly in results:
+        assembly_info = assembly.get('assembly_info', dict())
+        organism_info = assembly.get('organism', dict())
+        taxid = str(organism_info.get('tax_id'))
+        organism_name = organism_info.get('organism_name')
+        if not assembly_info:
+            continue
+        assembly_object = acc_to_ass_map.get(assembly.get('accession'))
+        if not assembly_object:
+            continue
+        update_payload = dict()
+        if assembly_object.assembly_status != assembly_info.get('assembly_status'):
+            update_payload['assembly_status'] = assembly_info.get('assembly_status')
+        if assembly_object.refseq_category != assembly_info.get('refseq_category'):
+            update_payload['refseq_category'] = assembly_info.get('refseq_category')
+        if assembly_object.organism_name != organism_name:
+            update_payload['organism_name'] = organism_name
+        if assembly_object.taxid != taxid:
+            update_payload['taxid'] = taxid
+            #clean up taxon lineage if taxid changed
+            update_payload['taxon_lineage'] = []
+        if update_payload:  
+            assembly_object.modify(**update_payload)
+
+
+def update_assemblies_from_ncbi(accessions: list[str], tmp_dir: str, batch_size: int=1000):
+    """
+    Fetch assemblies from NCBI Datasets and update the db with the updated fields if any field has changed
+    """
+    batches = create_batches(accessions, batch_size)
+    files_to_delete = []
+    try:
+        for idx, batch in enumerate(batches):
+            if idx > 0:
+                time.sleep(1)
+            assemblies_path = os.path.join(tmp_dir, f'assemblies_to_update_{idx}_{len(batch)}.txt')
+            files_to_delete.append(assemblies_path)
+            with open(assemblies_path, 'w') as f:
+                for accession in batch:
+                    f.write(accession + '\n')
+            cmd = ['genome', 'accession', '--inputfile', assemblies_path]
+            ncbi_report = ncbi_datasets_client.get_data_from_ncbi(cmd)
+            if ncbi_report:
+                update_assemblies_from_ncbi_report(ncbi_report)
+    except Exception as e:
+        print(f"Error updating data: {e}")
+    finally:
+        #delete the tmp files
+        for file_to_delete in files_to_delete:
+            if os.path.exists(file_to_delete):
+                os.remove(file_to_delete)
+        print("Updated assemblies")
+
+
+def build_assembly_lookup(accessions: list[str], fields: list[str]=['assembly_accession', 'taxid', 'organism_name', 'taxon_lineage']) -> dict[str, GenomeAssembly]:
+    """
+    Build a lookup dictionary of assemblies by accession, this is used to quickly get the assembly by accession
+    """
+    return {
+        a.assembly_accession: a
+        for a in GenomeAssembly.objects(
+            assembly_accession__in=accessions
+        ).only(*fields)
+    }

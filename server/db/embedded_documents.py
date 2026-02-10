@@ -119,7 +119,6 @@ class GeneCategoryFeatureStats(DynamicEmbeddedDocument):
     biotype_counts = DictField(field=IntField())
     transcript_type_counts = DictField(field=IntField())
 
-
 class SubFeatureStats(DynamicEmbeddedDocument):
     total_count = IntField()
     length = EmbeddedDocumentField(GenericLengthStats)
@@ -148,3 +147,21 @@ class GFFStats(DynamicEmbeddedDocument):
     transcript_type_stats = DictField(field=EmbeddedDocumentField(GenericTranscriptTypeStats))
 
 
+class DistributionStats(EmbeddedDocument):
+    mean = FloatField()
+    median = FloatField()
+    std = FloatField()
+    min = FloatField()
+    max = FloatField()
+    n = IntField()
+
+class TaxonGeneCategoryStats(EmbeddedDocument):
+    count = EmbeddedDocumentField(DistributionStats)
+
+class TaxonGeneStats(EmbeddedDocument):
+    coding = EmbeddedDocumentField(TaxonGeneCategoryStats)
+    non_coding = EmbeddedDocumentField(TaxonGeneCategoryStats)
+    pseudogene = EmbeddedDocumentField(TaxonGeneCategoryStats)
+
+class TaxonAnnotationStats(EmbeddedDocument):
+    genes = EmbeddedDocumentField(TaxonGeneStats)

@@ -2,6 +2,7 @@ from typing import Optional
 from db.models import TaxonNode
 from helpers import response as response_helper, query_visitors as query_visitors_helper
 from fastapi import HTTPException
+from fastapi.responses import StreamingResponse
 
 def get_taxon_nodes(filter: str = None, rank: str = None, offset: int = 0, limit: int = 20, taxids: Optional[str] = None, sort_by: str = None, sort_order: str = 'desc'):
     query=dict()
@@ -47,45 +48,94 @@ def get_ancestors(taxid: str):
         "total": len(ancestors)
     }
 
-def get_flattened_tree():
-
+def get_flattened_tree(format: str = "json"):
+    """
+    Returns flattened taxonomy tree.
+    - format='json' (default): JSON with fields + rows (list of lists).
+    - format='tsv': streaming TSV response (lower memory, streamed).
+    """
     taxon_coll = TaxonNode._get_collection()
 
+    # Build parent mapping - stream cursor (no list conversion)
     parent_by_child = {}
-    #skip cellular organism we use Eukaryota as root
+    # skip cellular organism we use Eukaryota as root
     for doc in taxon_coll.find({"taxid": {"$ne": "131567"}}, {"taxid": 1, "children": 1}):
         parent_taxid = doc["taxid"]
         for child_taxid in doc.get("children", []):
             parent_by_child[child_taxid] = parent_taxid
 
+    fields = [
+        "taxid",
+        "parent_taxid",
+        "scientific_name",
+        "annotations_count",
+        "assemblies_count",
+        "organisms_count",
+        "rank",
+        "coding_mean_count",
+        "non_coding_mean_count",
+        "pseudogene_mean_count"
+    ]
+
+    pipeline = [
+        {"$match": {"taxid": {"$ne": "131567"}}},
+        {"$project": {
+            "taxid": 1,
+            "scientific_name": 1,
+            "annotations_count": 1,
+            "assemblies_count": 1,
+            "organisms_count": 1,
+            "rank": 1,
+            "coding_mean_count": {"$ifNull": ["$stats.genes.coding.count.mean", 0]},
+            "non_coding_mean_count": {"$ifNull": ["$stats.genes.non_coding.count.mean", 0]},
+            "pseudogene_mean_count": {"$ifNull": ["$stats.genes.pseudogene.count.mean", 0]},
+            "_id": 0
+        }}
+    ]
+
+    if format and format.lower() == "tsv":
+        def stream_tsv():
+            yield "\t".join(fields) + "\n"
+            for doc in taxon_coll.aggregate(pipeline):
+                taxid = doc["taxid"]
+                parent_taxid = parent_by_child.get(taxid)
+                row_values = [
+                    str(taxid),
+                    str(parent_taxid) if parent_taxid else "",
+                    str(doc.get("scientific_name", "")).replace("\t", " ").replace("\n", " "),
+                    str(doc.get("annotations_count", 0)),
+                    str(doc.get("assemblies_count", 0)),
+                    str(doc.get("organisms_count", 0)),
+                    str(doc.get("rank", "")).replace("\t", " ").replace("\n", " "),
+                    str(doc.get("coding_mean_count", 0)),
+                    str(doc.get("non_coding_mean_count", 0)),
+                    str(doc.get("pseudogene_mean_count", 0))
+                ]
+                yield "\t".join(row_values) + "\n"
+
+        return StreamingResponse(
+            stream_tsv(),
+            media_type="text/tab-separated-values",
+            headers={
+                "Content-Type": "text/tab-separated-values; charset=utf-8",
+                "X-Accel-Buffering": "no",
+            }
+        )
+
+    # JSON format (default): build rows list and return
     rows = []
-    projection = {
-        "taxid": 1,
-        "scientific_name": 1,
-        "annotations_count": 1,
-        "assemblies_count": 1,
-        "organisms_count": 1,
-        "_id": 0
-    }
-    for doc in taxon_coll.find({"taxid": {"$ne": "131567"}}, projection):
+    for doc in taxon_coll.aggregate(pipeline):
         taxid = doc["taxid"]
         rows.append([
             taxid,
-            parent_by_child.get(taxid),  # None if root
+            parent_by_child.get(taxid),
             doc.get("scientific_name"),
             doc.get("annotations_count", 0),
             doc.get("assemblies_count", 0),
-            doc.get("organisms_count", 0)
+            doc.get("organisms_count", 0),
+            doc.get("rank"),
+            doc.get("coding_mean_count", 0),
+            doc.get("non_coding_mean_count", 0),
+            doc.get("pseudogene_mean_count", 0)
         ])
-
-    return {
-        "fields": [
-            "taxid",
-            "parent_taxid",
-            "scientific_name",
-            "annotations_count",
-            "assemblies_count",
-            "organisms_count"
-        ],
-        "rows": rows
-    }
+    return {"fields": fields, "rows": rows}

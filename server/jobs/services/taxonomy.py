@@ -1,4 +1,5 @@
-from db.models import TaxonNode, Organism
+from db.models import TaxonNode, Organism, GenomeAssembly, GenomeAnnotation
+from collections import defaultdict
 from clients import ebi_client
 from lxml import etree
 from .classes import AnnotationToProcess, OrganismToProcess
@@ -6,6 +7,7 @@ import os
 from .utils import create_batches
 import gzip
 from itertools import chain
+from pymongo.operations import UpdateOne
 
 def get_existing_lineages_dict(annotations: list[AnnotationToProcess])->dict[str, list[str]]:
     """
@@ -125,6 +127,7 @@ def save_taxons(organisms_to_process: list[OrganismToProcess], batch_size: int=5
             continue
         
     print(f"Total taxons saved: {len(saved_taxids)}")
+    return saved_taxids
 
 def get_ordered_taxons(taxids: list[str])->list[TaxonNode]:
     """
@@ -144,6 +147,126 @@ def update_taxon_hierarchy(ordered_taxons: list[TaxonNode]):
         child_taxon = ordered_taxons[index]
         father_taxon = ordered_taxons[index + 1]
         father_taxon.modify(add_to_set__children=child_taxon.taxid)
+
+
+def rebuild_taxon_hierarchy_from_lineages():
+    """
+    Rebuild the taxon hierarchy from all existing taxon_lineage data in assemblies, annotations, and organisms.
+    This ensures that parent-child relationships are correctly set even if they weren't established during initial import.
+    
+    Memory-efficient implementation: streams lineages and processes taxon nodes in batches to avoid loading all 20k into memory.
+    """
+    
+    print("Rebuilding taxon hierarchy from all lineages...")
+    
+    # Build parent-child relationships incrementally by streaming lineages
+    # parent_taxid -> set of child_taxids
+    parent_to_children = defaultdict(set)
+    
+    # Process lineages from assemblies
+    for doc in GenomeAssembly.objects.aggregate([
+        {"$project": {"taxon_lineage": 1}},
+        {"$match": {"taxon_lineage": {"$ne": [], "$exists": True}}},
+        {"$group": {"_id": "$taxon_lineage"}}
+    ]):
+        lineage = doc["_id"]
+        # lineage is ordered from species (index 0) to root (last index)
+        for i in range(len(lineage) - 1):
+            child_taxid = lineage[i]
+            parent_taxid = lineage[i + 1]
+            parent_to_children[parent_taxid].add(child_taxid)
+    
+    # Process lineages from annotations
+    for doc in GenomeAnnotation.objects.aggregate([
+        {"$project": {"taxon_lineage": 1}},
+        {"$match": {"taxon_lineage": {"$ne": [], "$exists": True}}},
+        {"$group": {"_id": "$taxon_lineage"}}
+    ]):
+        lineage = doc["_id"]
+        for i in range(len(lineage) - 1):
+            child_taxid = lineage[i]
+            parent_taxid = lineage[i + 1]
+            parent_to_children[parent_taxid].add(child_taxid)
+    
+    # Process lineages from organisms
+    for doc in Organism.objects.aggregate([
+        {"$project": {"taxon_lineage": 1}},
+        {"$match": {"taxon_lineage": {"$ne": [], "$exists": True}}},
+        {"$group": {"_id": "$taxon_lineage"}}
+    ]):
+        lineage = doc["_id"]
+        for i in range(len(lineage) - 1):
+            child_taxid = lineage[i]
+            parent_taxid = lineage[i + 1]
+            parent_to_children[parent_taxid].add(child_taxid)
+    
+    # Convert sets to sorted lists for consistency
+    parent_to_children = {k: sorted(list(v)) for k, v in parent_to_children.items()}
+    
+    # Use raw MongoDB collection for efficient bulk updates
+    taxon_collection = TaxonNode._get_collection()
+    updated_count = 0
+    batch_size = 1000
+    
+    # Process taxons that should have children (those in parent_to_children) in batches
+    parent_taxids_list = list(parent_to_children.keys())
+    
+    for batch_taxids in create_batches(parent_taxids_list, batch_size):
+        # Build bulk operations for this batch
+        bulk_ops = []
+        for taxid in batch_taxids:
+            expected_children = parent_to_children[taxid]
+            bulk_ops.append(
+                UpdateOne(
+                    {'taxid': taxid},
+                    {'$set': {'children': expected_children}}
+                )
+            )
+        
+        if bulk_ops:
+            result = taxon_collection.bulk_write(bulk_ops, ordered=False)
+            updated_count += result.modified_count
+    
+    # Clear children for taxons that shouldn't have any (not in parent_to_children but currently have children)
+    # Process in batches as we find them to avoid loading all into memory
+    all_parent_taxids_set = set(parent_to_children.keys())
+    
+    # Find taxons with children that aren't in our parent list, process in batches
+    batch_taxids_to_clear = []
+    for doc in taxon_collection.find(
+        {'taxid': {'$nin': list(all_parent_taxids_set)}, 'children': {'$ne': []}},
+        {'taxid': 1}
+    ):
+        batch_taxids_to_clear.append(doc['taxid'])
+        
+        # Process batch when it reaches batch_size
+        if len(batch_taxids_to_clear) >= batch_size:
+            bulk_ops = [
+                UpdateOne(
+                    {'taxid': taxid},
+                    {'$set': {'children': []}}
+                )
+                for taxid in batch_taxids_to_clear
+            ]
+            
+            result = taxon_collection.bulk_write(bulk_ops, ordered=False)
+            updated_count += result.modified_count
+            batch_taxids_to_clear = []
+    
+    # Process remaining taxids
+    if batch_taxids_to_clear:
+        bulk_ops = [
+            UpdateOne(
+                {'taxid': taxid},
+                {'$set': {'children': []}}
+            )
+            for taxid in batch_taxids_to_clear
+        ]
+        
+        result = taxon_collection.bulk_write(bulk_ops, ordered=False)
+        updated_count += result.modified_count
+    
+    print(f"Rebuilt taxon hierarchy: updated {updated_count} taxon nodes")
 
 
 def parse_taxons_and_organisms_from_ena_browser(xml_path: str) -> list[OrganismToProcess]:
@@ -213,3 +336,66 @@ def parse_taxons_and_organisms_from_ena_browser(xml_path: str) -> list[OrganismT
                 del elem.getparent()[0]
 
     return organisms
+
+
+def get_new_organisms_taxids(taxids: list[str])->list[str]:
+    """
+    Get the new organisms taxids from the taxids set
+    - taxids: list of taxids to check
+    - return: list of new organisms taxids
+    """
+    taxid_set = set(taxids)
+    existing_organisms = set(Organism.objects(taxid__in=taxids).scalar('taxid'))
+    new_taxids = taxid_set - existing_organisms
+    return list(new_taxids)
+
+
+def handle_new_lineage(organism: OrganismToProcess):
+    """
+    Handle the new lineage for an organism
+    - organism: OrganismToProcess
+    """
+    #check if all the taxons already exists in the db and save the new ones
+    existing_taxons = TaxonNode.objects(taxid__in=organism.taxon_lineage)
+    new_taxons = set(organism.taxon_lineage) - set(existing_taxons.scalar('taxid'))
+    if new_taxons:
+        taxons_to_save = [taxon for taxon in organism.parsed_taxon_lineage if taxon.taxid in new_taxons]
+        try:
+            TaxonNode.objects.insert(taxons_to_save)
+            print(f"Saved {len(taxons_to_save)} new taxons")
+        except Exception as e:
+            print(f"Error saving new taxons: {e}")
+            # Update the existing taxons with the new rank and scientific name
+    taxon_lineage_lookup = {item.taxid: item for item in organism.parsed_taxon_lineage}
+    for taxon in existing_taxons:
+        if taxon.taxid in taxon_lineage_lookup:
+            lineage_item = taxon_lineage_lookup[taxon.taxid]
+            payload = dict()
+            if taxon.scientific_name != lineage_item.scientific_name:
+                payload['scientific_name'] = lineage_item.scientific_name
+            if taxon.rank != lineage_item.rank:
+                payload['rank'] = lineage_item.rank
+            if payload:
+                taxon.modify(**payload)
+
+    # Note: Hierarchy will be rebuilt from all lineages by rebuild_taxon_hierarchy_from_lineages()
+    # No need for incremental update here since it only adds and doesn't remove stale relationships
+
+
+def process_organism(organism: OrganismToProcess, existing_organism: Organism):
+    """
+    Process an organism
+    - organism: OrganismToProcess
+    """
+    payload = dict()
+    payload_of_related_documents = dict()
+    if existing_organism.taxon_lineage != organism.taxon_lineage:
+        payload['taxon_lineage'] = organism.taxon_lineage
+        payload_of_related_documents['taxon_lineage'] = organism.taxon_lineage
+        handle_new_lineage(organism)
+    if existing_organism.organism_name != organism.organism_name:
+        payload['organism_name'] = organism.organism_name
+        payload_of_related_documents['organism_name'] = organism.organism_name
+    if existing_organism.common_name != organism.common_name:
+        payload['common_name'] = organism.common_name
+    return payload, payload_of_related_documents

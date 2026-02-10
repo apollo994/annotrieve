@@ -4,8 +4,9 @@ import shutil
 import subprocess
 import shlex
 from datetime import datetime
+from typing import Union
 import requests
-from db.models import GenomeAnnotation, AnnotationError
+from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap
 from db.embedded_documents import PipelineInfo, IndexedFileInfo
 from mongoengine import Q
 from helpers import file as file_helper
@@ -111,7 +112,7 @@ def save_annotations(annotations: list[GenomeAnnotation], annotations_path: str)
 
         #those where the md5 checksum of the original file is the same as the one in the errors or the url path
         source_md5s = [annotation.source_file_info.uncompressed_md5 for annotation in annotations]
-        AnnotationError.objects(Q(source_md5__in=source_md5s) | Q(source_file_info__url_path__in=url_paths)).delete()
+        AnnotationError.objects(Q(source_md5__in=source_md5s) | Q(url_path__in=url_paths)).delete()
         saved_annotations_ids = [annotation.annotation_id for annotation in annotations]
         print(f"Saved {len(saved_annotations_ids)} annotations")
     except Exception as e:
@@ -128,19 +129,6 @@ def filter_annotations_dict_by_field(annotations: list[AnnotationToProcess], fie
     Filter the annotations by a field and a list of values, return the filtered annotations
     """
     return [annotation for annotation in annotations if getattr(annotation, field) in list_of_values]
-
-def delete_changed_md5_checksum_annotations(saved_annotations_ids: list[str], annotations_path: str) -> tuple[int, int]:
-    """
-    Handle the annotations which incoming md5 checksum changed
-    """
-    urls = [annotation.source_file_info.url_path for annotation in annotations]
-    annotations_to_delete = GenomeAnnotation.objects(source_file_info__url_path__in=urls) #if the path exists, it means the incoming md5 checksum changed 
-    deleted_count = annotations_to_delete.count()
-    deleted_files_count = remove_files_from_annotations(annotations_to_delete, annotations_path)
-    annotations_to_delete.delete()
-    print(f"Deleted {deleted_count} annotations")
-    print(f"Deleted {deleted_files_count} files")
-    return deleted_count, deleted_files_count
 
 def filter_annotations_by_md5_checksum_and_url_path(annotations: list[AnnotationToProcess]) -> list[AnnotationToProcess]:
     """
@@ -254,26 +242,31 @@ def init_indexed_file_info(uncompressed_md5_checksum: str, file_size: int, relat
         'pipeline': PipelineInfo(**PIPELINE_INFO),
     })
 
-def download_gff_file(annotation_to_process: AnnotationToProcess, downloaded_gff: str) -> str:
+def download_gff_file(annotation_to_process: AnnotationToProcess, downloaded_gff: str):
     """
-    Download the gff file from the original url, 
-    keep only those files that are synchronized with the tsv file (by last modified date)
+    Download the gff file from the original url.
+    Require both server and TSV to have last_modified; raise otherwise so the tracker in GH can handle it.
+    Raise on date mismatch when they differ.
     """
     url = annotation_to_process.access_url
-    # Stream the file content using requests
     try:
         with requests.get(url, stream=True) as r:
-            r.raise_for_status()  # Check for any errors
+            r.raise_for_status()
             last_modified = get_last_modified_date(r.headers)
-            #keep only those files that are synchronized with the tsv file
-            if last_modified == annotation_to_process.last_modified:
-                with open(downloaded_gff, 'wb') as f:
-                # Write the content to the temp file in chunks
-                    for chunk in r.iter_content(chunk_size=8192): 
-                        f.write(chunk)
+            tsv_last_modified = annotation_to_process.last_modified
+            if last_modified is None or tsv_last_modified is None:
+                raise Exception(
+                    f"Missing last_modified: server Last-Modified={last_modified}, tsv last_modified={tsv_last_modified}, url={url}"
+                )
+            if last_modified != tsv_last_modified:
+                raise Exception(
+                    f"Date mismatch: server Last-Modified={last_modified}, tsv last_modified={tsv_last_modified}, url={url}"
+                )
+            with open(downloaded_gff, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
     except Exception as e:
         raise e
-    return downloaded_gff
 
 def get_sources_and_types(gff_file: str) -> tuple[list[str], list[str]]:
     """
@@ -361,3 +354,42 @@ def sort_gff_file(gff_file, output_file):
                 raise Exception(combined_err.decode('utf-8'))
     except subprocess.CalledProcessError as e:
         raise Exception(f"An error occurred: {e}")
+
+
+def delete_annotations(query: Union[dict, Q], annotations_path: str):
+    """
+    Delete annotations matching the query.
+    
+    Args:
+        query: Either a dict (for keyword arguments) or a Q object (for complex queries)
+        annotations_path: Path to the annotations directory
+    """
+    # Handle both dict and Q object queries
+    if isinstance(query, dict):
+        annotations_to_delete = GenomeAnnotation.objects(**query)
+    else:
+        # Q object - pass directly to objects()
+        annotations_to_delete = GenomeAnnotation.objects(query)
+    
+    count = annotations_to_delete.count()
+    if count == 0:
+        return
+    print(f"Deleting {count} annotations")
+    remove_files_from_annotations(annotations_to_delete, annotations_path)
+    annotation_ids = list(annotations_to_delete.scalar('annotation_id'))
+    AnnotationSequenceMap.objects(annotation_id__in=annotation_ids).delete()
+    annotations_to_delete.delete()
+    print(f"Deleted {count} annotations")
+
+
+def clean_up_annotations_with_errors():
+    """
+    Clean up the annotations with errors which url paths are the same as the ones in the valid annotations
+    """
+    annotations_with_errors_urls = AnnotationError.objects().scalar('url_path')
+    existing_annotations = GenomeAnnotation.objects(source_file_info__url_path__in=annotations_with_errors_urls)
+    for annotation in existing_annotations:
+        AnnotationError.objects(url_path=annotation.source_file_info.url_path).delete()
+
+
+

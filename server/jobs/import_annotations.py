@@ -11,8 +11,9 @@ from .services import taxonomy as taxonomy_service
 from .services import stats as stats_service
 from .services import feature_summary as feature_summary_service
 from .services import feature_stats as feature_stats_service
-from db.models import GenomeAnnotation, GenomeAssembly
+from db.models import GenomeAnnotation
 from .services.utils import create_batches
+from mongoengine import Q
 
 TMP_DIR = "/tmp"
 ANNOTATIONS_PATH = os.getenv('LOCAL_ANNOTATIONS_DIR')
@@ -31,7 +32,6 @@ def import_annotations():
     Orchestrate the import job: fetch → filter → enrich → process → persist → stats → cleanup.
     """
     os.makedirs(TMP_DIR, exist_ok=True)
-
     print("Starting import annotations job...")
     # fetch annotations and deduplicate by md5 checksum and url path (exact match)
     new_annotations = []
@@ -45,7 +45,7 @@ def import_annotations():
         new_annotations.extend(filtered_annotations)
     
     if DEV:
-        new_annotations = random.sample(new_annotations, 10)
+        new_annotations = random.sample(new_annotations, 1000)
     print(f"Found {len(new_annotations)} new annotations to process")
     # LINEAGE HANDLING STEP
     valid_lineages = taxonomy_service.handle_taxonomy(new_annotations, TMP_DIR) #lineages saved in the database, return a dict of taxid:lineage
@@ -77,9 +77,16 @@ def import_annotations():
         else:
             print("No annotations processed")
 
-    #no matter what we update the stats at the end
+    #clean up annotations with errors
+    annotation_service.clean_up_annotations_with_errors()
+    
+    #clean up corrupted annotations
+    query = Q(features_summary__sources=[]) & Q(features_summary__types=[]) & Q(features_summary__attribute_keys=[])
+    annotation_service.delete_annotations(query, ANNOTATIONS_PATH)
+    
+    #UPDATE DB AND TAXON GENE STATS
     stats_service.update_db_stats()
-
+    stats_service.update_taxon_gene_stats()
     print("Import annotations job successfully finished")
 
 def process_annotations_pipeline(annotations: list[AnnotationToProcess], valid_lineages: dict[str, list[str]], existing_annotation_md5s: list[str]) -> list[GenomeAnnotation]:
@@ -122,15 +129,3 @@ def process_annotations_pipeline(annotations: list[AnnotationToProcess], valid_l
 
     return processed_annotations
 
-
-def handle_bioprojects(ann_to_save: GenomeAnnotation) -> list[GenomeAnnotation]:
-    """
-    Set the bioprojects for the annotations
-    """
-    #fetch related assembly
-    assembly = GenomeAssembly.objects(assembly_accession=ann_to_save.assembly_accession).first()
-    if not assembly:
-        return
-    #set bioprojects
-    ann_to_save.bioprojects = assembly.bioprojects
-    return ann_to_save
