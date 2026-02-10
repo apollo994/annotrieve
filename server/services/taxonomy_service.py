@@ -94,8 +94,11 @@ def get_flattened_tree(format: str = "json"):
     ]
 
     if format and format.lower() == "tsv":
+        TSV_BUFFER_SIZE = 5000
+
         def stream_tsv():
             yield "\t".join(fields) + "\n"
+            buffer: list[str] = []
             for doc in taxon_coll.aggregate(pipeline):
                 taxid = doc["taxid"]
                 parent_taxid = parent_by_child.get(taxid)
@@ -111,7 +114,12 @@ def get_flattened_tree(format: str = "json"):
                     str(doc.get("non_coding_mean_count", 0)),
                     str(doc.get("pseudogene_mean_count", 0))
                 ]
-                yield "\t".join(row_values) + "\n"
+                buffer.append("\t".join(row_values) + "\n")
+                if len(buffer) >= TSV_BUFFER_SIZE:
+                    yield "".join(buffer)
+                    buffer.clear()
+            if buffer:
+                yield "".join(buffer)
 
         return StreamingResponse(
             stream_tsv(),
