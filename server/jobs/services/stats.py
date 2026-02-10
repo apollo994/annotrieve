@@ -222,7 +222,7 @@ def update_taxon_gene_stats():
         for taxon in taxon_nodes_batch:
             counts = taxon_counts.get(taxon.taxid, {"coding": [], "non_coding": [], "pseudogene": []})
             
-            coding = TaxonGeneCategoryStats(count=i(counts.get("coding", [])))
+            coding = TaxonGeneCategoryStats(count=compute_distribution_stats(counts.get("coding", [])))
             non_coding = TaxonGeneCategoryStats(count=compute_distribution_stats(counts.get("non_coding", [])))
             pseudogene = TaxonGeneCategoryStats(count=compute_distribution_stats(counts.get("pseudogene", [])))
             
