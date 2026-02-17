@@ -230,3 +230,37 @@ export function getTranscriptTypeMetricValues(
     params
   )
 }
+
+// Annotations aggregates by taxon rank (for radial stacked bar chart)
+export const TAXON_RANK_OPTIONS = [
+  'domain',
+  'kingdom',
+  'phylum',
+  'class',
+  'order',
+  'family',
+  'genus',
+] as const
+
+export type TaxonRankOption = (typeof TAXON_RANK_OPTIONS)[number]
+
+export interface TaxonAggregateRow {
+  taxid: number
+  taxon_name: string
+  avg_coding_genes_count: number
+  avg_non_coding_genes_count: number
+  avg_pseudogenes_count: number
+  count: number
+}
+
+export interface AnnotationsAggregatesByTaxonResponse {
+  fields: string[]
+  rows: [number, string, number, number, number, number][]
+}
+
+export function getAnnotationsAggregatesByTaxonRank(rank: string) {
+  return apiGet<AnnotationsAggregatesByTaxonResponse>(
+    '/annotations/aggregates/taxons',
+    { rank }
+  )
+}

@@ -12,3 +12,4 @@ post_stats.py
 Pipfile.lock
 Pipfile
 test_logs/
+.cursor/

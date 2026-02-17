@@ -354,13 +354,30 @@ export const useTaxonomicTreeStore = create<TaxonomicTreeState>((set, get) => ({
   },
   
   clearSearch: () => {
+    const state = get()
+    const rootTaxid = state.rootNode?.taxid
+    
     set({
       searchQuery: '',
       searchResults: [],
       matchedTaxids: new Set(),
       isSearchMode: false,
       hasNoSearchResults: false,
-      selectedRank: null
+      selectedRank: null,
+      // Clear rank filter data
+      rankRoots: [],
+      rankRootsOffset: 0,
+      hasMoreRankRoots: false,
+      totalRankRoots: 0,
+      // Clear selected taxon data (from search selection)
+      selectedTaxonData: null,
+      selectedTaxonAncestors: [],
+      selectedTaxonChildren: [],
+      // Clear expanded nodes and children data to prevent old rows from showing
+      expandedNodes: rootTaxid ? new Set([rootTaxid]) : new Set(),
+      childrenData: new Map(),
+      fetchedNodes: new Set(),
+      fetchingNodes: new Set()
     })
   },
   
@@ -370,11 +387,18 @@ export const useTaxonomicTreeStore = create<TaxonomicTreeState>((set, get) => ({
     if (rank) {
       get().fetchRankRoots(rank, 0)
     } else {
+      const state = get()
+      const rootTaxid = state.rootNode?.taxid
       set({
         rankRoots: [],
         rankRootsOffset: 0,
         hasMoreRankRoots: false,
-        totalRankRoots: 0
+        totalRankRoots: 0,
+        // Clear expanded nodes and children data when clearing rank filter
+        expandedNodes: rootTaxid ? new Set([rootTaxid]) : new Set(),
+        childrenData: new Map(),
+        fetchedNodes: new Set(),
+        fetchingNodes: new Set()
       })
     }
   },

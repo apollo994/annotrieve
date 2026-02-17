@@ -32,3 +32,26 @@ export function extractCounts(data: TaxonRecord) {
   }
 }
 
+/** Gene counts from stats.genes or top-level fallbacks (coding, non_coding, pseudogene) */
+export function extractGeneCounts(data: TaxonRecord) {
+  const stats = data.stats as { genes?: { coding?: { count?: { mean?: number } }; non_coding?: { count?: { mean?: number } }; pseudogene?: { count?: { mean?: number } } } } | undefined
+  const coding = normalizeCount(
+    (data as { coding_count?: number }).coding_count ??
+    stats?.genes?.coding?.count?.mean
+  )
+  const nonCoding = normalizeCount(
+    (data as { non_coding_count?: number }).non_coding_count ??
+    stats?.genes?.non_coding?.count?.mean
+  )
+  const pseudogene = normalizeCount(
+    (data as { pseudogene_count?: number }).pseudogene_count ??
+    stats?.genes?.pseudogene?.count?.mean
+  )
+  return { coding, nonCoding, pseudogene }
+}
+
+export const GENE_STACK_COLORS = {
+  coding: 'bg-emerald-500',
+  nonCoding: 'bg-amber-500',
+  pseudogene: 'bg-indigo-500',
+} as const

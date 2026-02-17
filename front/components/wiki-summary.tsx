@@ -21,9 +21,13 @@ interface WikipediaSummary {
 interface WikiSummaryProps {
   searchTerm: string
   className?: string
+  /** When true, only the text extract is shown (no thumbnail image) */
+  hideImage?: boolean
+  /** When true, show full extract; otherwise truncate to 100 chars */
+  fullExtract?: boolean
 }
 
-export function WikiSummary({ searchTerm, className = "" }: WikiSummaryProps) {
+export function WikiSummary({ searchTerm, className = "", hideImage = false, fullExtract = false }: WikiSummaryProps) {
   const [summary, setSummary] = useState<WikipediaSummary | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -101,7 +105,7 @@ export function WikiSummary({ searchTerm, className = "" }: WikiSummaryProps) {
   return (
     <div className="border rounded-lg p-6 bg-muted/30">
       <div className="flex flex-col gap-4">
-        {summary.thumbnail && (
+        {!hideImage && summary.thumbnail && (
           <img
             src={summary.thumbnail.source}
             alt={summary.title}
@@ -111,7 +115,7 @@ export function WikiSummary({ searchTerm, className = "" }: WikiSummaryProps) {
         )}
         <div className="flex-1 min-w-0">
           <p className="text-muted-foreground leading-relaxed text-sm">
-            {summary.extract.length > 100 ? summary.extract.slice(0, 100) + "..." : summary.extract}
+            {fullExtract ? summary.extract : (summary.extract.length > 100 ? summary.extract.slice(0, 100) + "..." : summary.extract)}
           </p>
           <a
             href={summary.content_urls.desktop.page}

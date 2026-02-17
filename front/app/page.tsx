@@ -6,7 +6,6 @@ import { TopAnnotations } from "@/components/top-annotated-records"
 import { DatabaseFrequencies } from "@/components/database-frequencies"
 import { ReleaseDateChart } from "@/components/release-date-chart"
 import { FeaturesSection } from "@/components/features-section"
-import { TreeOfLifeD3 } from "@/components/tree-of-life-d3"
 import { UserAnalyticsMap } from "@/components/user-analytics-map"
 import { SectionWrapper } from "@/components/ui/section-wrapper"
 
@@ -45,33 +44,19 @@ export default function Home() {
       </SectionWrapper>
       <SectionWrapper id="release-timeline" backgroundVariant="muted">
         <ReleaseDateChart
-          title="Annotation release timeline"
+          title="Cumulative annotation release timeline"
           description={
             <>
-              Explore how annotation releases have evolved over time across{" "}
+              Track the cumulative growth of annotation releases over time across{" "}
               <span className="font-medium">Ensembl</span>,{" "}
               <span className="font-medium">NCBI RefSeq</span>, and{" "}
-              <span className="font-medium">NCBI GenBank</span>. The chart shows yearly annotation counts grouped by database source.
-            </>
-          }
-        />
-      </SectionWrapper>
-      
-      <SectionWrapper id="tree-of-life" backgroundVariant="default">
-        <TreeOfLifeD3
-          title="Interactive taxonomy tree"
-          description={
-            <>
-              Explore the complete hierarchical tree of life of the annotated organisms with an interactive circle packing visualization. 
-              Nested circles represent taxonomic relationships, with <strong> each circle size </strong> reflecting the number of annotations. 
-              <strong> Zoom with scroll</strong>, <strong>pan by dragging</strong>, 
-              and <strong>click nodes</strong> to explore their annotations in detail.
+              <span className="font-medium">NCBI GenBank</span>. Each line shows the total number of annotations released up to that year, with each database accumulating independently.
             </>
           }
         />
       </SectionWrapper>
 
-      <SectionWrapper id="latest-releases" backgroundVariant="muted">
+      <SectionWrapper id="latest-releases" backgroundVariant="default">
         <LatestReleases
           title="Explore recent releases"
           description="Browse newly released assemblies and jump straight into their annotations."
@@ -85,20 +70,6 @@ export default function Home() {
           description="See organisms, classes, and assemblies with the most annotations and start exploring from there."
         />
       </SectionWrapper>
-{/* 
-      <SectionWrapper id="user-analytics" backgroundVariant="muted">
-        <UserAnalyticsMap
-          title="Global User Analytics"
-          description={
-            <>
-              Interactive map showing the geographic distribution of unique users accessing Annotrieve. 
-              Each user is identified by a unique fingerprint. <strong>Hover over countries</strong> to see 
-              detailed statistics, and <strong>zoom and pan</strong> to explore the map.
-            </>
-          }
-        />
-      </SectionWrapper> */}
-
     </>
   )
 }

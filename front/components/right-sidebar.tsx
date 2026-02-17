@@ -4,6 +4,7 @@ import { useUIStore } from "@/lib/stores/ui"
 import { FileOverviewSidebar } from "@/components/file-overview-dialog"
 import { TaxonomicTreeTable } from "@/components/taxonomic-tree-table"
 import { AssembliesListTable } from "@/components/assemblies-list-table"
+import { TaxonDetailsSidebar } from "@/components/taxon-details-sidebar"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -12,6 +13,7 @@ import { useEffect } from "react"
 export function RightSidebar() {
   const rightSidebar = useUIStore((state) => state.rightSidebar)
   const closeRightSidebar = useUIStore((state) => state.closeRightSidebar)
+  const taxonomySetAsRootCallback = useUIStore((state) => state.taxonomySetAsRootCallback)
   const { isOpen, view, data } = rightSidebar
 
   // Close on escape key
@@ -35,6 +37,8 @@ export function RightSidebar() {
         return "Taxonomic Tree"
       case "assemblies-list":
         return "Assemblies List"
+      case "taxon-details":
+        return "Taxon Details"
       default:
         return "Details"
     }
@@ -72,23 +76,25 @@ export function RightSidebar() {
         )}
         style={{ width: 'min(800px, 90vw)' }}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b flex-shrink-0 bg-muted/30">
-          <h2 className="text-lg font-semibold">{getTitle()}</h2>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={closeRightSidebar}
-            className="h-8 w-8 p-0"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* Header - skip for taxon-details (TaxonDetailsSidebar renders its own) */}
+        {view !== "taxon-details" && (
+          <div className="flex items-center justify-between p-3 border-b flex-shrink-0 bg-muted/30">
+            <h2 className="text-lg font-semibold">{getTitle()}</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={closeRightSidebar}
+              className="h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
           {view === "taxonomic-tree" && (
-            <div className="p-4 h-full">
+            <div className="p-3 h-full overflow-y-auto">
               <TaxonomicTreeTable
                 rootTaxid={data.taxid || "2759"}
                 selectedTaxid={data.taxid || null}
@@ -99,9 +105,17 @@ export function RightSidebar() {
           )}
 
           {view === "assemblies-list" && (
-            <div className="p-4 h-full">
+            <div className="p-3 h-full overflow-y-auto">
               <AssembliesListTable taxid={data.taxid} />
             </div>
+          )}
+
+          {view === "taxon-details" && data.taxid && (
+            <TaxonDetailsSidebar
+              taxid={data.taxid}
+              onSetAsRoot={taxonomySetAsRootCallback || undefined}
+              onClose={closeRightSidebar}
+            />
           )}
         </div>
       </div>

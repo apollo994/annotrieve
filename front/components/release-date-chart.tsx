@@ -141,7 +141,28 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
                     })
                     .sort((a, b) => a.date.getTime() - b.date.getTime())
 
-                setData(sortedData)
+                // Convert to cumulative timeline - each database accumulates independently
+                // Each year shows: all previous years' counts + current year's count
+                const cumulativeData: ReleaseDateData[] = []
+                let cumulativeEnsembl = 0
+                let cumulativeRefSeq = 0
+                let cumulativeGenBank = 0
+
+                sortedData.forEach(d => {
+                    // Add current year's count to each database's running total
+                    cumulativeEnsembl += d.Ensembl
+                    cumulativeRefSeq += d.RefSeq
+                    cumulativeGenBank += d.GenBank
+                    cumulativeData.push({
+                        date: d.date,
+                        year: d.year,
+                        Ensembl: cumulativeEnsembl,  // Total Ensembl annotations up to this year
+                        RefSeq: cumulativeRefSeq,     // Total RefSeq annotations up to this year
+                        GenBank: cumulativeGenBank    // Total GenBank annotations up to this year
+                    })
+                })
+
+                setData(cumulativeData)
             } catch (err) {
                 setError('Failed to load release date frequencies')
                 console.error('Error fetching release date frequencies:', err)
@@ -157,10 +178,11 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
         return (
             <div className="container mx-auto px-4 py-16">
                 <SectionHeader
-                    title={title ?? "Annotation Release Timeline"}
+                    title={title ?? "Cumulative Annotation Release Timeline"}
                     description={description ?? (
                         <>
-                            Track the evolution of annotation releases over time across different database sources.
+                            Track the cumulative growth of annotation releases over time across different database sources.
+                            Each line shows the total number of annotations released up to that year, with each database accumulating independently.
                         </>
                     )}
                     icon={Calendar}
@@ -182,10 +204,11 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
         return (
             <div className="container mx-auto px-4 py-16">
                 <SectionHeader
-                    title={title ?? "Annotation Release Timeline"}
+                    title={title ?? "Cumulative Annotation Release Timeline"}
                     description={description ?? (
                         <>
-                            Track the evolution of annotation releases over time across different database sources.
+                            Track the cumulative growth of annotation releases over time across different database sources.
+                            Each line shows the total number of annotations released up to that year, with each database accumulating independently.
                         </>
                     )}
                     icon={Calendar}
@@ -212,10 +235,11 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
         return (
             <div className="container mx-auto px-4 py-16">
                 <SectionHeader
-                    title={title ?? "Annotation Release Timeline"}
+                    title={title ?? "Cumulative Annotation Release Timeline"}
                     description={description ?? (
                         <>
-                            Track the evolution of annotation releases over time across different database sources.
+                            Track the cumulative growth of annotation releases over time across different database sources.
+                            Each line shows the total number of annotations released up to that year, with each database accumulating independently.
                         </>
                     )}
                     icon={Calendar}
@@ -233,11 +257,11 @@ export function ReleaseDateChart({ title, description }: ReleaseDateChartProps) 
     return (
         <div className="container mx-auto px-4 py-16">
             <SectionHeader
-                title={title ?? "Annotation Release Timeline"}
+                title={title ?? "Cumulative Annotation Release Timeline"}
                     description={description ?? (
                         <>
-                            Track the evolution of annotation releases over time across different database sources.
-                            Each line represents the number of annotations released in that year.
+                            Track the cumulative growth of annotation releases over time across different database sources.
+                            Each line shows the total number of annotations released up to that year, with each database accumulating independently.
                         </>
                     )}
                 icon={Calendar}

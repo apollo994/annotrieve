@@ -1,7 +1,8 @@
 "use client"
 
-import { Globe, ArrowRight } from "lucide-react"
+import { Globe, Network } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
 import { CommonSearchBar } from "@/components/common-search-bar"
 import type { CommonSearchResult } from "@/lib/types"
@@ -244,18 +245,25 @@ export function Hero() {
                             className="px-7 sm:px-9 py-3.5 sm:py-4.5 text-base sm:text-lg font-semibold gap-2 sm:gap-3 rounded-xl transition-transform duration-200 will-change-transform hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
                         >
                             <Globe className="h-4 w-4 sm:h-5 sm:w-5" />
-                            <span>Explore All Annotations</span>
-                            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span>View Annotations</span>
                         </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => router.push("/faqs")}
-                            size="lg"
-                            className="px-7 sm:px-9 py-3.5 sm:py-4.5 text-base sm:text-lg font-semibold gap-2 sm:gap-3 rounded-xl transition-transform duration-200 will-change-transform hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
-                        >
-                            Learn more
-
-                        </Button>
+                        <div className="relative inline-flex">
+                            <Button
+                                variant="secondary"
+                                onClick={() => router.push("/taxonomy")}
+                                size="lg"
+                                className="px-7 sm:px-9 py-3.5 sm:py-4.5 text-base sm:text-lg font-semibold gap-2 sm:gap-3 rounded-xl transition-transform duration-200 will-change-transform hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2"
+                            >
+                                <Network className="h-4 w-4 sm:h-5 sm:w-5" />
+                                <span>Explore Taxonomy</span>
+                            </Button>
+                            <Badge
+                                variant="secondary"
+                                className="absolute -top-1.5 -right-1.5 text-[10px] px-1.5 py-0 h-4 shrink-0 pointer-events-none"
+                            >
+                                Beta
+                            </Badge>
+                        </div>
                     </div>
 
                     {/* Live stats under CTA */}

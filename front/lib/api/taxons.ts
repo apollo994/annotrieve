@@ -31,11 +31,70 @@ export function getTaxonRankFrequencies() {
   return apiGet<Record<string, number>>('/taxons/frequencies/rank')
 }
 
-export interface FlattenedTreeResponse {
-  fields: string[]
-  rows: [string, string | null, string, number, number, number][]
+export interface FlatTreeNode {
+  id: string
+  parentId: string | null
+  scientific_name: string
+  annotations_count: number
+  assemblies_count: number
+  organisms_count: number
+  rank: string | null
+  coding_count: number
+  non_coding_count: number
+  pseudogene_count: number
 }
 
-export function getFlattenedTree() {
-  return apiGet<FlattenedTreeResponse>('/taxons/flattened-tree')
+export interface FlattenedTreeResponse {
+  fields: string[]
+  rows: (string | number | null)[][]
+}
+
+/**
+ * Fetches flattened tree. format='json' (default) returns structured JSON; format='tsv' returns TSV parsed to FlatTreeNode[].
+ */
+export async function getFlattenedTree(format: 'json' | 'tsv' = 'tsv'): Promise<FlatTreeNode[] | FlattenedTreeResponse> {
+  const { getApiBase, joinUrl } = await import('@/lib/config/env')
+  const API_BASE = getApiBase()
+  const url = `${joinUrl(API_BASE, '/taxons/flattened-tree')}?format=${format}`
+  
+  if (format === 'json') {
+    const res = await fetch(url, { method: 'GET', headers: { 'Accept': 'application/json' } })
+    if (!res.ok) throw new Error(`GET /taxons/flattened-tree failed: ${res.status}`)
+    return res.json() as Promise<FlattenedTreeResponse>
+  }
+  
+  const res = await fetch(url, { method: 'GET', headers: { 'Accept': 'text/tab-separated-values' } })
+  if (!res.ok) throw new Error(`GET /taxons/flattened-tree failed: ${res.status}`)
+  const text = await res.text()
+  return parseTsvToFlatTreeNodes(text)
+}
+
+/**
+ * Parses TSV text into FlatTreeNode array
+ */
+function parseTsvToFlatTreeNodes(tsvText: string): FlatTreeNode[] {
+  const lines = tsvText.trim().split('\n')
+  if (lines.length === 0) return []
+  
+  // First line is header - skip it
+  const dataLines = lines.slice(1)
+  
+  return dataLines.map((line) => {
+    const columns = line.split('\t')
+    
+    // Expected columns: taxid, parent_taxid, scientific_name, annotations_count,
+    // assemblies_count, organisms_count, rank, coding_count, non_coding_count, pseudogene_count
+    return {
+      id: columns[0] || '',
+      parentId: columns[1] || null,
+      scientific_name: columns[2] || '',
+      annotations_count: parseInt(columns[3] || '0', 10),
+      assemblies_count: parseInt(columns[4] || '0', 10),
+      organisms_count: parseInt(columns[5] || '0', 10),
+      rank: columns[6] || null,
+      coding_count: parseInt(columns[7] || '0', 10),
+      non_coding_count: parseInt(columns[8] || '0', 10),
+      pseudogene_count: parseInt(columns[9] || '0', 10),
+    }
+  })
 }

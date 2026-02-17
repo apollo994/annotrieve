@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Card, Button, LoadingSpinner, NotFound } from "@/components/ui"
-import { Dna, Database, FileText, ChevronRight } from "lucide-react"
+import { Dna, Database, FileText, ChevronRight, Compass } from "lucide-react"
 import { getTaxon, getTaxonAncestors, getTaxonChildren } from "@/lib/api/taxons"
 import { WikiSummary } from "@/components/wiki-summary"
 import type { TaxonRecord } from "@/lib/api/types"
@@ -21,8 +22,7 @@ import { getAssembliesStats, listAssemblies } from "@/lib/api/assemblies"
 import { getAnnotationsFrequencies } from "@/lib/api/annotations"
 import { Bar } from 'react-chartjs-2'
 import { CategoryScale, LinearScale, BarElement } from 'chart.js'
-import Link from "next/link"
-import { buildEntityDetailsUrl } from "@/lib/utils"
+import { buildEntityDetailsUrl, cn } from "@/lib/utils"
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -68,6 +68,30 @@ export function TaxonDetailsView({ taxid: taxidProp, onClose }: TaxonDetailsView
   const [loadingChildrenData, setLoadingChildrenData] = useState(false)
   const [directAnnotationsCount, setDirectAnnotationsCount] = useState(0)
   const [hasDirectOrganism, setHasDirectOrganism] = useState(false)
+
+  // Gene count distribution (from taxon.stats, like taxonomy)
+  const distributionByCategory = taxon
+    ? (() => {
+        type GeneCountStats = { mean?: number; median?: number; std?: number; min?: number; max?: number; n?: number }
+        const stats = (taxon as { stats?: { genes?: Record<string, { count?: GeneCountStats }> } }).stats
+        if (!stats?.genes) return null
+        const out: Record<string, { mean: number; median: number; std: number; min: number; max: number; n: number }> = {}
+        for (const cat of ["coding", "non_coding", "pseudogene"] as const) {
+          const s = stats.genes[cat]?.count
+          if (s && typeof s.mean === "number") {
+            out[cat] = {
+              mean: s.mean,
+              median: s.median ?? 0,
+              std: s.std ?? 0,
+              min: s.min ?? 0,
+              max: s.max ?? 0,
+              n: s.n ?? 0,
+            }
+          }
+        }
+        return Object.keys(out).length ? out : null
+      })()
+    : null
 
   // Ratios (computed from taxon counts)
   const organismsCount = taxon?.organisms_count ?? 0
@@ -337,7 +361,23 @@ export function TaxonDetailsView({ taxid: taxidProp, onClose }: TaxonDetailsView
               <span className="text-xs text-muted-foreground uppercase tracking-wide font-medium">TaxID</span>
               <span className="text-sm font-mono font-bold text-foreground">{taxon.taxid}</span>
             </div>
-            <Button disabled={selectedTaxons.some(t => t.taxid === taxon.taxid)} variant="accent" className="gap-2" onClick={handleViewAnnotations}>Add to filters</Button>
+            <div className="flex items-center gap-2 shrink-0">
+              {taxon.children && taxon.children.length > 0 && (
+                <Button
+                  variant="secondary"
+                  className="gap-2"
+                  asChild
+                >
+                  <Link href={`/taxonomy?taxon=${encodeURIComponent(taxon.taxid)}`}>
+                    <Compass className="h-4 w-4" />
+                    Explore in Taxonomy
+                  </Link>
+                </Button>
+              )}
+              <Button disabled={selectedTaxons.some(t => t.taxid === taxon.taxid)} variant="accent" className="gap-2" onClick={handleViewAnnotations}>
+                Add to filters
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -380,6 +420,42 @@ export function TaxonDetailsView({ taxid: taxidProp, onClose }: TaxonDetailsView
                 </div>
               </div>
             </Card>
+            {/* Gene count distribution stats */}
+            {distributionByCategory && Object.keys(distributionByCategory).length > 0 && (
+              <Card className="p-4">
+                <h2 className="text-lg font-semibold mb-1">Gene count distribution</h2>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Across {(taxon?.annotations_count ?? 0).toLocaleString()} annotation
+                  {(taxon?.annotations_count ?? 0) !== 1 ? "s" : ""}.
+                </p>
+                <div className="space-y-1.5">
+                  {Object.entries(distributionByCategory).map(([category, s]) => (
+                    <div
+                      key={category}
+                      className={cn(
+                        "rounded-md border p-2",
+                        category === "coding" && "border-primary/30 bg-primary/5",
+                        category === "non_coding" && "border-secondary/30 bg-secondary/5",
+                        category === "pseudogene" && "border-accent/30 bg-accent/5"
+                      )}
+                    >
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="font-medium capitalize">
+                          {category === "non_coding" ? "Non-coding" : category}
+                        </span>
+                        <span className="tabular-nums">mean {s.mean.toFixed(1)}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 mt-0.5 text-[10px] text-muted-foreground">
+                        <span>med {s.median.toFixed(0)}</span>
+                        <span>std {s.std.toFixed(1)}</span>
+                        <span>min {s.min}</span>
+                        <span>max {s.max}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
 
             {/* Ratios */}
             <Card className="p-4">
@@ -711,41 +787,7 @@ export function TaxonDetailsView({ taxid: taxidProp, onClose }: TaxonDetailsView
               </Card>
             )}
 
-            {/* Gene Statistics Distribution 
-            {taxid && (
-              <AnnotationsDistributionPlot
-                params={{ taxids: taxid }}
-                metric="counts"
-                category="all"
-                plotType="box"
-                title="Gene counts distribution"
-                height={300}
-              />
-            )}*/}
 
-            {/* Mean Length Distribution 
-            {taxid && (
-              <AnnotationsDistributionPlot
-                params={{ taxids: taxid }}
-                metric="mean_lengths"
-                category="all"
-                plotType="box"
-                title="Mean gene length distribution"
-                height={300}
-              />
-            )}*/}
-
-            {/* Gene Ratios Distribution 
-            {taxid && (
-              <AnnotationsDistributionPlot
-                params={{ taxids: taxid }}
-                metric="ratios"
-                category="all"
-                plotType="violin"
-                title="Gene category ratios distribution"
-                height={300}
-              />
-            )}*/}
           </div>
         </div>
       </div>

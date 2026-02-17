@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type RightSidebarView = "file-overview" | "taxonomic-tree" | "assemblies-list" | null
+export type RightSidebarView = "file-overview" | "taxonomic-tree" | "assemblies-list" | "taxon-details" | null
 
 export type Theme = 'light' | 'dark'
 
@@ -31,6 +31,11 @@ interface UIState {
     initialQuery: string
   }
   
+  // Taxonomy page callback for setting root taxon
+  taxonomySetAsRootCallback: ((taxid: string, taxon: any) => void) | null
+  // When navigating to taxonomy page with "View in tree", set this to apply root on load
+  taxonomyInitialRoot: { taxid: string; taxon: any } | null
+  
   // Actions
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
@@ -44,6 +49,8 @@ interface UIState {
   setRightSidebarView: (view: RightSidebarView, data?: any) => void
   openInsdcSearchModal: (initialQuery?: string) => void
   closeInsdcSearchModal: () => void
+  setTaxonomySetAsRootCallback: (callback: ((taxid: string, taxon: any) => void) | null) => void
+  setTaxonomyInitialRoot: (root: { taxid: string; taxon: any } | null) => void
 }
 
 export const useUIStore = create<UIState>()(
@@ -64,6 +71,9 @@ export const useUIStore = create<UIState>()(
         isOpen: false,
         initialQuery: ""
       },
+      
+      taxonomySetAsRootCallback: null,
+      taxonomyInitialRoot: null,
       
       // Actions
       setTheme: (theme: Theme) => {
@@ -146,6 +156,14 @@ export const useUIStore = create<UIState>()(
             initialQuery: ""
           }
         })
+      },
+      
+      setTaxonomySetAsRootCallback: (callback) => {
+        set({ taxonomySetAsRootCallback: callback })
+      },
+      
+      setTaxonomyInitialRoot: (root) => {
+        set({ taxonomyInitialRoot: root })
       },
     }),
     {

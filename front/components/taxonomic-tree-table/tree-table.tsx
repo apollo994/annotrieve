@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Loader2, ChevronRight, ChevronDown, Check, Dna, Database, FileText, ExternalLink, Search } from 'lucide-react'
 import { useTaxonomicTreeStore } from '@/lib/stores/taxonomic-tree'
 import { useUIStore } from '@/lib/stores/ui'
-import { getRankColor, extractCounts } from './utils'
+import { getRankColor, extractCounts, extractGeneCounts, GENE_STACK_COLORS } from './utils'
 import { buildTree, buildSearchTreeStructure, buildAncestorTree, flattenTrees } from './tree-builder'
 import type { TreeNode } from '@/lib/stores/taxonomic-tree'
 import { buildEntityDetailsUrl } from '@/lib/utils'
@@ -95,6 +95,16 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
   ])
 
   const flattenedNodes = useMemo(() => flattenTrees(trees), [trees])
+
+  const maxGeneSum = useMemo(() => {
+    let max = 0
+    for (const node of flattenedNodes) {
+      const g = extractGeneCounts(node.data)
+      const sum = g.coding + g.nonCoding + g.pseudogene
+      if (sum > max) max = sum
+    }
+    return max || 1
+  }, [flattenedNodes])
 
   // Fetch children for expanded nodes
   useEffect(() => {
@@ -187,36 +197,63 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
   return (
     <>
       <div className="border border-border rounded-lg overflow-hidden">
-        {/* Legend */}
-        <div className="bg-muted/30 border-b border-border px-4 py-2">
-          <div className="flex items-center justify-end gap-4 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              <Dna className="h-3 w-3 text-green-500" />
-              <span>Organisms</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Database className="h-3 w-3 text-purple-500" />
-              <span>Assemblies</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <FileText className="h-3 w-3 text-blue-500" />
-              <span>Annotations</span>
-            </div>
-          </div>
-        </div>
         <div className="overflow-x-auto max-h-[80vh] overflow-y-auto">
           <table className="w-full border-collapse">
+            {/* Legend Header */}
+            <thead className="bg-muted/30 border-b border-border">
+              <tr>
+                <th className="w-10 px-1 py-2"></th>
+                <th className="p-3 text-left"></th>
+                <th className="p-3 text-left"></th>
+                <th className="p-3 w-48 text-right">
+                  <div className="flex items-center justify-end gap-3 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1 whitespace-nowrap">
+                      <span className="text-muted-foreground">Mean counts:</span>
+                    </div>
+                    <div className="flex items-center gap-1 whitespace-nowrap">
+                      <span className={`inline-block w-2 h-2 rounded-sm ${GENE_STACK_COLORS.coding}`} />
+                      <span>Coding</span>
+                    </div>
+                    <div className="flex items-center gap-1 whitespace-nowrap">
+                      <span className={`inline-block w-2 h-2 rounded-sm ${GENE_STACK_COLORS.nonCoding}`} />
+                      <span>Non-coding</span>
+                    </div>
+                    <div className="flex items-center gap-1 whitespace-nowrap">
+                      <span className={`inline-block w-2 h-2 rounded-sm ${GENE_STACK_COLORS.pseudogene}`} />
+                      <span>Pseudogene</span>
+                    </div>
+                  </div>
+                </th>
+                <th className="p-3 text-right">
+                  <div className="flex items-center justify-end gap-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Dna className="h-3 w-3 text-green-500" />
+                      <span>Organisms</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Database className="h-3 w-3 text-purple-500" />
+                      <span>Assemblies</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <FileText className="h-3 w-3 text-blue-500" />
+                      <span>Annotations</span>
+                    </div>
+                  </div>
+                </th>
+                <th className="w-10 px-1 py-2"></th>
+              </tr>
+            </thead>
             <tbody className="">
               {loadingRankRoots && rankRoots.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center">
+                  <td colSpan={6} className="p-8 text-center">
                     <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2 text-primary" />
                     <p className="text-sm text-muted-foreground">Loading taxons...</p>
                   </td>
                 </tr>
               ) : flattenedNodes.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center">
+                  <td colSpan={6} className="p-8 text-center">
                     {isSearchMode && hasNoSearchResults ? (
                       <div className="space-y-4">
                         <p className="text-muted-foreground">No taxons found matching your search.</p>
@@ -241,10 +278,30 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
                   {flattenedNodes.map((node) => {
                     const rankColor = getRankColor(node.data.rank)
                     const counts = extractCounts(node.data)
+                    const geneCounts = extractGeneCounts(node.data)
+                    const geneSum = geneCounts.coding + geneCounts.nonCoding + geneCounts.pseudogene
+                    
+                    // Check if node has children from the original API data
+                    // The 'children' field can be an array of taxid strings or TaxonRecord objects
+                    const childrenFromData = node.data.children
+                    const hasChildrenInData = Array.isArray(childrenFromData) && childrenFromData.length > 0
+                    const hasNoChildrenInData = Array.isArray(childrenFromData) && childrenFromData.length === 0
+                    
+                    // Check if children have been fetched
                     const hasFetchedChildren = childrenData.has(node.taxid) && childrenData.get(node.taxid)!.length > 0
                     const hasChildrenInTree = node.children && node.children.length > 0
                     const hasBeenChecked = childrenData.has(node.taxid) || fetchedNodes.has(node.taxid)
-                    const hasChildren = !hasBeenChecked || hasFetchedChildren || hasChildrenInTree
+                    
+                    // Node has no children if:
+                    // 1. Original data explicitly shows empty children array, OR
+                    // 2. Children have been fetched and result is empty
+                    
+                    // Node has children if:
+                    // 1. Original data shows children exist, OR
+                    // 2. Children have been fetched and exist, OR
+                    // 3. Children exist in tree structure, OR
+                    // 4. Not yet checked AND original data doesn't explicitly show no children (assume might have children)
+                    const hasChildren = hasChildrenInData || hasFetchedChildren || hasChildrenInTree || (!hasBeenChecked && !hasNoChildrenInData)
                     const isExpanded = expandedNodes.has(node.taxid)
                     const isSelected = selectedNodes.has(node.taxid)
                     const isFetching = fetchingNodes.has(node.taxid)
@@ -269,23 +326,29 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
                         onClick={() => {
                           if (hasChildren) {
                             handleExpand(node.taxid)
+                          } else {
+                            // Open sidebar for leaf nodes
+                            const openRightSidebar = useUIStore.getState().openRightSidebar
+                            openRightSidebar("taxon-details", { taxid: String(node.taxid) })
                           }
                         }}
                       >
                         {/* Select button */}
-                        <td className="p-2" onClick={(e) => e.stopPropagation()}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`h-6 w-6 ${isSelected ? 'bg-primary/10' : ''}`}
-                            onClick={() => handleSelect(node.taxid, node.data)}
-                          >
-                            {isSelected ? (
-                              <Check className="h-3 w-3 text-primary" />
-                            ) : (
-                              <div className="h-3 w-3 border border-border rounded" />
-                            )}
-                          </Button>
+                        <td className="w-10 px-1 py-2" onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center justify-center">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={`h-6 w-6 ${isSelected ? 'bg-primary/10' : ''}`}
+                              onClick={() => handleSelect(node.taxid, node.data)}
+                            >
+                              {isSelected ? (
+                                <Check className="h-3 w-3 text-primary" />
+                              ) : (
+                                <div className="h-3 w-3 border border-border rounded" />
+                              )}
+                            </Button>
+                          </div>
                         </td>
 
                         {/* Taxon name with expand icon */}
@@ -328,6 +391,37 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
                           </Badge>
                         </td>
 
+                        {/* Gene counts stacked bar */}
+                        <td className="p-3 w-48 text-right" onClick={(e) => e.stopPropagation()}>
+                          {geneSum > 0 ? (
+                            <div
+                              className="flex h-6 w-full min-w-[120px] max-w-[200px] ml-auto rounded overflow-hidden border border-border/50"
+                              title={`Coding: ${geneCounts.coding.toLocaleString()} · Non-coding: ${geneCounts.nonCoding.toLocaleString()} · Pseudogene: ${geneCounts.pseudogene.toLocaleString()}`}
+                            >
+                              {geneCounts.coding > 0 && (
+                                <div
+                                  className={`${GENE_STACK_COLORS.coding} flex-shrink-0 min-w-[2px] transition-all`}
+                                  style={{ width: `${(geneCounts.coding / maxGeneSum) * 100}%` }}
+                                />
+                              )}
+                              {geneCounts.nonCoding > 0 && (
+                                <div
+                                  className={`${GENE_STACK_COLORS.nonCoding} flex-shrink-0 min-w-[2px] transition-all`}
+                                  style={{ width: `${(geneCounts.nonCoding / maxGeneSum) * 100}%` }}
+                                />
+                              )}
+                              {geneCounts.pseudogene > 0 && (
+                                <div
+                                  className={`${GENE_STACK_COLORS.pseudogene} flex-shrink-0 min-w-[2px] transition-all`}
+                                  style={{ width: `${(geneCounts.pseudogene / maxGeneSum) * 100}%` }}
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
+                        </td>
+
                         {/* Combined Counts */}
                         <td className="p-3 text-right">
                           <div className="flex items-center justify-end gap-3">
@@ -362,16 +456,17 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
                         </td>
 
                         {/* Actions */}
-                        <td className="p-2" onClick={(e) => e.stopPropagation()}>
+                        <td className="w-10 px-1 py-2" onClick={(e) => e.stopPropagation()}>
                           <Button
                             type="button"
                             variant="ghost"
                             size="icon"
-                            className="h-6 w-6"
+                            className="h-6 w-6 mx-auto"
                             onClick={(e) => {
                               e.preventDefault()
                               e.stopPropagation()
-                              router.push(buildEntityDetailsUrl("taxon", String(node.taxid)))
+                              const openRightSidebar = useUIStore.getState().openRightSidebar
+                              openRightSidebar("taxon-details", { taxid: String(node.taxid) })
                             }}
                             title="View taxon details"
                           >
@@ -384,7 +479,7 @@ export function TreeTable({ rootTaxid, rootNode, selectedTaxid, onNodeClick }: T
                   {/* Infinite scroll target for rank roots */}
                   {selectedRank && hasMoreRankRoots && (
                     <tr>
-                      <td colSpan={5} className="p-4 text-center">
+                      <td colSpan={6} className="p-4 text-center">
                         <div ref={rankRootsObserverTargetRef}>
                           {loadingRankRoots ? (
                             <>
