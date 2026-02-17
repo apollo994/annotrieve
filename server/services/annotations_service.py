@@ -36,13 +36,21 @@ def get_annotations(args: dict, field: str = None, response_type: str = 'metadat
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching annotations: {e}")
 
+TSV_BUFFER_SIZE = 5000
+
 def stream_annotation_tsv(annotations):
     def row_iterator():
         header = "\t".join(constants_helper.FIELD_TSV_MAP.keys()) + "\n"
         yield header
+        buffer: list[str] = []
         for annotation in annotations.scalar(*constants_helper.FIELD_TSV_MAP.values()):
             row = "\t".join("" if value is None else str(value) for value in annotation) + "\n"
-            yield row
+            buffer.append(row)
+            if len(buffer) >= TSV_BUFFER_SIZE:
+                yield "".join(buffer)
+                buffer.clear()
+        if buffer:
+            yield "".join(buffer)
 
     return StreamingResponse(
         row_iterator(),
@@ -131,7 +139,22 @@ def stream_annotation_tabix(md5_checksum:str, region:str=None, start:int=None, e
             raise HTTPException(status_code=400, detail=f"Invalid feature type: {feature_type}, expected values are: {annotation.features_summary.types}")
         if feature_source and feature_source not in annotation.features_summary.sources:
             raise HTTPException(status_code=400, detail=f"Invalid feature source: {feature_source}, expected values are: {annotation.features_summary.sources}")
-        return StreamingResponse(pysam_helper.stream_gff_file(file_path, index_format='csi', seqid=seq_id, start=start, end=end, feature_type=feature_type, feature_source=feature_source, biotype=biotype), media_type='text/plain')
+
+        def stream_buffered_gff():
+            buffer: list[str] = []
+            for line in pysam_helper.stream_gff_file(file_path, index_format='csi', seqid=seq_id, start=start, end=end, feature_type=feature_type, feature_source=feature_source, biotype=biotype):
+                buffer.append(line)
+                if len(buffer) >= TSV_BUFFER_SIZE:
+                    yield "".join(buffer)
+                    buffer.clear()
+            if buffer:
+                yield "".join(buffer)
+
+        return StreamingResponse(
+            stream_buffered_gff(),
+            media_type='text/plain',
+            headers={"X-Accel-Buffering": "no"},
+        )
     except HTTPException as e:
         raise e
     except Exception as e:
