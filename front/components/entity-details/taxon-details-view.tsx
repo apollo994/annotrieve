@@ -375,7 +375,7 @@ export function TaxonDetailsView({ taxid: taxidProp, onClose }: TaxonDetailsView
                 </Button>
               )}
               <Button disabled={selectedTaxons.some(t => t.taxid === taxon.taxid)} variant="accent" className="gap-2" onClick={handleViewAnnotations}>
-                Add to filters
+                View Annotations
               </Button>
             </div>
           </div>
