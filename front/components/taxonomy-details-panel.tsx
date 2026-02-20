@@ -250,7 +250,7 @@ export function TaxonomyDetailsPanel({
         ) : hasChildren ? (
           <Button onClick={onExploreFrom} className="w-full h-11 font-semibold gap-2">
             <Compass className="h-4 w-4" />
-            Explore from {selectedTaxon.taxon.scientific_name}
+            Explore {selectedTaxon.taxon.scientific_name} lineage
           </Button>
         ) : null}
         <div className="flex gap-2">
