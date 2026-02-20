@@ -245,15 +245,15 @@ export default function TaxonomyNewPage() {
               </TabsTrigger>
               <TabsTrigger value="tree" className="gap-1.5 text-xs">
                 <LayoutList className="h-3.5 w-3.5" />
-                Tree
+                Linear Tree
               </TabsTrigger>
               <TabsTrigger value="constant-branch" className="gap-1.5 text-xs">
                 <GitBranch className="h-3.5 w-3.5" />
-                Radial
+                Circular Tree
               </TabsTrigger>
               <TabsTrigger value="gene-stack" className="gap-1.5 text-xs">
                 <Layers className="h-3.5 w-3.5" />
-                Gene Stack
+                Sorted Values
               </TabsTrigger>
             </TabsList>
           </Tabs>
