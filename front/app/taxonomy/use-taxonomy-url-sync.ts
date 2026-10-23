@@ -10,81 +10,67 @@ const EUKARYOTA_TAXID = "2759"
 export type TaxonomyPayload = { taxid: string; taxon: TaxonRecord }
 
 interface UseTaxonomyUrlSyncOptions {
-  rootTaxon: TaxonomyPayload | null
-  setRootTaxon: (payload: TaxonomyPayload | null) => void
-  setSelectedTaxon: (payload: TaxonomyPayload | null) => void
-  setActiveView: (view: "overview" | "tree" | "constant-branch" | "gene-stack") => void
+  /** Current root payload (for display). When URL taxid changes, we fetch and call setRootPayload. */
+  rootPayload: TaxonomyPayload | null
+  setRootPayload: (payload: TaxonomyPayload | null) => void
+  /** Called when we load from URL on mount/nav (e.g. set view to overview). */
+  setActiveView?: (view: "overview" | "tree" | "constant-branch" | "gene-stack") => void
 }
 
 /**
- * Handles URL <-> state sync for taxonomy explorer:
- * - On mount with ?taxon=X: loads that taxon, sets as root, opens panel
- * - When root changes: updates URL so reload preserves view
+ * URL as source of truth for taxonomy root.
+ * - Middleware ensures /taxonomy always has ?taxon=<taxid> (redirects if missing).
+ * - When the taxid in the URL changes, we fetch the taxon and set rootPayload.
+ * - The page updates the URL only on user navigation (handleSetRoot → router.replace).
+ * No bidirectional sync: URL is read here; URL is written only by the page when the user navigates.
  */
 export function useTaxonomyUrlSync({
-  rootTaxon,
-  setRootTaxon,
-  setSelectedTaxon,
+  rootPayload,
+  setRootPayload,
   setActiveView,
 }: UseTaxonomyUrlSyncOptions) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const hasHydratedRef = useRef(false)
 
   useEffect(() => {
     const taxidFromUrl = searchParams?.get("taxon")
     if (!taxidFromUrl) {
-      hasHydratedRef.current = true
+      router.replace("/taxonomy?taxon=" + EUKARYOTA_TAXID, { scroll: false })
       return
     }
-    if (rootTaxon?.taxid === taxidFromUrl) {
-      hasHydratedRef.current = true
-      return
-    }
+    if (rootPayload?.taxid === taxidFromUrl) return
 
     let cancelled = false
     getTaxon(taxidFromUrl)
       .then((taxonData) => {
         if (cancelled) return
-        if (taxidFromUrl === EUKARYOTA_TAXID) {
-          setRootTaxon(null)
-          setSelectedTaxon(null)
-          router.replace("/taxonomy", { scroll: false })
-        } else {
-          const payload: TaxonomyPayload = {
+        const payload: TaxonomyPayload = {
+          taxid: taxonData.taxid,
+          taxon: {
             taxid: taxonData.taxid,
-            taxon: {
-              taxid: taxonData.taxid,
-              scientific_name: taxonData.scientific_name,
-              rank: taxonData.rank,
-              organisms_count: taxonData.organisms_count,
-              assemblies_count: taxonData.assemblies_count,
-              annotations_count: taxonData.annotations_count,
-            },
-          }
-          setRootTaxon(payload)
-          setSelectedTaxon(payload)
+            scientific_name: taxonData.scientific_name,
+            rank: taxonData.rank,
+            organisms_count: taxonData.organisms_count,
+            assemblies_count: taxonData.assemblies_count,
+            annotations_count: taxonData.annotations_count,
+          },
         }
-        setActiveView("overview")
+        setRootPayload(payload)
+        const viewParam = searchParams?.get("view")
+        const validView =
+          viewParam === "overview" ||
+          viewParam === "constant-branch" ||
+          viewParam === "gene-stack"
+            ? viewParam
+            : "overview"
+        setActiveView?.(validView)
       })
       .catch(() => {
-        if (!cancelled) router.replace("/taxonomy", { scroll: false })
-      })
-      .finally(() => {
-        if (!cancelled) hasHydratedRef.current = true
+        if (!cancelled) router.replace("/taxonomy?taxon=" + EUKARYOTA_TAXID, { scroll: false })
       })
 
     return () => {
       cancelled = true
     }
-  }, [searchParams, router, rootTaxon?.taxid, setRootTaxon, setSelectedTaxon, setActiveView])
-
-  useEffect(() => {
-    if (!hasHydratedRef.current) return
-    const urlTaxid = searchParams?.get("taxon")
-    const desiredUrl = rootTaxon ? `/taxonomy?taxon=${rootTaxon.taxid}` : "/taxonomy"
-    const currentMatches = rootTaxon ? urlTaxid === rootTaxon.taxid : !urlTaxid
-    if (currentMatches) return
-    router.replace(desiredUrl, { scroll: false })
-  }, [rootTaxon?.taxid, searchParams, router])
+  }, [searchParams, router, setRootPayload, setActiveView, rootPayload?.taxid])
 }

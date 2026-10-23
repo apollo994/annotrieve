@@ -1,8 +1,8 @@
 # Use a modern Python base image
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-bookworm
 
 # Set environment variables to prevent interactive prompts
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system dependencies
@@ -50,4 +50,4 @@ EXPOSE 5000
 
 # Run the application with Gunicorn and Uvicorn workers for production
 # In development, this is overridden by docker-compose command
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:5000", "--access-logfile", "-", "--error-logfile", "-", "main:app"] 
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:5000", "--timeout", "3600", "--access-logfile", "-", "--error-logfile", "-", "main:app"] 

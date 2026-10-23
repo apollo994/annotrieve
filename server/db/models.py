@@ -1,15 +1,27 @@
 from datetime import datetime
-from .embedded_documents import AssemblyStats, SourceFileInfo, IndexedFileInfo, FeatureOverview, GFFStats, TaxonAnnotationStats
+from .embedded_documents import (
+    AssemblyStats,
+    AssemblyReportBackfill,
+    SourceFileInfo,
+    IndexedFileInfo,
+    FeatureOverview,
+    GFFStats,
+    TaxonAnnotationStats,
+    BuscoScore,
+)
 from mongoengine import (
     Document,
     DynamicDocument,
     StringField,
     ListField,
     IntField,
+    BooleanField,
+    DictField,
     EmbeddedDocumentField,
     URLField,
     DateTimeField,
 )
+
 
 def drop_all_collections():
     GenomeAssembly.objects().delete()
@@ -20,6 +32,7 @@ def drop_all_collections():
     GenomeAnnotation.objects().delete()
     TaxonNode.objects().delete()
     BioProject.objects().delete()
+
 
 class GenomeAssembly(DynamicDocument):
     assembly_accession = StringField(required=True, unique=True)
@@ -38,7 +51,11 @@ class GenomeAssembly(DynamicDocument):
     bioprojects = ListField(StringField()) #list of bioprojects
     submitter = StringField()
     annotations_count = IntField()
+    ncbi_ftp_directory_url = URLField()
     download_url = URLField(required=True, unique=True)
+    assembly_report = EmbeddedDocumentField(
+        AssemblyReportBackfill, default=AssemblyReportBackfill
+    )
     meta = {
         'indexes': [
             "assembly_accession", 
@@ -52,6 +69,7 @@ class GenomeAssembly(DynamicDocument):
             "refseq_category",
         ],
     }
+
 
 class UserAnalytics(DynamicDocument):
     fingerprint = StringField(required=True, unique=True) #hmac of the user's IP address to ensure full anonymity
@@ -78,6 +96,49 @@ class UserAnalytics(DynamicDocument):
         Convert a datetime object to an ISO date string
         """
         return date.isoformat().split('T')[0]
+
+
+class UsageRollup(DynamicDocument):
+    """
+    Singleton public-usage aggregates derived from api.log (key="latest").
+    Stores unique-user counts per capability and top-10 opened entities only.
+    """
+
+    key = StringField(required=True, unique=True, default="latest")
+    as_of = DateTimeField(required=True)
+    by_capability = DictField()  # capability_id -> unique_users (int)
+    by_capability_requests = DictField()  # capability_id -> request_count (int)
+    top_assemblies = ListField(DictField())  # [{id, unique_users, label, ...}]
+    top_annotations = ListField(DictField())
+    top_taxons = ListField(DictField())
+    meta = {
+        "indexes": ["key", "as_of"],
+        "collection": "usage_rollup",
+    }
+
+
+class UploadRateLimit(DynamicDocument):
+    """
+    Track upload requests per client (IP + User-Agent) to enforce per-day limits.
+    Documents are short-lived thanks to a TTL index on created_at.
+    """
+
+    ip = StringField(required=True)
+    user_agent = StringField(required=True)
+    created_at = DateTimeField(default=datetime.utcnow)
+    task_id = StringField()
+
+    meta = {
+        "indexes": [
+            ("ip", "user_agent"),
+            {
+                "fields": ["created_at"],
+                # 48h TTL – application logic enforces a rolling 24h window
+                "expireAfterSeconds": 60 * 60 * 48,
+            },
+        ]
+    }
+
 
 class BioProject(DynamicDocument):
     accession = StringField(required=True, unique=True)
@@ -107,32 +168,43 @@ class Organism(DynamicDocument):
             ]
     }
 
-#class to map aliases to the related sequence_id in the gff file
+
+# Deprecated: per-annotation seqids live in {gff}.contigs.txt on disk.
 class AnnotationSequenceMap(DynamicDocument):
     sequence_id = StringField(required=True) #id in the gff file
     annotation_id = StringField(required=True) #indexed_file_info.uncompressed_md5 of the annotation
     aliases = ListField(StringField()) #aliases for the sequence_id, e.g. chr1, 1, 1_1, 1_1_1,ucsc_style_name, refseq_accession, insdc_accession, etc.
+    feature_count = IntField(default=0)
+    length = IntField()
+    canonical_id = StringField()
     meta = {
-        'indexes': ['annotation_id', 'sequence_id', 'aliases']
+        'indexes': [
+            'annotation_id',
+            'sequence_id',
+            'aliases',
+            'canonical_id',
+        ]
     }
 
+# Deprecated: assembly chromosomes live in chromosomes.json on disk.
 class GenomicSequence(DynamicDocument):
     #ASSEMBLY
     assembly_accession = StringField(required=True)
     assembly_name = StringField(required=True)
 
-    #SEQUENCE IDENTIFIERS
     ucsc_style_name = StringField()
     genbank_accession = StringField()
     refseq_accession = StringField()
-    
+    canonical_id = StringField()
+
     chr_name = StringField()
-    sequence_name = StringField() #assigned_molecule in the assembly report
+    sequence_role = StringField()
+    sequence_name = StringField()
     length = IntField()
 
     aliases = ListField(StringField(), required=True) #all possible aliases for the chromosome
     meta = {
-        'indexes': ['assembly_accession', 'aliases']
+        'indexes': ['assembly_accession', 'aliases', 'canonical_id', 'chr_name', 'sequence_name', 'sequence_role']
     }
 
 class AnnotationError(DynamicDocument):
@@ -166,8 +238,12 @@ class GenomeAnnotation(DynamicDocument):
     organism_name = StringField(required=True)
     taxid = StringField(required=True)
     taxon_lineage = ListField(StringField(), required=True)
+
+    #BUSCO SCORE
+    busco = EmbeddedDocumentField(BuscoScore)
+
     #MAPPED REGIONS
-    mapped_regions = ListField(StringField()) #Mapped seqid of the gff file (AnnotationSequenceMap ids)
+    mapped_regions = ListField(StringField())  # Deprecated; use AnnotationSequenceMap collection
 
     #SOURCE
     source_file_info = EmbeddedDocumentField(SourceFileInfo)
@@ -198,31 +274,70 @@ class GenomeAnnotation(DynamicDocument):
             "source_file_info.release_date",
             "source_file_info.last_modified",
             "source_file_info.pipeline.name",
+            "busco.complete",
+            "busco.single_copy",
+            "busco.duplicated",
+            "busco.fragmented",
+            "busco.missing",  
         ]
     }
+    @staticmethod
     def parse_iso_date(iso_date: str) -> datetime:
         """
-        Parse an ISO date string to a datetime object
+        Parse an ISO date string to a datetime object.
+        Raises ValueError if iso_date is missing or not a valid ISO date.
         """
-        return datetime.fromisoformat(iso_date)
+        if iso_date is None or (isinstance(iso_date, str) and not iso_date.strip()):
+            raise ValueError("Missing or empty ISO date string")
+        return datetime.fromisoformat(iso_date.strip())
 
-    def to_iso_date(self, date: datetime) -> str:
+    @staticmethod
+    def try_parse_iso_date(iso_date: str | None) -> datetime | None:
+        """Parse an ISO date string, returning None if missing or invalid."""
+        try:
+            return GenomeAnnotation.parse_iso_date(iso_date)
+        except (TypeError, ValueError):
+            return None
+
+    @staticmethod
+    def resolve_source_dates(
+        release_date: str | None,
+        last_modified: str | None,
+    ) -> tuple[datetime, datetime]:
         """
-        Convert a datetime object to an ISO date string
+        Resolve release_date and last_modified for SourceFileInfo.
+
+        Empty/missing release_date falls back to last_modified (same rule as the
+        community annotation tracker). Raises ValueError if last_modified is also
+        missing/invalid, or if release_date is present but unparseable and there
+        is no valid last_modified fallback for a missing release only.
         """
-        return date.isoformat().split('T')[0]
+        last_mod_dt = GenomeAnnotation.try_parse_iso_date(last_modified)
+        release_raw = release_date.strip() if isinstance(release_date, str) else release_date
+        if release_raw is None or release_raw == "":
+            if last_mod_dt is None:
+                raise ValueError("Missing release_date and last_modified")
+            return last_mod_dt, last_mod_dt
+
+        release_dt = GenomeAnnotation.try_parse_iso_date(release_date)
+        if release_dt is None:
+            raise ValueError(f"Invalid release_date: {release_date!r}")
+        if last_mod_dt is None:
+            raise ValueError(f"Missing or invalid last_modified: {last_modified!r}")
+        return release_dt, last_mod_dt
 
 class TaxonNode(Document):
     children = ListField(StringField())
+    parent_id = StringField()
     scientific_name = StringField(required=True)
     taxid = StringField(required= True,unique=True)
     rank = StringField()
     assemblies_count = IntField()
     annotations_count = IntField()
-    organisms_count = IntField() #how many leaves are down from this node
+    organisms_count = IntField() #how many leaves under this node
     stats = EmbeddedDocumentField(TaxonAnnotationStats)
     meta = {
         'indexes': [
-            'taxid', 'scientific_name','children','rank'
+            'taxid', 'scientific_name', 'children', 'parent_id', 'rank'
         ]
     }

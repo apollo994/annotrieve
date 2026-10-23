@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Fraunces, DM_Mono } from "next/font/google";
 import "./globals.css";
-import { AppHeader } from "@/components/app-header";
-import { FavoritesFloatingButton } from "@/components/favorites-floating-button";
-import { BetaBannerProvider } from "@/components/beta-banner-provider";
-import { ReactQueryProvider } from "@/components/providers/react-query-provider";
-import { ThemeProvider } from "@/components/theme-provider";
-import { InsdcModalProvider } from "@/components/providers/insdc-modal-provider";
+import { AppNavbar } from "@/components/layout/app-navbar";
+import { ReactQueryProvider } from "@/components/layout/providers/react-query-provider";
+import { ThemeProvider } from "@/components/layout/theme-provider";
+import { InsdcModalProvider } from "@/components/layout/providers/insdc-modal-provider"
+import { AnnotationsNavDialogProvider } from "@/components/layout/providers/annotations-nav-dialog-provider"
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,10 +19,23 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz"],
+});
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  variable: "--font-dm-mono",
+  weight: ["300", "400", "500"],
+  display: "swap",
+  style: ["normal", "italic"],
+});
 
 export const metadata: Metadata = {
   title: "Annotrieve - Eukaryotic Genome Annotations",
-  description: "Explore annotated genomes from NCBI and Ensembl",
+  description: "Hub for eukaryotic GFF annotations from Ensembl, NCBI, and other sources",
 };
 
 export default function RootLayout({
@@ -56,22 +70,21 @@ export default function RootLayout({
         <meta name="google-site-verification" content="WlV38EDOLs3XwYrtqyIJTYe-TAwaimfc1emCbx7RG_A" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${dmMono.variable} antialiased h-full overflow-hidden`}
       >
         <ThemeProvider>
           <ReactQueryProvider>
-            <BetaBannerProvider>
               <InsdcModalProvider />
+              <AnnotationsNavDialogProvider />
               <div className="min-h-screen flex flex-col h-full">
-                <AppHeader />
-                <main className="flex-1 overflow-y-auto">
+                <AppNavbar />
+                <main id="main-content" className="flex-1 overflow-y-auto">
                   {children}
                 </main>
-                <FavoritesFloatingButton />
               </div>
-            </BetaBannerProvider>
           </ReactQueryProvider>
         </ThemeProvider>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

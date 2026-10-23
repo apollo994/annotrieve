@@ -4,28 +4,33 @@ from helpers import response as response_helper
 from helpers import parameters as params_helper
 from helpers import pysam_helper
 from helpers import constants as constants_helper
+from helpers import tsv_fields as tsv_fields_helper
 from helpers import annotation as annotation_helper
 from helpers import feature_stats as feature_stats_helper
+from helpers import busco_stats as busco_stats_helper
 from helpers import pipelines as pipelines_helper
-from db.models import GenomeAnnotation, AnnotationError, AnnotationSequenceMap, TaxonNode
+from db.models import GenomeAnnotation, AnnotationError
+from helpers import assembly_sequence_files as seq_files
 from fastapi.responses import StreamingResponse
-from fastapi import HTTPException, BackgroundTasks
-from typing import Optional, Dict, Any
+from fastapi import HTTPException
+from typing import Dict, Any
 import os
 from datetime import datetime
 from db.embedded_documents import GFFStats
+import itertools
 
-def get_annotations(args: dict, field: str = None, response_type: str = 'metadata', background_tasks: Optional[BackgroundTasks] = None):
+def get_annotations(args: dict, field: str = None, response_type: str = 'metadata'):
     try:
         limit = args.pop('limit', 20)
         offset = args.pop('offset', 0)
         fields = args.pop('fields', None)
+        selected_fields = args.pop('selected_fields', None)
         annotations = annotation_helper.get_annotation_records(**args)
         total = annotations.count()
         if response_type == 'frequencies':
             return query_visitors_helper.get_frequencies(annotations, field, type='annotation')
         elif response_type == 'tsv':
-            return stream_annotation_tsv(annotations)
+            return stream_annotation_tsv(annotations, selected_fields=selected_fields)
         else:
             if fields:
                 annotations = annotations.only(*fields.split(',') if isinstance(fields, str) else fields)
@@ -38,20 +43,44 @@ def get_annotations(args: dict, field: str = None, response_type: str = 'metadat
 
 TSV_BUFFER_SIZE = 5000
 
-def stream_annotation_tsv(annotations):
-    def row_iterator():
-        header = "\t".join(constants_helper.FIELD_TSV_MAP.keys()) + "\n"
-        yield header
-        buffer: list[str] = []
-        for annotation in annotations.scalar(*constants_helper.FIELD_TSV_MAP.values()):
-            row = "\t".join("" if value is None else str(value) for value in annotation) + "\n"
-            buffer.append(row)
-            if len(buffer) >= TSV_BUFFER_SIZE:
-                yield "".join(buffer)
-                buffer.clear()
-        if buffer:
-            yield "".join(buffer)
 
+def stream_annotation_tsv(annotations, selected_fields=None):
+    field_map = tsv_fields_helper.resolve_tsv_field_map(selected_fields)
+    assembly_field_map = tsv_fields_helper.resolve_assembly_tsv_field_map(selected_fields)
+    mongo_paths = list(field_map.values())
+    column_keys = list(field_map.keys()) + list(assembly_field_map.keys())
+    accession_index = mongo_paths.index("assembly_accession")
+    extended_keys = set(constants_helper.FIELD_TSV_EXTENDED_MAP.keys()) | set(
+        constants_helper.FIELD_TSV_ASSEMBLY_MAP.keys()
+    )
+    use_extended_formatting = selected_fields is not None and bool(
+        params_helper.normalize_to_list(selected_fields)
+    )
+    header = ("\t".join(column_keys) + "\n").encode()
+
+    def format_row(row):
+        cells = []
+        for key, value in zip(column_keys, row):
+            is_extended_column = use_extended_formatting and key in extended_keys
+            cells.append(
+                tsv_fields_helper.format_tsv_cell(value, extended=is_extended_column)
+            )
+        return "\t".join(cells) + "\n"
+
+    def row_iterator():
+        yield header
+        cursor = tsv_fields_helper.iter_tsv_rows(
+            annotations, mongo_paths, batch_size=TSV_BUFFER_SIZE
+        )
+        while batch := list(itertools.islice(cursor, TSV_BUFFER_SIZE)):
+            if assembly_field_map:
+                # One batched join query per buffer instead of per row, keyed on
+                # the distinct assembly_accessions already present in the batch.
+                assembly_values = tsv_fields_helper.resolve_assembly_rows(
+                    batch, accession_index, assembly_field_map
+                )
+                batch = [row + extra for row, extra in zip(batch, assembly_values)]
+            yield "".join(format_row(row) for row in batch).encode()
     return StreamingResponse(
         row_iterator(),
         media_type='text/tab-separated-values',
@@ -88,28 +117,53 @@ def update_annotation_stats(md5_checksum, payload):
 
 def get_mapped_regions(md5_checksum, offset_param, limit_param):
     try:
-        regions = AnnotationSequenceMap.objects(annotation_id=md5_checksum)
-        count = regions.count()
-        offset, limit = params_helper.handle_pagination_params(offset_param, limit_param, count)    
-        return response_helper.json_response_with_pagination(regions, count, offset, limit)
+        annotation = get_annotation(md5_checksum)
+        if not annotation.indexed_file_info or not annotation.indexed_file_info.bgzipped_path:
+            return response_helper.json_response_with_pagination([], 0, 0, 20)
+        rel = annotation.indexed_file_info.bgzipped_path.lstrip("/")
+        lines = list(seq_files.iter_contigs_lines(rel))
+        count = len(lines)
+        offset, limit = params_helper.handle_pagination_params(offset_param, limit_param, count)
+        page = [
+            {"sequence_id": sid, "annotation_id": md5_checksum, "aliases": [sid]}
+            for sid in lines[offset : offset + limit]
+        ]
+        return response_helper.json_response_with_pagination(page, count, offset, limit)
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching mapped regions: {e}")
+        raise HTTPException(status_code=500, detail=f"Error fetching contigs aliases: {e}")
+
+
+def _stream_contigs_for_annotation(annotation: GenomeAnnotation):
+    rel = annotation.indexed_file_info.bgzipped_path.lstrip("/")
+    if seq_files.contigs_file_exists(rel):
+        for line in seq_files.iter_contigs_lines(rel):
+            yield line + "\n"
+        return
+    file_path = file_helper.get_annotation_file_path(annotation)
+    yield from pysam_helper.stream_contigs(file_path)
+
 
 def get_contigs(md5_checksum):
     try:
         annotation = get_annotation(md5_checksum)
+        if not annotation.indexed_file_info or not annotation.indexed_file_info.bgzipped_path:
+            raise HTTPException(status_code=404, detail=f"Annotation {md5_checksum} not found")
         file_path = file_helper.get_annotation_file_path(annotation)
         if not os.path.exists(file_path):
             raise HTTPException(status_code=404, detail=f"Annotation {md5_checksum} not found")
         return StreamingResponse(
-            pysam_helper.stream_contigs(file_path), 
-            media_type='text/plain', 
+            _stream_contigs_for_annotation(annotation),
+            media_type='text/plain',
             headers={
                 "Content-Disposition": f'attachment; filename="{md5_checksum}_contigs.txt"',
                 "Cache-Control": "public, max-age=86400",
                 "X-Accel-Buffering": "no",
             }
-        )  
+        )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching contigs: {e}")
 
@@ -222,6 +276,25 @@ def get_transcript_type_metric_values(transcript_type: str, metric: str, include
     params = params_helper.handle_request_params(commons or {}, payload or {})
     annotations = annotation_helper.get_annotation_records(**params)
     return feature_stats_helper.get_transcript_type_metric_values(transcript_type, metric, annotations, include_annotations)
+
+
+def get_busco_stats_summary(commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
+    """
+    Get busco stats summary: metrics (complete, single_copy, duplicated, fragmented, missing)
+    with mean and counts. No categories.
+    """
+    params = params_helper.handle_request_params(commons or {}, payload or {})
+    annotations = annotation_helper.get_annotation_records(**params)
+    return busco_stats_helper.get_busco_stats_summary(annotations)
+
+
+def get_busco_metric_values(metric: str, include_annotations: bool = False, commons: Dict[str, Any] = None, payload: Dict[str, Any] = None):
+    """
+    Get raw values for a single busco metric (for histograms).
+    """
+    params = params_helper.handle_request_params(commons or {}, payload or {})
+    annotations = annotation_helper.get_annotation_records(**params)
+    return busco_stats_helper.get_busco_metric_values(metric, annotations, include_annotations)
 
 
 def get_annotations_aggregates_by_taxon_rank(rank: str):

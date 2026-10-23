@@ -1,6 +1,7 @@
 from array import array
-from db.models import GenomeAnnotation, AnnotationError, Organism, TaxonNode, GenomicSequence, GenomeAssembly, BioProject   
-from db.embedded_documents import SourceFileInfo, PipelineInfo, AssemblyStats
+from datetime import datetime, timezone
+from db.models import GenomeAnnotation, AnnotationError, Organism, TaxonNode, GenomicSequence, GenomeAssembly   
+from db.embedded_documents import SourceFileInfo, PipelineInfo, AssemblyStats, BuscoScore
 import re
 
 class AnnotationToProcess:
@@ -29,12 +30,15 @@ class AnnotationToProcess:
         """
         Convert the AnnotationToProcess object to a GenomeAnnotation document
         """
+        release_dt, last_mod_dt = GenomeAnnotation.resolve_source_dates(
+            self.release_date, self.last_modified
+        )
         source_info = SourceFileInfo(
             database=self.source_database,
             provider=self.annotation_provider,
-            release_date=GenomeAnnotation.parse_iso_date(self.release_date),
+            release_date=release_dt,
             url_path=self.access_url,
-            last_modified=GenomeAnnotation.parse_iso_date(self.last_modified),
+            last_modified=last_mod_dt,
             uncompressed_md5=self.md5_checksum,
         )
         if self.pipeline_name:
@@ -54,8 +58,19 @@ class AnnotationToProcess:
 
     def to_annotation_error(self, error_message: str) -> AnnotationError:
         """
-        Convert the AnnotationToProcess object to an AnnotationError document
+        Convert the AnnotationToProcess object to an AnnotationError document.
+
+        Dates always resolve to valid datetimes so error recording cannot fail
+        on incomplete tracker metadata (fall back to last_modified, then utcnow).
         """
+        try:
+            release_dt, last_mod_dt = GenomeAnnotation.resolve_source_dates(
+                self.release_date, self.last_modified
+            )
+        except ValueError:
+            now = datetime.now(timezone.utc)
+            last_mod_dt = GenomeAnnotation.try_parse_iso_date(self.last_modified) or now
+            release_dt = GenomeAnnotation.try_parse_iso_date(self.release_date) or last_mod_dt
         return AnnotationError(
             assembly_accession=self.assembly_accession,
             taxid=self.taxon_id,
@@ -63,8 +78,8 @@ class AnnotationToProcess:
             error_message=error_message,
             url_path=self.access_url,
             source_md5=self.md5_checksum,
-            release_date=self.release_date,
-            last_modified=self.last_modified,
+            release_date=release_dt,
+            last_modified=last_mod_dt,
             source_database=self.source_database,
         )
 
@@ -99,25 +114,53 @@ class OrganismToProcess:
         )
 
 
+def genomic_sequence_canonical_id(
+    genbank_accession: str | None,
+    refseq_accession: str | None,
+) -> str | None:
+    """
+    Stable cross-collection id: genbank, refseq, or 'genbank|refseq' when both are set.
+    """
+    gb = (genbank_accession or "").strip()
+    rs = (refseq_accession or "").strip()
+    if gb and rs:
+        return f"{gb}|{rs}"
+    if gb:
+        return gb
+    if rs:
+        return rs
+    return None
+
+
+def genomic_sequence_canonical_id_from_doc(doc: GenomicSequence) -> str | None:
+    if getattr(doc, "canonical_id", None):
+        return doc.canonical_id
+    return genomic_sequence_canonical_id(
+        doc.genbank_accession, doc.refseq_accession
+    )
+
+
 class AssemblyReportSequence:
     """
     This class is used to map the incoming assembly report sequence data to the GenomicSequence model
     """
     def __init__(
         self,
-        assigned_molecule: str,
+        chr_name: str,
         sequence_name: str,
         genbank_accn: str,
         refseq_accn: str,
         sequence_length: int,
         ucsc_style_name: str,
+        sequence_role: str = "",
     ):
-        self.assigned_molecule = assigned_molecule
+        self.chr_name = chr_name
         self.sequence_name = sequence_name
         self.genbank_accn = genbank_accn
         self.refseq_accn = refseq_accn
         self.sequence_length = sequence_length
         self.ucsc_style_name = ucsc_style_name
+        self.sequence_role = sequence_role
 
     def to_genomic_sequence(self, assembly_accession: str, assembly_name: str) -> GenomicSequence:
         """
@@ -127,12 +170,16 @@ class AssemblyReportSequence:
             assembly_accession=assembly_accession,
             assembly_name=assembly_name,
             sequence_name=self.sequence_name,
-            chr_name=self.assigned_molecule,
+            chr_name=self.chr_name,
+            sequence_role=self.sequence_role,
             genbank_accession=self.genbank_accn,
             refseq_accession=self.refseq_accn,
             ucsc_style_name=self.ucsc_style_name,
             length=self.sequence_length,
             aliases=self.get_aliases(),
+            canonical_id=genomic_sequence_canonical_id(
+                self.genbank_accn, self.refseq_accn
+            ),
         )
 
     def get_aliases(self) -> list[str]:
@@ -165,7 +212,7 @@ class AssemblyReportSequence:
         sequence_name = self.sequence_name
         add(sequence_name)
 
-        chr_name = self.assigned_molecule
+        chr_name = self.chr_name
         add(chr_name)
 
         # Space → underscore variant for relevant fields
@@ -255,14 +302,21 @@ class AssemblyToProcess:
         """
         Convert the AssemblyToProcess object to a GenomeAssembly document
         """
+        from . import assembly as assembly_service
+
         assembly_stats = self.assembly_stats
         taxid = self.get_tax_id()
+        assembly_name = self.get_assembly_name()
         return GenomeAssembly(
             assembly_accession=self.accession,
             paired_assembly_accession=self.paired_accession,
-            assembly_name=self.get_assembly_name(),
-            organism_name=self.get_organism_name(),
-            download_url=self.create_ftp_path(self.accession, self.get_assembly_name()),
+            assembly_name=assembly_name,
+            organism_name=self.organism.get("organism_name"),
+            ncbi_ftp_directory_url=None,
+            download_url=assembly_service.placeholder_download_url(self.accession),
+            assembly_report=assembly_service.initial_assembly_report(
+                self.assembly_info.get("assembly_level")
+            ),
             taxid=taxid,
             assembly_stats=AssemblyStats(**assembly_stats),
             source_database=self.source_database,
@@ -399,3 +453,27 @@ class MiscFeature:
         self.mean = (self.mean * (self.count - 1) + length) / self.count
         self.min = min(self.min, length)
         self.max = max(self.max, length)
+
+    __slots__ = ("annotation_id",  "complete", "single_copy", "duplicated", "fragmented", "missing")
+    def __init__(self, annotation_id: str, lineage: str, complete: float, single_copy: float, duplicated: float, fragmented: float, missing: float, busco_count: int):
+        self.annotation_id = annotation_id
+        self.complete = complete
+        self.single_copy = single_copy
+        self.duplicated = duplicated
+        self.fragmented = fragmented
+        self.missing = missing
+
+    def to_busco_score(self, busco_version: str, busco_lineage: str, busco_count: int) -> BuscoScore:
+        """
+        Convert the BuscoScoreToProcess object to a BuscoScore document
+        """
+        return BuscoScore(
+            busco_lineage=busco_lineage,
+            busco_version=busco_version,
+            total_count=busco_count,
+            complete=self.complete,
+            single_copy=self.single_copy,
+            duplicated=self.duplicated,
+            fragmented=self.fragmented,
+            missing=self.missing,
+        )

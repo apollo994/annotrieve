@@ -1,14 +1,14 @@
 "use client"
 
-import { useMemo } from "react"
+import { Suspense, useMemo } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TaxonDetailsView } from "@/components/entity-details/taxon-details-view"
 import { AssemblyDetailsView } from "@/components/entity-details/assembly-details-view"
+import { LoadingSpinner } from "@/components/ui/loading"
 
-export default function AnnotationsDetailsPage() {
+function AnnotationsDetailsContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const taxonId = searchParams?.get("taxon")
@@ -31,17 +31,9 @@ export default function AnnotationsDetailsPage() {
   return (
     <div className="min-h-full overflow-y-auto bg-background">
       <div className="mx-auto w-full max-w-6xl px-4 py-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleBack}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to annotations
-          </Button>
-        </div>
+        <header>
+          <h1 className="sr-only">Annotation details</h1>
+        </header>
 
         {activeView === "taxon" && taxonId && (
           <TaxonDetailsView taxid={taxonId} onClose={handleBack} />
@@ -70,3 +62,16 @@ export default function AnnotationsDetailsPage() {
   )
 }
 
+export default function AnnotationsDetailsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center p-6 min-h-[50vh]">
+          <LoadingSpinner />
+        </div>
+      }
+    >
+      <AnnotationsDetailsContent />
+    </Suspense>
+  )
+}
