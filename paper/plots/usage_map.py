@@ -14,8 +14,8 @@ from matplotlib.colors import LinearSegmentedColormap
 
 API_URL = "https://genome.crg.es/annotrieve/api/v0/analytics/frequencies/country"
 NE_URL = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
-OUTPUT_FILE = "usage_map.png"
-TOP_N_LABELS = 5
+OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "usage_map.png")
+TOP_N_LABELS = 10
 
 # API name -> Natural Earth NAME column
 COUNTRY_NAME_FIXES = {
@@ -25,24 +25,6 @@ COUNTRY_NAME_FIXES = {
     "Bosnia and Herzegovina": "Bosnia and Herz.",
     "Dominican Republic": "Dominican Rep.",
     "South Korea": "South Korea",
-}
-
-# Hand-picked label offsets in axis (degree) units for the top countries.
-# (dx, dy): offset from country centroid to the pill center.
-LABEL_OFFSETS = {
-    "United States of America": (-30, 8),
-    "Spain": (-18, -12),
-    "United Kingdom": (-22, 10),
-    "Germany": (20, 10),
-    "Sri Lanka": (20, -6),
-    "France": (-18, -8),
-    "Italy": (16, -10),
-    "China": (22, 10),
-    "Sweden": (18, 6),
-    "Japan": (18, -6),
-    "Mexico": (-22, -10),
-    "Netherlands": (-18, 8),
-    "Ireland": (-18, 6),
 }
 
 
@@ -88,37 +70,22 @@ def build_map(counts, world):
         vmax=vmax,
     )
 
-    # Pill labels for top N
+    # Top N countries listed in the bottom-left corner
     top = sorted(counts.items(), key=lambda kv: kv[1], reverse=True)[:TOP_N_LABELS]
-    for country, count in top:
-        row = world[world["NAME"] == country]
-        if row.empty:
-            continue
-        centroid = row.geometry.representative_point().iloc[0]
-        dx, dy = LABEL_OFFSETS.get(country, (25, 15))
-        ax.annotate(
-            f"{country}: {count}",
-            xy=(centroid.x, centroid.y),
-            xytext=(centroid.x + dx, centroid.y + dy),
-            fontsize=10,
-            fontweight="bold",
-            color="#111",
-            ha="center",
-            va="center",
-            bbox=dict(
-                boxstyle="round,pad=0.4,rounding_size=0.6",
-                facecolor="white",
-                edgecolor="#5fb1c6",
-                linewidth=1.3,
-            ),
-            arrowprops=dict(
-                arrowstyle="-",
-                color="#5fb1c6",
-                linewidth=1.2,
-                shrinkA=4,
-                shrinkB=6,
-            ),
-        )
+    lines = ["Top countries (unique IPs)"] + [
+        f"{rank}. {country}: {count}" for rank, (country, count) in enumerate(top, 1)
+    ]
+    ax.text(
+        0.01,
+        0.03,
+        "\n".join(lines),
+        transform=ax.transAxes,
+        fontsize=10,
+        color="#111",
+        ha="left",
+        va="bottom",
+        linespacing=1.5,
+    )
 
     ax.set_xlim(-170, 180)
     ax.set_ylim(-60, 85)

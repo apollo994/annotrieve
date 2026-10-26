@@ -1,0 +1,11 @@
+name: busco-env
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - busco=6.0.0
+  - gffread=0.12.7
+  - pip
+  - pip:
+      - annocli==1.0.3
