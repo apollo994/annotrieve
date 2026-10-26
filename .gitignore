@@ -24,3 +24,4 @@ TODO.txt
 htmlcov/
 coverage.xml
 graphify-out/
+.ipynb_checkpoints/
