@@ -1,0 +1,29 @@
+panel	class	n_pairs	median_log2_ens_over_ncbi	p	q_bh
+Protein-coding genes: number	Actinopteri	133	-0.042	3.09e-09	1.44e-08
+Protein-coding genes: number	Mammalia	87	-0.066	1.88e-11	1.76e-10
+Protein-coding genes: number	Insecta	55	0.098	3.69e-06	9.4e-06
+Protein-coding genes: number	Aves	50	-0.088	3.09e-09	1.44e-08
+Protein-coding genes: number	Magnoliopsida	14	0.027	0.502	0.52
+Protein-coding genes: number	Bivalvia	12	0.150	0.151	0.17
+Protein-coding genes: number	other	49	0.020	0.0929	0.108
+Protein-coding genes: mean length (bp)	Actinopteri	133	-0.118	7.73e-17	2.16e-15
+Protein-coding genes: mean length (bp)	Mammalia	87	-0.053	6.12e-05	0.000143
+Protein-coding genes: mean length (bp)	Insecta	55	-0.433	2.52e-08	8.83e-08
+Protein-coding genes: mean length (bp)	Aves	50	-0.192	6.62e-12	9.26e-11
+Protein-coding genes: mean length (bp)	Magnoliopsida	14	-0.224	0.00061	0.00107
+Protein-coding genes: mean length (bp)	Bivalvia	12	-0.347	0.000488	0.000911
+Protein-coding genes: mean length (bp)	other	49	-0.232	5.66e-08	1.76e-07
+lncRNAs: number	Actinopteri	132	0.411	0.000821	0.00128
+lncRNAs: number	Mammalia	86	-0.950	0.000654	0.00108
+lncRNAs: number	Insecta	54	1.805	7.22e-08	2.02e-07
+lncRNAs: number	Aves	50	-0.641	0.572	0.572
+lncRNAs: number	Magnoliopsida	14	0.906	0.0494	0.0602
+lncRNAs: number	Bivalvia	12	1.834	0.000977	0.00144
+lncRNAs: number	other	48	0.822	0.000367	0.000734
+lncRNAs: mean length (bp)	Actinopteri	132	-0.113	0.00595	0.00793
+lncRNAs: mean length (bp)	Mammalia	86	-0.413	9.35e-09	3.74e-08
+lncRNAs: mean length (bp)	Insecta	54	-0.006	0.359	0.387
+lncRNAs: mean length (bp)	Aves	50	-0.637	3.13e-10	2.19e-09
+lncRNAs: mean length (bp)	Magnoliopsida	14	-0.748	0.000122	0.000263
+lncRNAs: mean length (bp)	Bivalvia	12	-0.352	0.0342	0.0435
+lncRNAs: mean length (bp)	other	48	-0.308	0.00139	0.00194

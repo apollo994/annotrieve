@@ -12,7 +12,7 @@ Same logic as https://github.com/guigolab/BUSCO-tracker:
 Requires annocli, gffread, busco and awk on the PATH.
 
 Usage:
-    python run_busco.py <annotation_id> <busco_lineage> [-o OUTDIR] [--cpu N] [--force]
+    python run_busco.py <annotation_id> <busco_lineage> [-o OUTDIR] [--cpu N] [--retries N] [--force]
 
 Examples:
     python run_busco.py 22fa79d2c5ab33e26438434bb45a271b eukaryota_odb12
@@ -20,21 +20,22 @@ Examples:
 
 <busco_lineage> is either a lineage name (BUSCO downloads it if needed) or the
 path to an already downloaded lineage folder (BUSCO runs with --offline).
-Results are written to OUTDIR (default: busco_<annotation_id>):
-    OUTDIR/annotrieve/                                  downloaded annotation + assembly
-    OUTDIR/<annotation>_proteins.faa                    longest protein per gene
-    OUTDIR/busco_<lineage>/                             BUSCO output
-    OUTDIR/BUSCO.tsv                                    summary row (BUSCO-tracker format)
+Results are written to OUTDIR_<lineage name> (OUTDIR default: busco_<annotation_id>),
+so the same annotation can be run with several lineages side by side:
+    OUTDIR_<lineage>/BUSCO_<annotation_id>.tsv          summary row (BUSCO-tracker format)
+    OUTDIR_<lineage>/busco_<pid>.log                    BUSCO log (BUSCO writes it in its working directory)
 """
 import argparse
 import csv
 import gzip
 import logging
+import random
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 BUSCO_HEADER = ["annotation_id", "lineage", "busco_count", "complete",
@@ -135,10 +136,10 @@ END {
 """
 
 
-def run(cmd, step, stdout=None):
+def run(cmd, step, stdout=None, cwd=None):
     """Run a command, exit with its stderr on failure."""
     logger.info(f"{step}: {' '.join(str(c) for c in cmd)}")
-    result = subprocess.run(cmd, stdout=stdout, stderr=subprocess.PIPE, text=True)
+    result = subprocess.run(cmd, stdout=stdout, stderr=subprocess.PIPE, text=True, cwd=cwd)
     if result.returncode != 0:
         sys.exit(f"{step} failed (exit code {result.returncode}):\n{result.stderr}")
     return result
@@ -151,21 +152,34 @@ def gunzip(src, dest):
         shutil.copyfileobj(fin, fout)
 
 
-def download(annotation_id, outdir):
+def download(annotation_id, outdir, retries=3, backoff=15):
     """Download annotation + assembly with matched sequence names.
 
-    Returns (aliased gff, assembly fasta).
+    The servers (NCBI, Ensembl) answer 503 or drop connections when many jobs
+    download at once, so a failed download is retried with exponential backoff
+    and jitter. Returns (aliased gff, assembly fasta).
     """
-    result = run(["annocli", "download", "--annotation-ids", annotation_id,
-                  "--add-asm", "--fix-alias", "-o", str(outdir)], "download")
+    cmd = ["annocli", "download", "--annotation-ids", annotation_id,
+           "--add-asm", "--fix-alias", "-o", str(outdir)]
+    for attempt in range(1, retries + 1):
+        # discard partial files from a previous attempt
+        shutil.rmtree(outdir, ignore_errors=True)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        logger.info(f"download (attempt {attempt}/{retries}): {' '.join(cmd)}")
 
-    # annocli exits with 0 even when a download fails, so check the files
-    gffs = sorted(outdir.rglob("*.aliasMatch.gff.gz"))
-    fastas = sorted(outdir.rglob("*.fna.gz"))
-    if len(gffs) != 1 or len(fastas) != 1:
-        sys.exit(f"Expected one aliasMatch GFF and one assembly in {outdir}, "
-                 f"found {len(gffs)} and {len(fastas)}\n{result.stderr}")
-    return gffs[0], fastas[0]
+        # annocli exits with 0 even when a download fails, so check the files
+        gffs = sorted(outdir.rglob("*.aliasMatch.gff*.gz"))  # .gff.gz (NCBI) or .gff3.gz (Ensembl)
+        fastas = sorted(outdir.rglob("*.fna.gz"))
+        if result.returncode == 0 and len(gffs) == 1 and len(fastas) == 1:
+            return gffs[0], fastas[0]
+
+        message = (f"download failed (exit code {result.returncode}, found {len(gffs)} "
+                   f"aliasMatch GFF and {len(fastas)} assembly in {outdir})\n{result.stderr}")
+        if attempt == retries:
+            sys.exit(message)
+        wait = backoff * 2 ** (attempt - 1) * random.uniform(0.5, 1.5)
+        logger.warning(f"{message}\nretrying in {wait:.0f}s")
+        time.sleep(wait)
 
 
 def extract_proteins(gff_gz, fasta_gz, protein_file):
@@ -207,6 +221,8 @@ def extract_proteins(gff_gz, fasta_gz, protein_file):
 def run_busco(proteins, lineage, outdir, cpu, force):
     """Run BUSCO in protein mode. Returns the BUSCO output folder."""
     lineage_is_dir = Path(lineage).is_dir()
+    if lineage_is_dir:
+        lineage = str(Path(lineage).resolve())  # BUSCO runs from outdir
     lineage_name = Path(lineage).name if lineage_is_dir else lineage
     out_name = f"busco_{lineage_name}"
 
@@ -216,7 +232,7 @@ def run_busco(proteins, lineage, outdir, cpu, force):
         cmd.append("--offline")
     if force:
         cmd.append("-f")
-    run(cmd, "busco")
+    run(cmd, "busco", cwd=outdir)
     return outdir / out_name
 
 
@@ -242,6 +258,19 @@ def parse_busco_results(busco_dir):
     }
 
 
+def finish(outdir, annotation_id, busco_dir):
+    """STEP 4: write the summary TSV."""
+    results = parse_busco_results(busco_dir)
+    busco_tsv = outdir / f"BUSCO_{annotation_id}.tsv"
+    with open(busco_tsv, "w", newline="") as f:
+        writer = csv.writer(f, delimiter="\t", lineterminator="\n")
+        writer.writerow(BUSCO_HEADER)
+        writer.writerow([annotation_id] + [results[k] for k in BUSCO_HEADER[1:]])
+
+    logger.info(f"Done: {results}")
+    logger.info(f"Summary written to {busco_tsv}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Run BUSCO on the proteins of an Annotrieve annotation.")
@@ -251,6 +280,8 @@ def main():
     parser.add_argument("-o", "--outdir",
                         help="output folder (default: busco_<annotation_id>)")
     parser.add_argument("--cpu", type=int, default=4, help="BUSCO threads (default: 4)")
+    parser.add_argument("--retries", type=int, default=3,
+                        help="download attempts before giving up (default: 3)")
     parser.add_argument("--force", action="store_true",
                         help="overwrite an existing BUSCO output folder")
     args = parser.parse_args()
@@ -259,11 +290,12 @@ def main():
         if shutil.which(tool) is None:
             sys.exit(f"{tool} not found on PATH")
 
-    outdir = Path(args.outdir or f"busco_{args.annotation_id}").resolve()
+    lineage_name = Path(args.lineage).name
+    outdir = Path(f"{args.outdir or f'busco_{args.annotation_id}'}_{lineage_name}").resolve()
     outdir.mkdir(parents=True, exist_ok=True)
 
     logger.info("STEP 1: download annotation and assembly, fix aliases")
-    gff, fasta = download(args.annotation_id, outdir / "annotrieve")
+    gff, fasta = download(args.annotation_id, outdir / "annotrieve", args.retries)
 
     logger.info("STEP 2: extract proteins")
     proteins = outdir / f"{args.annotation_id}_proteins.faa"
@@ -272,15 +304,7 @@ def main():
     logger.info("STEP 3: run BUSCO")
     busco_dir = run_busco(proteins, args.lineage, outdir, args.cpu, args.force)
 
-    results = parse_busco_results(busco_dir)
-    busco_tsv = outdir / "BUSCO.tsv"
-    with open(busco_tsv, "w", newline="") as f:
-        writer = csv.writer(f, delimiter="\t", lineterminator="\n")
-        writer.writerow(BUSCO_HEADER)
-        writer.writerow([args.annotation_id] + [results[k] for k in BUSCO_HEADER[1:]])
-
-    logger.info(f"Done: {results}")
-    logger.info(f"Summary written to {busco_tsv}")
+    finish(outdir, args.annotation_id, busco_dir)
 
 
 if __name__ == "__main__":

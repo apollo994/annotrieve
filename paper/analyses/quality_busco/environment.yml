@@ -1,4 +1,4 @@
-name: busco-env
+name: busco-annotrieve
 channels:
   - conda-forge
   - bioconda

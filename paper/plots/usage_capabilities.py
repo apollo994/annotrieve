@@ -32,7 +32,7 @@ def build_plot(items):
     fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150)
 
     # Reversed so the most used case is at the top
-    bars = ax.barh(labels[::-1], users[::-1], color=BAR_COLOR, height=0.6)
+    bars = ax.barh(labels[::-1], users[::-1], color=BAR_COLOR, height=0.85)
 
     for bar, value in zip(bars, users[::-1]):
         ax.text(
@@ -46,7 +46,7 @@ def build_plot(items):
         )
 
     ax.set_xlim(0, max(users) * 1.12)
-    ax.set_xlabel("Unique users", fontsize=10)
+    ax.set_xlabel("Unique client", fontsize=10)
     ax.tick_params(axis="y", length=0, labelsize=10)
     ax.tick_params(axis="x", labelsize=9)
     for side in ("top", "right", "left"):
