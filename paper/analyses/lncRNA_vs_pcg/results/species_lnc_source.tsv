@@ -1,0 +1,3038 @@
+lineage	species_taxid	organism_name	lnc_databases	source
+Actinopteri	100188	Brachyistius frenatus	RefSeq	RefSeq only
+Actinopteri	100190	Embiotoca jacksoni	RefSeq	RefSeq only
+Actinopteri	101364	Carassius gibelio	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	101497	Notothenia rossii	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	103215	Channallabes apus	Ensembl	Ensembl only
+Actinopteri	1042646	Gadus chalcogrammus	RefSeq	RefSeq only
+Actinopteri	105023	Nothobranchius furzeri	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1053555	Astyanax lacustris	GenBank	GenBank only
+Actinopteri	106582	Maylandia zebra	RefSeq	RefSeq only
+Actinopteri	1073243	Festucalex cinctus	RefSeq	RefSeq only
+Actinopteri	1090481	Gymnoscopelus microlampas	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1091424	Melanostigma gelatinosum	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1091426	Protomyctophum parallelum	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	109274	Hippocampus abdominalis	Ensembl	Ensembl only
+Actinopteri	109280	Hippocampus comes	RefSeq	RefSeq only
+Actinopteri	109282	Hippocampus guttulatus	RefSeq	RefSeq only
+Actinopteri	109293	Hippocampus zosterae	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1095086	Leptonotus elevatus	RefSeq	RefSeq only
+Actinopteri	109706	Chaetodon trifascialis	RefSeq	RefSeq only
+Actinopteri	109905	Chelmon rostratus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	111784	Reinhardtius hippoglossoides	Ensembl	Ensembl only
+Actinopteri	113540	Scleropages formosus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1142201	Danio aesculapii	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	118141	Megalops cyprinoides	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	118154	Synaphobranchus kaupii	Ensembl	Ensembl only
+Actinopteri	119488	Siniperca chuatsi	RefSeq	RefSeq only
+Actinopteri	1203425	Notolabrus celidotus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	120843	Melanotaenia duboulayi	Ensembl	Ensembl only
+Actinopteri	1234273	Tachysurus fulvidraco	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	123683	Oryzias javanicus	Ensembl	Ensembl only
+Actinopteri	1250792	Melanotaenia boesemani	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1266883	Foetorepus agassizii	Ensembl	Ensembl only
+Actinopteri	129043	Cololabis saira	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	129108	Xenentodon cancila	GenBank	GenBank only
+Actinopteri	129916	Urocampus carinirostris	RefSeq	RefSeq only
+Actinopteri	13013	Clarias gariepinus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1311420	Caesio teres	GenBank	GenBank only
+Actinopteri	13489	Dicentrarchus labrax	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	134920	Pungitius pungitius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	135647	Barbatula barbatula	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	13676	Scomber japonicus	RefSeq	RefSeq only
+Actinopteri	13677	Scomber scombrus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	137080	Garra rufa	RefSeq	RefSeq only
+Actinopteri	137520	Hypomesus transpacificus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	13765	Xyrichtys novacula	Ensembl + GenBank	Ensembl only
+Actinopteri	143350	Pagrus major	RefSeq	RefSeq only
+Actinopteri	143606	Gobiocypris rarus	Ensembl	Ensembl only
+Actinopteri	144197	Stegastes partitus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	146480	Ammodytes marinus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	147232	Halichoeres trimaculatus	RefSeq	RefSeq only
+Actinopteri	147949	Micropterus dolomieu	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1484357	Hyperoplus immaculatus	Ensembl	Ensembl only
+Actinopteri	150288	Boleophthalmus pectinirostris	RefSeq	RefSeq only
+Actinopteri	150448	Aulostomus chinensis	RefSeq	RefSeq only
+Actinopteri	1534307	Albula goreensis	Ensembl	Ensembl only
+Actinopteri	154827	Xyrauchen texanus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	154954	Genypterus blacodes	RefSeq	RefSeq only
+Actinopteri	155067	Vimba vimba	Ensembl	Ensembl only
+Actinopteri	1572043	Triplophysa tibetana	Ensembl	Ensembl only
+Actinopteri	1582913	Triplophysa dalaica	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	158456	Betta splendens	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	158779	Pelmatolapia mariae	RefSeq	RefSeq only
+Actinopteri	159077	Nerophis ophidion	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1606681	Puntigrus tetrazona	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	160734	Plectropomus leopardus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1608454	Sinocyclocheilus anshuiensis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161448	Corythoichthys intestinalis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161450	Doryrhamphus excisus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161453	Dunckerocampus dactyliophorus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161455	Entelurus aequoreus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161469	Phyllopteryx taeniolatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161581	Stigmatopora argus	RefSeq	RefSeq only
+Actinopteri	161582	Stigmatopora nigra	RefSeq	RefSeq only
+Actinopteri	161584	Syngnathus acus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161585	Syngnathus floridae	RefSeq	RefSeq only
+Actinopteri	161587	Syngnathus leptorhynchus	RefSeq	RefSeq only
+Actinopteri	161590	Syngnathus scovelli	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161592	Syngnathus typhle	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	161767	Amphiprion percula	Ensembl	Ensembl only
+Actinopteri	163618	Copadichromis virginalis	RefSeq	RefSeq only
+Actinopteri	163623	Diplotaxodon limnothrissa	RefSeq	RefSeq only
+Actinopteri	166261	Centroberyx affinis	RefSeq	RefSeq only
+Actinopteri	166262	Centroberyx gerrardi	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	166745	Eucyclogobius newberryi	RefSeq	RefSeq only
+Actinopteri	1676925	Paramormyrops kingsleyae	RefSeq	RefSeq only
+Actinopteri	1677794	Triplophysa yarkandensis	Ensembl	Ensembl only
+Actinopteri	171736	Symphodus melops	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	172269	Argyrosomus regius	Ensembl	Ensembl only
+Actinopteri	172907	Cirrhinus molitorella	Ensembl	Ensembl only
+Actinopteri	173247	Echeneis naucrates	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	1747188	Kryptolebias hermaphroditus	Ensembl	Ensembl only
+Actinopteri	175792	Tachysurus vachellii	RefSeq	RefSeq only
+Actinopteri	175797	Silurus meridionalis	RefSeq	RefSeq only
+Actinopteri	175798	Cranoglanis bouderius	Ensembl	Ensembl only
+Actinopteri	1772091	Lycodopsis pacificus	GenBank	GenBank only
+Actinopteri	1778380	Gasterosteus nipponicus	Ensembl	Ensembl only
+Actinopteri	180520	Siphateles boraxobius	RefSeq	RefSeq only
+Actinopteri	181472	Salarias fasciatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	182223	Hypomesus nipponensis	RefSeq	RefSeq only
+Actinopteri	182658	Lethrinus nebulosus	Ensembl + GenBank	Ensembl only
+Actinopteri	183150	Oryzias sinensis	Ensembl	Ensembl only
+Actinopteri	183657	Urophycis tenuis	Ensembl	Ensembl only
+Actinopteri	184440	Centropristis striata	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	184585	Engraulis encrasicolus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	185739	Pollachius pollachius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	188132	Poeciliopsis prolifica	RefSeq	RefSeq only
+Actinopteri	1914718	Filicampus tigris	RefSeq	RefSeq only
+Actinopteri	195075	Blennius ocellaris	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	195615	Hippoglossus stenolepis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	195821	Anableps anableps	Ensembl + GenBank	Ensembl only
+Actinopteri	195855	Valencia hispanica	Ensembl	Ensembl only
+Actinopteri	196075	Sprattus sprattus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	205130	Mastacembelus armatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	2059687	Pseudoliparis swirei	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	206093	Electrona antarctica	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	206126	Spinachia spinachia	Ensembl + GenBank	Ensembl only
+Actinopteri	208333	Girardinichthys multiradiatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	210632	Parambassis ranga	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	210640	Moxostoma hubbsi	Ensembl	Ensembl only
+Actinopteri	211835	Lutjanus erythropterus	RefSeq	RefSeq only
+Actinopteri	214431	Scortum barcoo	Ensembl	Ensembl only
+Actinopteri	214486	Sebastes schlegelii	Ensembl	Ensembl only
+Actinopteri	215343	Fistularia commersonii	RefSeq	RefSeq only
+Actinopteri	215358	Larimichthys crocea	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	215367	Enoplosus armatus	RefSeq	RefSeq only
+Actinopteri	215402	Channa argus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	217509	Carassius carassius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	219545	Ameiurus melas	Ensembl	Ensembl only
+Actinopteri	219752	Odontesthes bonariensis	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Actinopteri	2290929	Trichomycterus rosablanca	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	229290	Anoplopoma fimbria	RefSeq	RefSeq only
+Actinopteri	238031	Elopichthys bambusa	Ensembl	Ensembl only
+Actinopteri	238744	Menidia menidia	Ensembl + GenBank	Ensembl only
+Actinopteri	240159	Collichthys lucidus	Ensembl	Ensembl only
+Actinopteri	240162	Miichthys miiuy	Ensembl	Ensembl only
+Actinopteri	240163	Nibea albiflora	Ensembl	Ensembl only
+Actinopteri	240832	Thaleichthys pacificus	Ensembl	Ensembl only
+Actinopteri	240838	Hippocampus bargibanti	RefSeq	RefSeq only
+Actinopteri	241271	Cheilinus undulatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	241346	Semicossyphus pulcher	RefSeq	RefSeq only
+Actinopteri	241442	Beaufortia kweichowensis	Ensembl	Ensembl only
+Actinopteri	241820	Antennarius striatus	RefSeq	RefSeq only
+Actinopteri	243562	Plotosus lineatus	Ensembl	Ensembl only
+Actinopteri	244447	Cynoglossus semilaevis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	2546036	Lampris incognitus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	263515	Gymnocypris eckloni scoliostomus	Ensembl	Ensembl only
+Actinopteri	264210	Pristipomoides typus	GenBank	GenBank only
+Actinopteri	270530	Synchiropus splendidus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	270537	Toxotes chatareus	Ensembl	Ensembl only
+Actinopteri	271503	Cebidichthys violaceus	RefSeq	RefSeq only
+Actinopteri	27697	Sardina pilchardus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	27704	Gobio gobio	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	27706	Micropterus salmoides	RefSeq	RefSeq only
+Actinopteri	27720	Hoplias malabaricus	RefSeq	RefSeq only
+Actinopteri	27771	Limanda limanda	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	278164	Alosa alosa	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	283035	Sander lucioperca	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	283036	Sander vitreus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	284583	Perccottus glenii	Ensembl	Ensembl only
+Actinopteri	286537	Coilia mystus	GenBank	GenBank only
+Actinopteri	286572	Aulonocara stuartgranti	RefSeq	RefSeq only
+Actinopteri	2871759	Seriola aureovittata	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	28743	Cyprinodon variegatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	28829	Solea senegalensis	RefSeq	RefSeq only
+Actinopteri	29144	Chanos chanos	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	29151	Osmerus eperlanus	RefSeq	RefSeq only
+Actinopteri	291819	Paracanthobrama guichenoti	Ensembl	Ensembl only
+Actinopteri	293821	Epinephelus fuscoguttatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	2972642	Amia ocellicauda	RefSeq	RefSeq only
+Actinopteri	299321	Denticeps clupeoides	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	300413	Epinephelus moara	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	300417	Syngnathoides biaculeatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	302047	Seriola lalandi dorsalis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	3034131	Rhinichthys klamathensis goyatoka	RefSeq	RefSeq only
+Actinopteri	303518	Pundamilia nyererei	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	303726	Nelusetta ayraudi	RefSeq	RefSeq only
+Actinopteri	304217	Rhamphochromis longiceps	RefSeq	RefSeq only
+Actinopteri	304258	Clinocottus analis	RefSeq	RefSeq only
+Actinopteri	30732	Oryzias melastigma	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	307959	Sinocyclocheilus rhinocerous	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	30960	Mallotus villosus	Ensembl	Ensembl only
+Actinopteri	30962	Oncorhynchus clarkii lewisi	RefSeq	RefSeq only
+Actinopteri	31033	Takifugu rubripes	RefSeq	RefSeq only
+Actinopteri	310571	Epinephelus lanceolatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	310915	Pangasianodon hypophthalmus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	3127111	Pempheris klunzingeri	RefSeq	RefSeq only
+Actinopteri	315492	Lateolabrax maculatus	Ensembl + GenBank	Ensembl only
+Actinopteri	321403	Nothobranchius kuhntae	Ensembl	Ensembl only
+Actinopteri	32469	Xiphophorus birchmanni	Ensembl	Ensembl only
+Actinopteri	32473	Xiphophorus couchianus	RefSeq	RefSeq only
+Actinopteri	32507	Neolamprologus brichardi	RefSeq	RefSeq only
+Actinopteri	32509	Perissodus microlepis	RefSeq	RefSeq only
+Actinopteri	33528	Gambusia affinis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	3359660	Polyacanthonotus merretti	GenBank	GenBank only
+Actinopteri	337641	Hemibagrus wyckioides	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	340692	Coregonus ussuriensis	Ensembl	Ensembl only
+Actinopteri	34773	Alosa sapidissima	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	34774	Alosa pseudoharengus	RefSeq	RefSeq only
+Actinopteri	34785	Callionymus lyra	RefSeq	RefSeq only
+Actinopteri	34787	Tautogolabrus adspersus	GenBank	GenBank only
+Actinopteri	34816	Morone saxatilis	RefSeq	RefSeq only
+Actinopteri	34817	Hippoglossoides platessoides	Ensembl	Ensembl only
+Actinopteri	34823	Microgadus tomcod	Ensembl	Ensembl only
+Actinopteri	355514	Leuresthes tenuis	RefSeq	RefSeq only
+Actinopteri	35575	Mchenga conophoros	RefSeq	RefSeq only
+Actinopteri	356809	Acrossocheilus fasciatus	Ensembl	Ensembl only
+Actinopteri	36185	Thymallus thymallus	Ensembl	Ensembl only
+Actinopteri	36190	Chaenocephalus aceratus	Ensembl	Ensembl only
+Actinopteri	36212	Trachurus trachurus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	365059	Coilia nasus	Ensembl	Ensembl only
+Actinopteri	369639	Onychostoma macrolepis	RefSeq	RefSeq only
+Actinopteri	37003	Kryptolebias marmoratus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	37273	Gambusia holbrooki	GenBank	GenBank only
+Actinopteri	373995	Tenualosa ilisha	Ensembl	Ensembl only
+Actinopteri	375764	Sphaeramia orbicularis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	38527	Abramis brama	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	390368	Pholidichthys leucotaenia	Ensembl + GenBank	Ensembl only
+Actinopteri	390378	Neosynchiropus ocellatus	GenBank	GenBank only
+Actinopteri	390379	Thalassophryne amazonica	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	39042	Chaetodon auriga	RefSeq	RefSeq only
+Actinopteri	394691	Sebastes fasciatus	RefSeq	RefSeq only
+Actinopteri	396775	Nibea coibor	Ensembl	Ensembl only
+Actinopteri	40690	Trematomus bernacchii	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	40830	Barbus barbus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	409849	Periophthalmus magnuspinnatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	412623	Brachionichthys hirsutus	RefSeq	RefSeq only
+Actinopteri	41447	Seriola dumerili	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	417921	Etheostoma cragini	RefSeq	RefSeq only
+Actinopteri	420107	Neolamprologus multifasciatus	RefSeq	RefSeq only
+Actinopteri	422203	Triplophysa siluroides	Ensembl	Ensembl only
+Actinopteri	42514	Pygocentrus nattereri	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	42526	Colossoma macropomum	RefSeq	RefSeq only
+Actinopteri	426098	Eutrigla gurnardus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	42636	Brienomyrus brachyistius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	433405	Anarrhichthys ocellatus	RefSeq	RefSeq only
+Actinopteri	433684	Takifugu flavidus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	433685	Takifugu bimaculatus	Ensembl	Ensembl only
+Actinopteri	435163	Thamnaconus septentrionalis	Ensembl	Ensembl only
+Actinopteri	435218	Polydactylus sextarius	Ensembl	Ensembl only
+Actinopteri	43689	Simochromis diagramma	RefSeq	RefSeq only
+Actinopteri	43700	Monopterus albus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	441366	Gouania willdenowi	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	443677	Neoarius graeffei	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	443705	Nansenia antarctica	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	443714	Protomyctophum bolini	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	443729	Trachinotus anak	RefSeq	RefSeq only
+Actinopteri	446415	Argentina silus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	446457	Telmatherina bonti	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	451745	Nematolebias whitei	RefSeq	RefSeq only
+Actinopteri	47308	Neogobius melanostomus	Ensembl	Ensembl only
+Actinopteri	473322	Nannobrachium achirus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	473348	Arctozenus risso	Ensembl	Ensembl only
+Actinopteri	473354	Borostomias antarcticus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	47969	Oreochromis aureus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	48171	Chelon labrosus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	48193	Mugil cephalus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	48668	Rutilus rutilus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	48698	Poecilia formosa	RefSeq	RefSeq only
+Actinopteri	48699	Poecilia latipinna	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	48701	Poecilia mexicana	RefSeq	RefSeq only
+Actinopteri	48915	Diplodus puntazzo	Ensembl	Ensembl only
+Actinopteri	508554	Labrus mixtus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	508657	Hyperoplus lanceolatus	Ensembl	Ensembl only
+Actinopteri	51549	Pseudorasbora parva	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	52239	Pseudochaenichthys georgianus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	52670	Austrofundulus limnaeus	RefSeq	RefSeq only
+Actinopteri	52904	Scophthalmus maximus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	54267	Fundulus diaphanus	GenBank	GenBank only
+Actinopteri	54343	Etheostoma spectabile	RefSeq	RefSeq only
+Actinopteri	546530	Nerophis lumbriciformis	RefSeq	RefSeq only
+Actinopteri	54904	Hiodon alosoides	GenBank	GenBank only
+Actinopteri	56716	Cottoperca gobio	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	56720	Lipophrys pholis	RefSeq	RefSeq only
+Actinopteri	56723	Labrus bergylta	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	56726	Pholis gunnellus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	56733	Eleginops maclovinus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	572540	Lepisosteus platostomus	GenBank + RefSeq	RefSeq only
+Actinopteri	58319	Scardinius erythrophthalmus	RefSeq	RefSeq only
+Actinopteri	58324	Phoxinus phoxinus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	58325	Leuciscus leuciscus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	586833	Myripristis murdjan	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	586865	Synchiropus picturatus	GenBank	GenBank only
+Actinopteri	59291	Coregonus lavaretus	RefSeq	RefSeq only
+Actinopteri	59861	Coregonus clupeaformis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	61643	Taurulus bubalis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	61819	Amphilophus citrinellus	Ensembl	Ensembl only
+Actinopteri	62062	Hucho hucho	Ensembl	Ensembl only
+Actinopteri	62067	Brachymystax lenok tsinlingensis	Ensembl	Ensembl only
+Actinopteri	63155	Archocentrus centrarchus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	64108	Zeus faber	RefSeq	RefSeq only
+Actinopteri	64144	Anabas testudineus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	64152	Channa striata	Ensembl	Ensembl only
+Actinopteri	642989	Vanacampus margaritifer	RefSeq	RefSeq only
+Actinopteri	642998	Idiotropiscis lumnitzeri	RefSeq	RefSeq only
+Actinopteri	65739	Anarhichas minor	RefSeq	RefSeq only
+Actinopteri	66913	Ictalurus furcatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	670488	Hippichthys cyanospilos	RefSeq	RefSeq only
+Actinopteri	69136	Cyprinodon diabolis	Ensembl	Ensembl only
+Actinopteri	69293	Gasterosteus aculeatus	RefSeq	RefSeq only
+Actinopteri	693459	Phycodurus eques	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	698409	Brachyhypopomus gauderio	RefSeq	RefSeq only
+Actinopteri	70543	Myxocyprinus asiaticus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	714202	Odontamblyopus lacepedii	Ensembl	Ensembl only
+Actinopteri	72011	Acanthopagrus schlegelii	Ensembl + GenBank	Ensembl only
+Actinopteri	72105	Sebastes umbrosus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	72446	Labeo catla	Ensembl	Ensembl only
+Actinopteri	74940	Oncorhynchus tshawytscha	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	75038	Scatophagus argus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	75329	Misgurnus anguillicaudatus	RefSeq	RefSeq only
+Actinopteri	75352	Megalobrama amblycephala	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	75366	Sinocyclocheilus grahami	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	75939	Dallia pectoralis	Ensembl	Ensembl only
+Actinopteri	76338	Thalassoma bifasciatum	GenBank	GenBank only
+Actinopteri	76340	Sciaenops ocellatus	Ensembl	Ensembl only
+Actinopteri	77115	Cyprinodon tularosa	RefSeq	RefSeq only
+Actinopteri	7906	Acipenser ruthenus	RefSeq	RefSeq only
+Actinopteri	7913	Polyodon spathula	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7917	Atractosteus spatula	GenBank + RefSeq	RefSeq only
+Actinopteri	7918	Lepisosteus oculatus	RefSeq	RefSeq only
+Actinopteri	7932	Megalops atlanticus	Ensembl	Ensembl only
+Actinopteri	7936	Anguilla anguilla	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7938	Anguilla rostrata	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7950	Clupea harengus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7955	Danio rerio	RefSeq	RefSeq only
+Actinopteri	7957	Carassius auratus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7959	Ctenopharyngodon idella	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7962	Cyprinus carpio	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7965	Hypophthalmichthys nobilis	Ensembl	Ensembl only
+Actinopteri	7994	Astyanax mexicanus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	7998	Ictalurus punctatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8005	Electrophorus electricus	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Actinopteri	8010	Esox lucius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8014	Osmerus mordax	RefSeq	RefSeq only
+Actinopteri	8017	Oncorhynchus gorbuscha	RefSeq	RefSeq only
+Actinopteri	8018	Oncorhynchus keta	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8019	Oncorhynchus kisutch	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8020	Oncorhynchus masou masou	RefSeq	RefSeq only
+Actinopteri	8022	Oncorhynchus mykiss	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8023	Oncorhynchus nerka	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8030	Salmo salar	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8032	Salmo trutta	RefSeq	RefSeq only
+Actinopteri	8036	Salvelinus alpinus	RefSeq	RefSeq only
+Actinopteri	8038	Salvelinus fontinalis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8040	Salvelinus namaycush	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8049	Gadus morhua	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	80720	Gadus macrocephalus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8073	Lophius americanus	Ensembl	Ensembl only
+Actinopteri	8078	Fundulus heteroclitus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8081	Poecilia reticulata	RefSeq	RefSeq only
+Actinopteri	8083	Xiphophorus maculatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8084	Xiphophorus hellerii	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8090	Oryzias latipes	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	80966	Acanthochromis polyacanthus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	80970	Amphiprion clarkii	Ensembl	Ensembl only
+Actinopteri	80972	Amphiprion ocellaris	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8103	Cyclopterus lumpus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8128	Oreochromis niloticus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8150	Tropheus moorii	Ensembl	Ensembl only
+Actinopteri	8153	Haplochromis burtoni	RefSeq	RefSeq only
+Actinopteri	8154	Astatotilapia calliptera	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	81636	Micromesistius poutassou	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	81638	Brosme brosme	Ensembl	Ensembl only
+Actinopteri	8167	Perca flavescens	RefSeq	RefSeq only
+Actinopteri	8168	Perca fluviatilis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8173	Pagrus pagrus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8175	Sparus aurata	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8177	Acanthopagrus latus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8187	Lates calcarifer	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8208	Notothenia coriiceps	RefSeq	RefSeq only
+Actinopteri	8218	Gymnodraco acuticeps	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8236	Thunnus albacares	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	82366	Verasper variegatus	Ensembl	Ensembl only
+Actinopteri	8237	Thunnus thynnus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8240	Thunnus maccoyii	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8245	Xiphias gladius	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8255	Paralichthys olivaceus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8260	Platichthys flesus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8262	Pleuronectes platessa	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	82655	Conger conger	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8267	Hippoglossus hippoglossus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	8276	Pantodon buchholzi	GenBank	GenBank only
+Actinopteri	8284	Squalius cephalus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	83875	Trachurus japonicus	RefSeq	RefSeq only
+Actinopteri	84645	Labeo rohita	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	85417	Gobius niger	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	882753	Antennarius maculatus	GenBank	GenBank only
+Actinopteri	88682	Diretmus argenteus	GenBank	GenBank only
+Actinopteri	88708	Poromitra crassiceps	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	90069	Solea solea	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	90074	Microchirus variegatus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	90735	Paramisgurnus dabryanus	RefSeq	RefSeq only
+Actinopteri	90988	Pimephales promelas	RefSeq	RefSeq only
+Actinopteri	930266	Salminus brasiliensis	RefSeq	RefSeq only
+Actinopteri	933932	Silurus aristotelis	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	933992	Chanodichthys erythropterus	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	941984	Toxotes jaculatrix	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	94237	Mola mola	Ensembl	Ensembl only
+Actinopteri	946358	Aplochiton taeniatus	GenBank	GenBank only
+Actinopteri	948025	Gymnoscopelus braueri	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	948063	Notolepis coatsorum	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	94984	Echiichthys vipera	Ensembl + RefSeq	RefSeq + Ensembl
+Actinopteri	980417	Leptoclinus maculatus	Ensembl	Ensembl only
+Actinopteri	992332	Triplophysa rosa	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	1046855	Amilenus aurantiacus	Ensembl	Ensembl only
+Arachnida	109461	Varroa destructor	RefSeq	RefSeq only
+Arachnida	1112382	Araneus angulatus	Ensembl	Ensembl only
+Arachnida	114398	Parasteatoda tepidariorum	RefSeq	RefSeq only
+Arachnida	1155756	Segestria senoculata	Ensembl	Ensembl only
+Arachnida	120091	Centruroides vittatus	RefSeq	RefSeq only
+Arachnida	1304667	Zoropsis spinimana	Ensembl	Ensembl only
+Arachnida	1581418	Amblyomma mixtum	RefSeq	RefSeq only
+Arachnida	1662264	Leviellus thorelli	Ensembl	Ensembl only
+Arachnida	1686743	Oppia nitens	RefSeq	RefSeq only
+Arachnida	1698855	Eratigena atrica	Ensembl	Ensembl only
+Arachnida	1871986	Parasteatoda lunata	Ensembl	Ensembl only
+Arachnida	187487	Xysticus acerbus	Ensembl	Ensembl only
+Arachnida	1907000	Gibbaranea gibbosa	Ensembl	Ensembl only
+Arachnida	1926196	Meta bourneti	Ensembl	Ensembl only
+Arachnida	1977180	Troglohyphantes excavatus	Ensembl	Ensembl only
+Arachnida	202533	Stegodyphus dumicola	RefSeq	RefSeq only
+Arachnida	218467	Centruroides sculpturatus	RefSeq	RefSeq only
+Arachnida	243486	Salticus scenicus	Ensembl	Ensembl only
+Arachnida	246614	Brevipalpus obovatus	RefSeq	RefSeq only
+Arachnida	2803876	Odiellus spinosus	Ensembl	Ensembl only
+Arachnida	3034272	Chaetopelma lymberakisi	Ensembl	Ensembl only
+Arachnida	3086104	Leiobunum subalpinum	Ensembl	Ensembl only
+Arachnida	32264	Tetranychus urticae	RefSeq	RefSeq only
+Arachnida	327109	Uloborus diversus	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	336591	Larinioides cornutus	Ensembl	Ensembl only
+Arachnida	336685	Tibellus oblongus	Ensembl	Ensembl only
+Arachnida	34597	Ornithodoros turicata	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	34609	Amblyomma maculatum	RefSeq	RefSeq only
+Arachnida	34620	Dermacentor andersoni	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	34621	Dermacentor variabilis	RefSeq	RefSeq only
+Arachnida	34632	Rhipicephalus sanguineus	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	34638	Galendromus occidentalis	RefSeq	RefSeq only
+Arachnida	44386	Haemaphysalis longicornis	RefSeq	RefSeq only
+Arachnida	50023	Panonychus citri	RefSeq	RefSeq only
+Arachnida	500645	Tetragnatha montana	Ensembl	Ensembl only
+Arachnida	543639	Dermacentor silvarum	Ensembl + RefSeq	RefSeq + Ensembl
+Arachnida	60249	Dermacentor albipictus	RefSeq	RefSeq only
+Arachnida	62148	Gluvia dorsalis	Ensembl	Ensembl only
+Arachnida	62625	Varroa jacobsoni	RefSeq	RefSeq only
+Arachnida	6932	Pholcus phalangioides	RefSeq	RefSeq only
+Arachnida	6941	Rhipicephalus microplus	RefSeq	RefSeq only
+Arachnida	6943	Amblyomma americanum	RefSeq	RefSeq only
+Arachnida	6945	Ixodes scapularis	RefSeq	RefSeq only
+Arachnida	6954	Dermatophagoides farinae	RefSeq	RefSeq only
+Arachnida	6956	Dermatophagoides pteronyssinus	RefSeq	RefSeq only
+Arachnida	83912	Psoroptes ovis	GenBank	GenBank only
+Arachnida	94029	Argiope bruennichi	Ensembl + RefSeq	RefSeq + Ensembl
+Ascomycota	1016849	Exophiala sideris	Ensembl	Ensembl only
+Ascomycota	104259	Penicillium brasilianum	Ensembl	Ensembl only
+Ascomycota	1072105	Lachancea dasiensis	Ensembl	Ensembl only
+Ascomycota	107463	Xanthoria parietina	Ensembl	Ensembl only
+Ascomycota	109264	Aspergillus bombycis	Ensembl	Ensembl only
+Ascomycota	1093211	Ramularia vizellae	Ensembl	Ensembl only
+Ascomycota	113226	Pseudocercospora musae	Ensembl	Ensembl only
+Ascomycota	1141098	Pseudomassariella vexata	Ensembl	Ensembl only
+Ascomycota	114497	Cordyceps fumosorosea arsef 2679	Ensembl	Ensembl only
+Ascomycota	1209926	Colletotrichum orchidophilum	Ensembl	Ensembl only
+Ascomycota	1209931	Colletotrichum salicis	Ensembl	Ensembl only
+Ascomycota	1217826	Xylona heveae tc161	Ensembl	Ensembl only
+Ascomycota	1230905	Lachancea mirantina	Ensembl	Ensembl only
+Ascomycota	1245769	Lachancea lanzarotensis	Ensembl	Ensembl only
+Ascomycota	1301332	Flavoplaca marina	Ensembl	Ensembl only
+Ascomycota	130810	[candida] arabinofermentans	Ensembl	Ensembl only
+Ascomycota	1367422	Fonsecaea erecta	Ensembl	Ensembl only
+Ascomycota	1408657	Pneumocystis jirovecii ru7	Ensembl	Ensembl only
+Ascomycota	1442368	Fonsecaea pedrosoi cbs 271.37	Ensembl	Ensembl only
+Ascomycota	1442371	Fonsecaea multimorphosa cbs 102226	Ensembl	Ensembl only
+Ascomycota	1460663	Paraphaeosphaeria sporulosa	Ensembl	Ensembl only
+Ascomycota	149040	Mollisia scopiformis	Ensembl	Ensembl only
+Ascomycota	150359	Niveomyces insectorum rcef 264	Ensembl	Ensembl only
+Ascomycota	1507870	Cryoendolithus antarcticus	Ensembl	Ensembl only
+Ascomycota	1531966	[torrubiella] hemipterigena	Ensembl	Ensembl only
+Ascomycota	1573173	Colletotrichum incanum	Ensembl	Ensembl only
+Ascomycota	157483	Lichina pygmaea	Ensembl	Ensembl only
+Ascomycota	158046	Phaeomoniella chlamydospora	Ensembl	Ensembl only
+Ascomycota	1664694	Cyphellophora attinorum	Ensembl	Ensembl only
+Ascomycota	174074	Cladonia squamosa	Ensembl	Ensembl only
+Ascomycota	174425	Lichina confinis	Ensembl	Ensembl only
+Ascomycota	177197	Coniochaeta ligniaria nrrl 30616	Ensembl	Ensembl only
+Ascomycota	1835702	Penicillium arizonense	Ensembl	Ensembl only
+Ascomycota	1851006	Phialophora macrospora	Ensembl	Ensembl only
+Ascomycota	196109	Microdochium bolleyi	Ensembl	Ensembl only
+Ascomycota	2060906	Blastomyces silverae	Ensembl	Ensembl only
+Ascomycota	212818	Exophiala mesophila	Ensembl	Ensembl only
+Ascomycota	215243	Exophiala oligosperma	Ensembl	Ensembl only
+Ascomycota	2268375	Leptographium flavum	Ensembl	Ensembl only
+Ascomycota	236234	Diplodia corticola	Ensembl	Ensembl only
+Ascomycota	253628	Verruconis gallopava	Ensembl	Ensembl only
+Ascomycota	2545709	Schizosaccharomyces osmophilus	GenBank + RefSeq	RefSeq only
+Ascomycota	254877	Penicillium flavigenum	Ensembl	Ensembl only
+Ascomycota	2714763	Akanthomyces lecanii rcef 1005	Ensembl	Ensembl only
+Ascomycota	27322	Metschnikowia bicuspidata var. bicuspidata nrrl yb-4993	Ensembl	Ensembl only
+Ascomycota	28573	Talaromyces islandicus	Ensembl	Ensembl only
+Ascomycota	2902605	Histoplasma ohiense	GenBank	GenBank only
+Ascomycota	308745	Aspergillus rambellii	Ensembl	Ensembl only
+Ascomycota	319629	Aspergillus brasiliensis cbs 101740	Ensembl	Ensembl only
+Ascomycota	321146	Pseudocercospora eumusae	Ensembl	Ensembl only
+Ascomycota	324773	Moelleriella libera rcef 2490	Ensembl	Ensembl only
+Ascomycota	332947	Hirsutella minnesotensis 3608	Ensembl	Ensembl only
+Ascomycota	342668	Pseudogymnoascus verrucosus	Ensembl	Ensembl only
+Ascomycota	348802	Exophiala xenobiotica	Ensembl	Ensembl only
+Ascomycota	39416	Tuber melanosporum	Ensembl	Ensembl only
+Ascomycota	39932	Leotia lubrica	Ensembl	Ensembl only
+Ascomycota	40993	Aspergillus carbonarius item 5010	Ensembl	Ensembl only
+Ascomycota	41063	Penicilliopsis zonata cbs 506.65	Ensembl	Ensembl only
+Ascomycota	41413	Aspergillus glaucus cbs 516.65	Ensembl	Ensembl only
+Ascomycota	45354	Sungouiella intermedia	Ensembl	Ensembl only
+Ascomycota	45609	Babjeviella inositovora nrrl y-12698	Ensembl	Ensembl only
+Ascomycota	45786	Nadsonia fulvescens var. elongata dsm 6958	Ensembl	Ensembl only
+Ascomycota	46472	Aspergillus versicolor cbs 583.65	Ensembl	Ensembl only
+Ascomycota	46583	Suhomyces tanzawaensis nrrl y-17324	Ensembl	Ensembl only
+Ascomycota	48691	Neolecta irregularis dah-3	Ensembl	Ensembl only
+Ascomycota	4896	Schizosaccharomyces pombe	GenBank + RefSeq	RefSeq only
+Ascomycota	4903	Williopsis jadinii	Ensembl	Ensembl only
+Ascomycota	4911	Kluyveromyces marxianus dmku3-1042	Ensembl	Ensembl only
+Ascomycota	4927	Hansenula anomala	Ensembl	Ensembl only
+Ascomycota	5053	Aspergillus aculeatus atcc 16872	Ensembl	Ensembl only
+Ascomycota	5066	Aspergillus wentii dto 134e9	Ensembl	Ensembl only
+Ascomycota	5078	Penicillium griseofulvum	Ensembl	Ensembl only
+Ascomycota	50926	Cladonia diversa	Ensembl	Ensembl only
+Ascomycota	50943	Cladonia portentosa	Ensembl	Ensembl only
+Ascomycota	51930	Tortispora caseinolytica nrrl y-17796	Ensembl	Ensembl only
+Ascomycota	54195	Ascoidea rubescens dsm 1968	Ensembl	Ensembl only
+Ascomycota	5599	Alternaria alternata	Ensembl	Ensembl only
+Ascomycota	569365	Cladophialophora immunda	Ensembl	Ensembl only
+Ascomycota	57485	Rhizosphaera kalkhoffii	Ensembl	Ensembl only
+Ascomycota	576137	Phialocephala subalpina	Ensembl	Ensembl only
+Ascomycota	679534	Lachancea nothofagi cbs 11611	Ensembl	Ensembl only
+Ascomycota	68825	Rasamsonia emersonii cbs 393.64	Ensembl	Ensembl only
+Ascomycota	708187	Colletotrichum chlorophyti	Ensembl	Ensembl only
+Ascomycota	71617	Tolypocladium ophioglossoides cbs 100239	Ensembl	Ensembl only
+Ascomycota	717740	Hyphopichia burtonii nrrl y-1933	Ensembl	Ensembl only
+Ascomycota	763406	Pichia membranifaciens nrrl y-2026	Ensembl	Ensembl only
+Ascomycota	78070	Platismatia glauca	Ensembl	Ensembl only
+Ascomycota	78148	Oidiodendron maius zn	Ensembl	Ensembl only
+Ascomycota	796027	Sugiyamaella lignohabitans	Ensembl	Ensembl only
+Ascomycota	86056	Rhinocladiella mackenziei cbs 650.93	Ensembl	Ensembl only
+Ascomycota	88771	Ceratocystis platani	Ensembl	Ensembl only
+Ascomycota	91928	Exophiala spinifera	Ensembl	Ensembl only
+Ascomycota	92629	Metarhizium album arsef 1941	Ensembl	Ensembl only
+Ascomycota	93593	Simplicillium lamellicola	Ensembl	Ensembl only
+Aves	1002788	Indicator indicator	RefSeq	RefSeq only
+Aves	100830	Tetrao urogallus	RefSeq	RefSeq only
+Aves	100859	Vanellus vanellus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	108405	Sterna hirundo	GenBank	GenBank only
+Aves	109042	Tympanuchus pallidicinctus	RefSeq	RefSeq only
+Aves	1094192	Motacilla alba alba	RefSeq	RefSeq only
+Aves	111821	Strix aluco	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	1118847	Theristicus caerulescens	GenBank	GenBank only
+Aves	114329	Neopelma chrysocephalum	RefSeq	RefSeq only
+Aves	115679	Oena capensis	GenBank	GenBank only
+Aves	115702	Treron vernans	GenBank	GenBank only
+Aves	115710	Zenaida meloda	GenBank	GenBank only
+Aves	1177618	Aythya baeri	Ensembl	Ensembl only
+Aves	118200	Dryobates pubescens	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	1192867	Chroicocephalus ridibundus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	1196302	Corvus moneduloides	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	120794	Falco rusticolus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	1212470	Setophaga striata	Ensembl	Ensembl only
+Aves	121530	Tauraco erythrolophus	RefSeq	RefSeq only
+Aves	126797	Athene noctua	RefSeq	RefSeq only
+Aves	126836	Strix nebulosa	Ensembl	Ensembl only
+Aves	127875	Cinclus cinclus	RefSeq	RefSeq only
+Aves	128390	Nipponia nippon	RefSeq	RefSeq only
+Aves	13146	Melopsittacus undulatus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	132585	Anser brachyrhynchus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	134902	Corvus hawaiiensis	RefSeq	RefSeq only
+Aves	135433	Geothlypis trichas	Ensembl + GenBank	Ensembl only
+Aves	1419345	Eudyptes filholi	Ensembl	Ensembl only
+Aves	1464014	Macropygia unchall	GenBank	GenBank only
+Aves	148594	Falco naumanni	RefSeq	RefSeq only
+Aves	148596	Falco punctatus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	1497555	Lichenostomus cassidix	RefSeq	RefSeq only
+Aves	151761	Amazona ochrocephala	Ensembl + GenBank	Ensembl only
+Aves	156563	Cyanistes caeruleus	RefSeq	RefSeq only
+Aves	1570318	Mergus octosetaceus	GenBank	GenBank only
+Aves	159579	Catharus minimus	Ensembl	Ensembl only
+Aves	161624	Passerculus sandwichensis	Ensembl + GenBank	Ensembl only
+Aves	164674	Empidonax traillii	RefSeq	RefSeq only
+Aves	175006	Malurus melanocephalus	RefSeq	RefSeq only
+Aves	175835	Buceros rhinoceros silvestris	RefSeq	RefSeq only
+Aves	176057	Nestor notabilis	RefSeq	RefSeq only
+Aves	176066	Myiopsitta monachus	Ensembl	Ensembl only
+Aves	177147	Streptopelia decaocto	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	177154	Streptopelia tranquebarica	GenBank	GenBank only
+Aves	177155	Streptopelia turtur	Ensembl	Ensembl only
+Aves	181096	Corvus cornix cornix	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	181119	Pseudopodoces humilis	RefSeq	RefSeq only
+Aves	181631	Cyanoderma ruficeps	Ensembl	Ensembl only
+Aves	182946	Seiurus aurocapilla	Ensembl	Ensembl only
+Aves	187106	Caloenas nicobarica	RefSeq	RefSeq only
+Aves	187126	Nesoenas mayeri	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	187382	Chlamydotis macqueenii	GenBank + RefSeq	RefSeq only
+Aves	187417	Anomalospiza imberbis	RefSeq	RefSeq only
+Aves	187451	Vidua macroura	RefSeq	RefSeq only
+Aves	188344	Leptosomus discolor	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Aves	188379	Egretta garzetta	RefSeq	RefSeq only
+Aves	189534	Aythya marila	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	190676	Archilochus colubris	Ensembl	Ensembl only
+Aves	190680	Chamaea fasciata	RefSeq	RefSeq only
+Aves	194338	Athene cunicularia	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	198806	Calidris pugnax	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	202280	Harpia harpyja	RefSeq	RefSeq only
+Aves	208062	Prinia subflava	RefSeq	RefSeq only
+Aves	211600	Melanerpes formicivorus	RefSeq	RefSeq only
+Aves	219593	Aythya ferina	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	219594	Aythya fuligula	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	221976	Pyrgilauda ruficollis	RefSeq	RefSeq only
+Aves	223441	Buteo regalis	Ensembl	Ensembl only
+Aves	224669	Buteo japonicus	Ensembl	Ensembl only
+Aves	232653	Psittacula echo	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	240206	Pterocles gutturalis	RefSeq	RefSeq only
+Aves	241587	Amazona collaria	Ensembl	Ensembl only
+Aves	243314	Hemiprocne comata	GenBank	GenBank only
+Aves	245564	Geothlypis philadelphia	Ensembl	Ensembl only
+Aves	2489341	Strigops habroptila	RefSeq	RefSeq only
+Aves	2495534	Eudyptes moseleyi	Ensembl	Ensembl only
+Aves	252789	Morphnus guianensis	GenBank	GenBank only
+Aves	257818	Otus sunia	Ensembl	Ensembl only
+Aves	257867	Platalea leucorodia	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	259256	Poephila acuticauda hecki	GenBank	GenBank only
+Aves	265642	Pithys albifrons albifrons	RefSeq	RefSeq only
+Aves	2696672	Apteryx mantelli	RefSeq	RefSeq only
+Aves	2707177	Ammospiza maritima maritima	GenBank	GenBank only
+Aves	279965	Antrostomus carolinensis	RefSeq	RefSeq only
+Aves	2857394	Ammospiza nelsoni	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	2857398	Ammospiza caudacuta	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	28689	Alca torda	GenBank	GenBank only
+Aves	28733	Vireo olivaceus	Ensembl	Ensembl only
+Aves	2939378	Oenanthe melanoleuca	RefSeq	RefSeq only
+Aves	2953368	Columba delegorguei	GenBank	GenBank only
+Aves	2953369	Columba eversmanni	GenBank	GenBank only
+Aves	2953435	Pampusana sanctaecrucis	GenBank	GenBank only
+Aves	296741	Chiroxiphia lanceolata	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	297711	Trogon surrucura	Ensembl + GenBank	Ensembl only
+Aves	30387	Netta rufina	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	30397	Buteo buteo	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	30410	Lagopus leucura	RefSeq	RefSeq only
+Aves	30419	Opisthocomus hoazin	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	30423	Coloeus monedula	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	30427	Haemorhous mexicanus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	30455	Fulmarus glacialis	RefSeq	RefSeq only
+Aves	30461	Bubo bubo	Ensembl	Ensembl only
+Aves	30464	Nothoprocta perdicaria	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	308060	Apteryx rowi	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	309878	Neopsephotus bourkii	RefSeq	RefSeq only
+Aves	321398	Lepidothrix coronata	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	328815	Manacus vitellinus	RefSeq	RefSeq only
+Aves	33587	Mycteria americana	RefSeq	RefSeq only
+Aves	33595	Phaenicophaeus curvirostris	RefSeq	RefSeq only
+Aves	33610	Gypaetus barbatus	GenBank	GenBank only
+Aves	33616	Gymnogyps californianus	RefSeq	RefSeq only
+Aves	345155	Falco biarmicus	RefSeq	RefSeq only
+Aves	345164	Falco cherrug	RefSeq	RefSeq only
+Aves	35540	Pezoporus wallicus	RefSeq	RefSeq only
+Aves	356909	Onychostruthus taczanowskii	RefSeq	RefSeq only
+Aves	36300	Pelecanus crispus	RefSeq	RefSeq only
+Aves	36305	Strix uralensis	RefSeq	RefSeq only
+Aves	37040	Gavia stellata	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	37045	Phaethon aethereus	RefSeq	RefSeq only
+Aves	3711734	Patagioenas fasciata x Patagioenas picazuro	GenBank	GenBank only
+Aves	372311	Patagioenas leucocephala	GenBank	GenBank only
+Aves	372312	Patagioenas squamosa	GenBank	GenBank only
+Aves	372313	Patagioenas speciosa	GenBank	GenBank only
+Aves	372314	Patagioenas picazuro	GenBank	GenBank only
+Aves	372318	Patagioenas maculosa albipennis	GenBank	GenBank only
+Aves	372321	Patagioenas fasciata	RefSeq	RefSeq only
+Aves	372332	Patagioenas cayennensis	GenBank	GenBank only
+Aves	37578	Morus bassanus	Ensembl + GenBank	Ensembl only
+Aves	37598	Fringilla coelebs	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	37610	Erithacus rubecula	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	39617	Aphelocoma coerulescens	RefSeq	RefSeq only
+Aves	39638	Agelaius phoeniceus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	40157	Lonchura striata	RefSeq	RefSeq only
+Aves	40179	Alectoris magna	Ensembl	Ensembl only
+Aves	40204	Melozone crissalis	RefSeq	RefSeq only
+Aves	40211	Spizella pallida	Ensembl	Ensembl only
+Aves	40217	Junco hyemalis	Ensembl	Ensembl only
+Aves	407982	Pezoporus occidentalis	RefSeq	RefSeq only
+Aves	415023	Manacus candei	RefSeq	RefSeq only
+Aves	415028	Corapipo altera	RefSeq	RefSeq only
+Aves	415032	Pseudopipra pipra	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	425635	Calidris pygmaea	Ensembl	Ensembl only
+Aves	43150	Hirundo rustica	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	43581	Zosterops lateralis	RefSeq	RefSeq only
+Aves	43583	Sarcoramphus papa	GenBank	GenBank only
+Aves	439704	Porphyrio hochstetteri	GenBank	GenBank only
+Aves	44316	Chloebia gouldiae	Ensembl	Ensembl only
+Aves	44393	Zonotrichia leucophrys gambelii	RefSeq	RefSeq only
+Aves	44394	Zonotrichia albicollis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	44397	Melospiza melodia melodia	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	44398	Melospiza georgiana	RefSeq	RefSeq only
+Aves	45637	Stictonetta naevosa	Ensembl	Ensembl only
+Aves	46218	Excalfactoria chinensis	RefSeq	RefSeq only
+Aves	46513	Phaethornis superciliosus	Ensembl + GenBank	Ensembl only
+Aves	47245	Zenaida macroura	GenBank	GenBank only
+Aves	472823	Heliangelus exortis	RefSeq	RefSeq only
+Aves	478635	Myiozetetes cayanensis	RefSeq	RefSeq only
+Aves	48155	Sylvia atricapilla	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	48277	Aegotheles albertisi	GenBank	GenBank only
+Aves	48427	Nyctibius grandis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	48435	Steatornis caripensis	GenBank	GenBank only
+Aves	48681	Puffinus mauretanicus	Ensembl	Ensembl only
+Aves	488313	Pogoniulus pusillus	RefSeq	RefSeq only
+Aves	48849	Passer domesticus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	48883	Geospiza fortis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	48891	Poecile atricapillus	RefSeq	RefSeq only
+Aves	48895	Poecile montanus	Ensembl + GenBank	Ensembl only
+Aves	50365	Anser albifrons	Ensembl	Ensembl only
+Aves	50402	Charadrius vociferus	RefSeq	RefSeq only
+Aves	51906	Guaruba guarouba	GenBank	GenBank only
+Aves	52644	Haliaeetus leucocephalus	RefSeq	RefSeq only
+Aves	52775	Ciconia boyciana	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	52777	Ciconia maguari	GenBank	GenBank only
+Aves	54374	Mesitornis unicolor	RefSeq	RefSeq only
+Aves	54380	Cariama cristata	RefSeq	RefSeq only
+Aves	54383	Eurypyga helias	RefSeq	RefSeq only
+Aves	54386	Rhynochetos jubatus	Ensembl + GenBank	Ensembl only
+Aves	555264	Heteronetta atricapilla	Ensembl	Ensembl only
+Aves	55661	Cuculus canorus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	55807	Malurus cyaneus samueli	Ensembl	Ensembl only
+Aves	56313	Tyto alba	RefSeq	RefSeq only
+Aves	57068	Acanthisitta chloris	RefSeq	RefSeq only
+Aves	57397	Apaloderma vittatum	RefSeq	RefSeq only
+Aves	57412	Colius striatus	RefSeq	RefSeq only
+Aves	57421	Merops nubicus	RefSeq	RefSeq only
+Aves	59729	Taeniopygia guttata	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Aves	59894	Ficedula albicollis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	64668	Lagopus muta	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	649802	Pipra filicauda	RefSeq	RefSeq only
+Aves	658922	Nettapus auritus	Ensembl	Ensembl only
+Aves	670352	Pluvialis apricaria	GenBank	GenBank only
+Aves	678569	Lathamus discolor	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	68294	Corvus kubaryi	RefSeq	RefSeq only
+Aves	73324	Sylvia borin	Ensembl + GenBank	Ensembl only
+Aves	75485	Rissa tridactyla	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	75840	Spatula cyanoptera	Ensembl	Ensembl only
+Aves	79626	Eudyptes chrysocome	Ensembl	Ensembl only
+Aves	81927	Vidua chalybeata	RefSeq	RefSeq only
+Aves	84833	Molothrus aeneus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	84834	Molothrus ater	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	85066	Corvus brachyrhynchos	RefSeq	RefSeq only
+Aves	87175	Camarhynchus parvulus	RefSeq	RefSeq only
+Aves	8790	Dromaius novaehollandiae	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8795	Rhea pennata	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8797	Rhea americana	RefSeq	RefSeq only
+Aves	8801	Struthio camelus	RefSeq	RefSeq only
+Aves	8805	Eudromia elegans	Ensembl + GenBank	Ensembl only
+Aves	8823	Apteryx haastii	Ensembl	Ensembl only
+Aves	8824	Apteryx owenii	Ensembl	Ensembl only
+Aves	8833	Aix sponsa	Ensembl	Ensembl only
+Aves	8839	Anas platyrhynchos	RefSeq	RefSeq only
+Aves	8843	Anser anser	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8845	Anser cygnoides	RefSeq	RefSeq only
+Aves	8846	Anser indicus	Ensembl	Ensembl only
+Aves	8868	Cygnus atratus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8869	Cygnus olor	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	887050	Gorsachius magnificus	Ensembl	Ensembl only
+Aves	8884	Oxyura jamaicensis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8895	Apus apus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8897	Chaetura pelagica	RefSeq	RefSeq only
+Aves	889875	Pezoporus flaviventris	RefSeq	RefSeq only
+Aves	8905	Podargus strigoides	Ensembl + GenBank	Ensembl only
+Aves	8932	Columba livia	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8954	Falco peregrinus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8957	Accipiter gentilis	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8962	Aquila chrysaetos chrysaetos	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8969	Haliaeetus albicilla	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	8996	Numida meleagris	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9002	Centrocercus urophasianus	RefSeq	RefSeq only
+Aves	9017	Cyrtonyx montezumae	RefSeq	RefSeq only
+Aves	9031	Gallus gallus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9054	Phasianus colchicus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9078	Alectoris chukar	Ensembl	Ensembl only
+Aves	9089	Chrysolophus pictus	Ensembl	Ensembl only
+Aves	9103	Meleagris gallopavo	RefSeq	RefSeq only
+Aves	9117	Grus americana	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9123	Gallinula chloropus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9135	Serinus canaria	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9157	Parus major	RefSeq	RefSeq only
+Aves	9160	Passer montanus	RefSeq	RefSeq only
+Aves	9172	Sturnus vulgaris	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9188	Turdus migratorius	Ensembl	Ensembl only
+Aves	9191	Agelaius tricolor	RefSeq	RefSeq only
+Aves	91951	Catharus ustulatus	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	9217	Phoenicopterus ruber ruber	GenBank	GenBank only
+Aves	9226	Ara ararauna	GenBank	GenBank only
+Aves	9233	Aptenodytes forsteri	RefSeq	RefSeq only
+Aves	9234	Aptenodytes patagonicus	RefSeq	RefSeq only
+Aves	9238	Pygoscelis adeliae	RefSeq	RefSeq only
+Aves	9240	Spheniscus humboldti	GenBank	GenBank only
+Aves	9244	Calypte anna	Ensembl + RefSeq	RefSeq + Ensembl
+Aves	925459	Balearica regulorum gibbericeps	RefSeq	RefSeq only
+Aves	92688	Eudyptes sclateri	Ensembl	Ensembl only
+Aves	928672	Pyrrhula murina	Ensembl	Ensembl only
+Aves	93934	Coturnix japonica	RefSeq	RefSeq only
+Aves	94827	Tinamus guttatus	RefSeq	RefSeq only
+Aves	97097	Phaethon lepturus	RefSeq	RefSeq only
+Basidiomycota	100756	Hericium coralloides	Ensembl	Ensembl only
+Basidiomycota	1032817	Inocybe grammopodia	Ensembl	Ensembl only
+Basidiomycota	1033783	Russula faginea	Ensembl	Ensembl only
+Basidiomycota	104224	Hygrocybe conica	Ensembl	Ensembl only
+Basidiomycota	104355	Gloeophyllum trabeum atcc 11539	Ensembl	Ensembl only
+Basidiomycota	104669	Cryptococcus amylolentus cbs 6039	Ensembl	Ensembl only
+Basidiomycota	109899	Serendipita vermifera maff 305830	Ensembl	Ensembl only
+Basidiomycota	111140	Russula delica	Ensembl	Ensembl only
+Basidiomycota	114155	Dichomitus squalens lyad-421 ss1	Ensembl	Ensembl only
+Basidiomycota	1305764	Pseudozyma hubeiensis sy62	Ensembl	Ensembl only
+Basidiomycota	1392244	Kalmanozyma brasiliensis ghg001	Ensembl	Ensembl only
+Basidiomycota	1398758	Porpolomopsis calyptriformis	Ensembl	Ensembl only
+Basidiomycota	1471999	Gliophorus irrigatus	Ensembl	Ensembl only
+Basidiomycota	152943	Lactarius pubescens	Ensembl	Ensembl only
+Basidiomycota	152947	Lactarius tabidus	Ensembl	Ensembl only
+Basidiomycota	152964	Russula nigricans	Ensembl	Ensembl only
+Basidiomycota	152966	Russula olivacea	Ensembl	Ensembl only
+Basidiomycota	152972	Russula vesca	Ensembl	Ensembl only
+Basidiomycota	154538	Trametes pubescens	Ensembl	Ensembl only
+Basidiomycota	156515	Tulasnella calospora mut 4182	Ensembl	Ensembl only
+Basidiomycota	1708541	Wallemia mellicola cbs 633.66	Ensembl	Ensembl only
+Basidiomycota	1759441	Athelia psychrophila	Ensembl	Ensembl only
+Basidiomycota	176009	Tricholoma cingulatum	Ensembl	Ensembl only
+Basidiomycota	176794	Russula gracillima	Ensembl	Ensembl only
+Basidiomycota	180088	Rhizopogon vesiculosus	Ensembl	Ensembl only
+Basidiomycota	181886	Inocybe petiginosa	Ensembl	Ensembl only
+Basidiomycota	1858805	Dacryopinax primogenitus	Ensembl	Ensembl only
+Basidiomycota	1859096	Cryptococcus deuterogattii R265	GenBank + RefSeq	RefSeq only
+Basidiomycota	190013	Chlorophyllum brunneum	Ensembl	Ensembl only
+Basidiomycota	202697	Jaapia argillacea mucl 33604	Ensembl	Ensembl only
+Basidiomycota	2126942	Fomitopsis schrenkii	Ensembl	Ensembl only
+Basidiomycota	222052	Phlegmacium triumphans	Ensembl	Ensembl only
+Basidiomycota	230827	Ripartites tricholoma	Ensembl	Ensembl only
+Basidiomycota	231932	Phanerochaete carnosa hhb-10118-sp	Ensembl	Ensembl only
+Basidiomycota	245174	Wallemia ichthyophaga exf-994	Ensembl	Ensembl only
+Basidiomycota	264083	Clavaria fumosa	Ensembl	Ensembl only
+Basidiomycota	264124	Botryobasidium botryosum fd-172 ss1	Ensembl	Ensembl only
+Basidiomycota	27342	Schizopora paradoxa	Ensembl	Ensembl only
+Basidiomycota	27349	Puccinia sorghi	Ensembl	Ensembl only
+Basidiomycota	2822767	Inocybe obscuroides	Ensembl	Ensembl only
+Basidiomycota	2834505	Sistotremastrum niveocremeum hhb9708	Ensembl	Ensembl only
+Basidiomycota	29883	Laccaria bicolor s238n-h82	Ensembl	Ensembl only
+Basidiomycota	29889	Calocera cornea hhb12733	Ensembl	Ensembl only
+Basidiomycota	3016916	Sparassis minoensis	Ensembl	Ensembl only
+Basidiomycota	326039	Lactarius evosmus	Ensembl	Ensembl only
+Basidiomycota	34465	Ganoderma resinaceum	Ensembl	Ensembl only
+Basidiomycota	37769	Cryptococcus gattii wm276	Ensembl	Ensembl only
+Basidiomycota	378274	Hygrocybe coccinea	Ensembl	Ensembl only
+Basidiomycota	383678	Fomitopsis pulvina	Ensembl	Ensembl only
+Basidiomycota	38799	Neolentinus lepideus hhb14362 ss-1	Ensembl	Ensembl only
+Basidiomycota	401625	Ceraceosorus bombacis	Ensembl	Ensembl only
+Basidiomycota	40437	Daedalea quercina l-15889	Ensembl	Ensembl only
+Basidiomycota	40457	Fistulina hepatica atcc 64428	Ensembl	Ensembl only
+Basidiomycota	418785	Entoloma clypeatum	Ensembl	Ensembl only
+Basidiomycota	467971	Sistotremastrum suecicum hhb10207 ss-3	Ensembl	Ensembl only
+Basidiomycota	4999	Kockovaella imperatae	Ensembl	Ensembl only
+Basidiomycota	5286	Rhodotorula toruloides np11	Ensembl	Ensembl only
+Basidiomycota	5323	Pleurotus eryngii	Ensembl	Ensembl only
+Basidiomycota	5346	Coprinopsis cinerea okayama7#130	Ensembl	Ensembl only
+Basidiomycota	5384	Suillus luteus uh-slu-lm8-n1	Ensembl	Ensembl only
+Basidiomycota	557324	Hygrocybe punicea	Ensembl	Ensembl only
+Basidiomycota	56187	Coprinus comatus	Ensembl	Ensembl only
+Basidiomycota	5630	Laetiporus sulphureus 93-53	Ensembl	Ensembl only
+Basidiomycota	5636	Panellus stipticus	Ensembl	Ensembl only
+Basidiomycota	5643	Trametes cinnabarina	Ensembl	Ensembl only
+Basidiomycota	566093	Hygrocybe helobia	Ensembl	Ensembl only
+Basidiomycota	599839	Fibroporia radiculosa	Ensembl	Ensembl only
+Basidiomycota	63146	Calocera viscosa tufc12733	Ensembl	Ensembl only
+Basidiomycota	71668	Agrocybe praecox	Ensembl	Ensembl only
+Basidiomycota	71694	Coprinopsis atramentaria	Ensembl	Ensembl only
+Basidiomycota	71717	Coprinellus micaceus	Ensembl	Ensembl only
+Basidiomycota	71784	Naematelia encephala	Ensembl	Ensembl only
+Basidiomycota	71905	Mycena galericulata	Ensembl	Ensembl only
+Basidiomycota	71918	Rhodocollybia maculata	Ensembl	Ensembl only
+Basidiomycota	71933	Amanita rubescens	Ensembl	Ensembl only
+Basidiomycota	749444	Ramariopsis corniculata	Ensembl	Ensembl only
+Basidiomycota	76328	Tricholoma terreum	Ensembl	Ensembl only
+Basidiomycota	76777	Malassezia sympodialis atcc 42132	Ensembl	Ensembl only
+Basidiomycota	76867	Hebeloma cylindrosporum	Ensembl	Ensembl only
+Basidiomycota	77020	Malassezia pachydermatis	Ensembl	Ensembl only
+Basidiomycota	80600	Rhizopogon vinicolor am-or11-026	Ensembl	Ensembl only
+Basidiomycota	80637	Coniophora puteana rwd-64-598 ss2	Ensembl	Ensembl only
+Basidiomycota	80663	Piloderma croceum f 1598	Ensembl	Ensembl only
+Basidiomycota	82310	Phlebiopsis gigantea 11061_1 cr5-6	Ensembl	Ensembl only
+Basidiomycota	82525	Tausonia pullulans	Ensembl	Ensembl only
+Basidiomycota	857007	Butyriboletus subappendiculatus	Ensembl	Ensembl only
+Basidiomycota	89924	Kwoniella heveanensis bcc8398	Ensembl	Ensembl only
+Basidiomycota	908347	Volvariella surrecta	Ensembl	Ensembl only
+Basidiomycota	984962	Heterobasidion irregulare tc 32-1	Ensembl	Ensembl only
+Cnidaria	105610	Montipora efflorescens	Ensembl	Ensembl only
+Cnidaria	117779	Acropora austera	Ensembl	Ensembl only
+Cnidaria	1216036	Micromussa lordhowensis	Ensembl	Ensembl only
+Cnidaria	123773	Madracis senaria	Ensembl	Ensembl only
+Cnidaria	126659	Porites cylindrica	Ensembl	Ensembl only
+Cnidaria	128131	Sanderia malayensis	Ensembl	Ensembl only
+Cnidaria	1282862	Oculina arbuscula	Ensembl	Ensembl only
+Cnidaria	130080	Oculina patagonica	RefSeq	RefSeq only
+Cnidaria	130672	Siderastrea siderea	Ensembl	Ensembl only
+Cnidaria	13093	Hydractinia symbiolongicarpus	RefSeq	RefSeq only
+Cnidaria	1309697	Callogorgia gracilis	Ensembl	Ensembl only
+Cnidaria	134933	Palythoa caribaeorum	Ensembl	Ensembl only
+Cnidaria	1350358	Plumapathes pennacea	Ensembl	Ensembl only
+Cnidaria	1381352	Turbinaria reniformis	Ensembl	Ensembl only
+Cnidaria	1479653	Duncanopsammia axifuga	Ensembl	Ensembl only
+Cnidaria	1502934	Leptogorgia sarmentosa	Ensembl	Ensembl only
+Cnidaria	151771	Dendronephthya gigantea	RefSeq	RefSeq only
+Cnidaria	154029	Acropora loripes	Ensembl	Ensembl only
+Cnidaria	156436	Acropora microphthalma	Ensembl	Ensembl only
+Cnidaria	159855	Acropora muricata	RefSeq	RefSeq only
+Cnidaria	165727	Acropora selago	Ensembl	Ensembl only
+Cnidaria	1789172	Diadumene lineata	Ensembl	Ensembl only
+Cnidaria	1967629	Cyphastrea salae	Ensembl	Ensembl only
+Cnidaria	203993	Pocillopora verrucosa	RefSeq	RefSeq only
+Cnidaria	214965	Dendrogyra cylindrus	Ensembl	Ensembl only
+Cnidaria	214988	Siderastrea radians	Ensembl	Ensembl only
+Cnidaria	227230	Pavona decussata	RefSeq	RefSeq only
+Cnidaria	237413	Catostylus mosaicus	Ensembl	Ensembl only
+Cnidaria	246305	Montipora capricornis	RefSeq	RefSeq only
+Cnidaria	252671	Clytia hemisphaerica	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	262591	Porites rus	Ensembl	Ensembl only
+Cnidaria	264050	Candelabrum cocksii	Ensembl	Ensembl only
+Cnidaria	2652724	Exaiptasia diaphana	RefSeq	RefSeq only
+Cnidaria	2751898	Rhodactis osculifera	Ensembl	Ensembl only
+Cnidaria	2759737	Pteroeides griseum	Ensembl	Ensembl only
+Cnidaria	317549	Paramuricea clavata	GenBank	GenBank only
+Cnidaria	35630	Hydractinia echinata	Ensembl	Ensembl only
+Cnidaria	400838	Pelagia noctiluca	Ensembl	Ensembl only
+Cnidaria	45264	Acropora millepora	RefSeq	RefSeq only
+Cnidaria	45351	Nematostella vectensis	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	46704	Montipora capitata	Ensembl	Ensembl only
+Cnidaria	46731	Pocillopora damicornis	RefSeq	RefSeq only
+Cnidaria	46748	Catalaphyllia jardinei	Ensembl	Ensembl only
+Cnidaria	47073	Condylactis gigantea	Ensembl	Ensembl only
+Cnidaria	48498	Orbicella faveolata	RefSeq	RefSeq only
+Cnidaria	48499	Orbicella franksi	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	497657	Pachyseris speciosa	Ensembl	Ensembl only
+Cnidaria	499914	Rhopilema esculentum	RefSeq	RefSeq only
+Cnidaria	50429	Stylophora pistillata	RefSeq	RefSeq only
+Cnidaria	504342	Stephanocoenia intersepta	Ensembl	Ensembl only
+Cnidaria	51056	Meandrina meandrites	Ensembl	Ensembl only
+Cnidaria	51061	Porites australiensis	Ensembl	Ensembl only
+Cnidaria	51062	Porites lutea	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	544484	Millepora dichotoma	Ensembl	Ensembl only
+Cnidaria	544493	Millepora alcicornis	Ensembl	Ensembl only
+Cnidaria	544496	Millepora complanata	Ensembl	Ensembl only
+Cnidaria	55974	Acropora hyacinthus	Ensembl	Ensembl only
+Cnidaria	591990	Montipora foliosa	RefSeq	RefSeq only
+Cnidaria	6082	Hydra viridissima	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	6087	Hydra vulgaris	RefSeq	RefSeq only
+Cnidaria	6105	Actinia tenebrosa	Ensembl + RefSeq	RefSeq + Ensembl
+Cnidaria	6112	Anthopleura xanthogrammica	Ensembl	Ensembl only
+Cnidaria	6114	Calliactis parasitica	Ensembl	Ensembl only
+Cnidaria	6116	Metridium senile	Ensembl	Ensembl only
+Cnidaria	6130	Acropora cervicornis	Ensembl	Ensembl only
+Cnidaria	6131	Acropora palmata	RefSeq	RefSeq only
+Cnidaria	70779	Acropora digitifera	RefSeq	RefSeq only
+Cnidaria	70780	Acropora gemmifera	Ensembl	Ensembl only
+Cnidaria	86515	Heliopora coerulea	Ensembl	Ensembl only
+Cnidaria	983564	Echinopora horrida	Ensembl	Ensembl only
+Cnidaria	999287	Madracis auretenra	Ensembl	Ensembl only
+Insecta	1001278	Cephus spinipes	Ensembl	Ensembl only
+Insecta	1002887	Glaucopsyche melanops	Ensembl	Ensembl only
+Insecta	1005073	Anania funebris	Ensembl	Ensembl only
+Insecta	1007376	Pseudoterpna coronillaria	Ensembl	Ensembl only
+Insecta	101737	Incurvaria masculella	Ensembl	Ensembl only
+Insecta	102642	Abax parallelepipedus	Ensembl	Ensembl only
+Insecta	102681	Temnothorax nylanderi	RefSeq	RefSeq only
+Insecta	103372	Acromyrmex echinatior	RefSeq	RefSeq only
+Insecta	103414	Anomoia purmunda	Ensembl	Ensembl only
+Insecta	1035111	Leguminivora glycinivorella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	103775	Drosophila gunungcola	RefSeq	RefSeq only
+Insecta	103831	Mythimna unipuncta	Ensembl	Ensembl only
+Insecta	103933	Bombus bifarius	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	103934	Bombus flavifrons	RefSeq	RefSeq only
+Insecta	103936	Bombus monticola	Ensembl	Ensembl only
+Insecta	1041015	Drosophila rhopaloa	RefSeq	RefSeq only
+Insecta	1042620	Micropterix aruncella	Ensembl	Ensembl only
+Insecta	104421	Camponotus floridanus	RefSeq	RefSeq only
+Insecta	104427	Drepana curvatula	Ensembl	Ensembl only
+Insecta	104428	Drepana falcataria	Ensembl	Ensembl only
+Insecta	104447	Idaea aversata	Ensembl	Ensembl only
+Insecta	104448	Idaea biselata	Ensembl	Ensembl only
+Insecta	104470	Colotois pennaria	Ensembl	Ensembl only
+Insecta	104486	Alsophila aescularia	Ensembl	Ensembl only
+Insecta	104503	Euphydryas aurinia	Ensembl	Ensembl only
+Insecta	104506	Euphydryas cynthia	Ensembl	Ensembl only
+Insecta	104507	Euphydryas desfontainii	Ensembl	Ensembl only
+Insecta	104515	Melitaea didyma	Ensembl	Ensembl only
+Insecta	1045598	Dyspetes luteomarginatus	Ensembl	Ensembl only
+Insecta	104688	Bactrocera oleae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	105785	Cryptotermes secundus	RefSeq	RefSeq only
+Insecta	106386	Pterostichus niger	Ensembl	Ensembl only
+Insecta	1073575	Agonopterix heracliana	Ensembl	Ensembl only
+Insecta	107794	Liopterus haemorrhoidalis	Ensembl	Ensembl only
+Insecta	1086592	Cataglyphis hispanica	RefSeq	RefSeq only
+Insecta	108790	Phymastichus coffea	RefSeq	RefSeq only
+Insecta	108931	Nilaparvata lugens	RefSeq	RefSeq only
+Insecta	110024	Nebria brevicollis	Ensembl	Ensembl only
+Insecta	1100899	Acleris literana	Ensembl	Ensembl only
+Insecta	1100900	Acrobasis consociella	Ensembl	Ensembl only
+Insecta	1100902	Acrobasis repandana	Ensembl	Ensembl only
+Insecta	1100907	Agriphila inquinatella	Ensembl	Ensembl only
+Insecta	1100917	Archips oporana	Ensembl	Ensembl only
+Insecta	1100929	Bucculatrix thoracella	Ensembl	Ensembl only
+Insecta	1100938	Catoptria pinella	Ensembl	Ensembl only
+Insecta	1100946	Choristoneura hebenstreitella	Ensembl	Ensembl only
+Insecta	1100963	Cydia splendana	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1100964	Cydia strobilella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1100979	Epiblema foenella	Ensembl	Ensembl only
+Insecta	1100980	Epiblema scutulana	Ensembl	Ensembl only
+Insecta	1100986	Epinotia tedella	Ensembl	Ensembl only
+Insecta	1100990	Eudonia delunella	Ensembl	Ensembl only
+Insecta	1100992	Eudonia mercurella	Ensembl	Ensembl only
+Insecta	1101010	Idaea rusticata	Ensembl	Ensembl only
+Insecta	1101017	Metalampra italica	Ensembl	Ensembl only
+Insecta	1101026	Pammene argyrana	Ensembl	Ensembl only
+Insecta	1101043	Pyrausta cingulata	Ensembl	Ensembl only
+Insecta	1101063	Tinea semifulvella	Ensembl	Ensembl only
+Insecta	110193	Nicrophorus vespilloides	RefSeq	RefSeq only
+Insecta	110368	Bicyclus anynana	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1107567	Anania coronata	Ensembl	Ensembl only
+Insecta	1107568	Anthocharis euphenoides	Ensembl	Ensembl only
+Insecta	1107572	Aricia morronensis	Ensembl	Ensembl only
+Insecta	1107706	Pieris ergane	Ensembl	Ensembl only
+Insecta	1107715	Pyrgus malvoides	Ensembl	Ensembl only
+Insecta	1107716	Pyrgus onopordi	Ensembl	Ensembl only
+Insecta	1107717	Pyrgus serratulae	Ensembl	Ensembl only
+Insecta	110791	Iphiclides podalirius	Ensembl	Ensembl only
+Insecta	1108569	Synanthedon andrenaeformis	Ensembl	Ensembl only
+Insecta	111401	Chrysolina graminis	Ensembl	Ensembl only
+Insecta	111881	Nymphalis urticae	Ensembl	Ensembl only
+Insecta	111904	Erebia meolans	Ensembl	Ensembl only
+Insecta	111905	Erebia montana	Ensembl	Ensembl only
+Insecta	111906	Erebia pharte	Ensembl	Ensembl only
+Insecta	111910	Hipparchia fagi	Ensembl	Ensembl only
+Insecta	111916	Lasiommata maera	Ensembl	Ensembl only
+Insecta	111917	Lasiommata megera	Ensembl	Ensembl only
+Insecta	111918	Lasiommata petropolitana	Ensembl	Ensembl only
+Insecta	111923	Melanargia galathea	Ensembl	Ensembl only
+Insecta	111924	Melanargia lachesis	Ensembl	Ensembl only
+Insecta	111925	Melanargia russiae	Ensembl	Ensembl only
+Insecta	111933	Pararge xiphia	Ensembl	Ensembl only
+Insecta	111940	Satyrus actaea	Ensembl	Ensembl only
+Insecta	111941	Satyrus ferula	Ensembl	Ensembl only
+Insecta	112268	Anopheles minimus	RefSeq	RefSeq only
+Insecta	1124515	Eristalis arbustorum	Ensembl	Ensembl only
+Insecta	1124558	Eupeodes latifasciatus	Ensembl	Ensembl only
+Insecta	1126389	Ectemnius continuus	Ensembl	Ensembl only
+Insecta	1126396	Sphecodes ephippius	Ensembl	Ensembl only
+Insecta	1126402	Andrena hattorfiana	Ensembl	Ensembl only
+Insecta	1126404	Andrena nitida	Ensembl	Ensembl only
+Insecta	1132040	Agriotes mancus	Ensembl	Ensembl only
+Insecta	1132042	Ctenicera cuprea	Ensembl	Ensembl only
+Insecta	113330	Mellicta athalia	Ensembl	Ensembl only
+Insecta	113332	Melitaea britomartis	Ensembl	Ensembl only
+Insecta	113334	Melitaea cinxia	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	113335	Melitaea deione	Ensembl	Ensembl only
+Insecta	113337	Melitaea diamina	Ensembl	Ensembl only
+Insecta	113340	Melitaea parthenoides	Ensembl	Ensembl only
+Insecta	113345	Melitaea trivia	Ensembl	Ensembl only
+Insecta	113346	Melitaea varia	Ensembl	Ensembl only
+Insecta	113505	Chironomus tepperi	RefSeq	RefSeq only
+Insecta	1143061	Leptura quadrifasciata	Ensembl	Ensembl only
+Insecta	1143063	Lochmaea crataegi	Ensembl	Ensembl only
+Insecta	1149918	Oxycarenus hyalinipennis	Ensembl	Ensembl only
+Insecta	1150024	Coleophora obscenella	Ensembl	Ensembl only
+Insecta	1150031	Coleophora alticolella	Ensembl	Ensembl only
+Insecta	1150032	Coleophora argentula	Ensembl	Ensembl only
+Insecta	1150053	Coleophora gryphipennella	Ensembl	Ensembl only
+Insecta	1150089	Coleophora sternipennella	Ensembl	Ensembl only
+Insecta	115077	Augochlora pura	RefSeq	RefSeq only
+Insecta	115081	Megalopta genalis	RefSeq	RefSeq only
+Insecta	115343	Adalia decempunctata	Ensembl	Ensembl only
+Insecta	115357	Harmonia axyridis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	115425	Cochliomyia hominivorax	GenBank	GenBank only
+Insecta	116150	Pararge aegeria	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	116153	Aethina tumida	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1163345	Diorhabda carinulata	RefSeq	RefSeq only
+Insecta	1163346	Diorhabda sublineata	RefSeq	RefSeq only
+Insecta	1167272	Cerceris rybyensis	Ensembl	Ensembl only
+Insecta	1178097	Epermenia chaerophyllella	Ensembl	Ensembl only
+Insecta	1190790	Sphecodes monilicornis	Ensembl	Ensembl only
+Insecta	1190801	Andrena helvola	Ensembl	Ensembl only
+Insecta	1190802	Andrena minutula	Ensembl	Ensembl only
+Insecta	1190803	Andrena praecox	Ensembl	Ensembl only
+Insecta	1195446	Acleris maccana	Ensembl	Ensembl only
+Insecta	1195450	Grapholita aureolana	Ensembl	Ensembl only
+Insecta	1202164	Stenus bimaculatus	Ensembl	Ensembl only
+Insecta	1206372	Sarcophaga rosellei	Ensembl	Ensembl only
+Insecta	1209556	Nomophila noctuella	Ensembl	Ensembl only
+Insecta	121162	Arctopsyche grandis	RefSeq	RefSeq only
+Insecta	1218281	Limnephilus lunatus	Ensembl	Ensembl only
+Insecta	121845	Diaphorina citri	RefSeq	RefSeq only
+Insecta	1219160	Physocephala rufipes	Ensembl	Ensembl only
+Insecta	1223490	Athetis lepigone	Ensembl	Ensembl only
+Insecta	1226583	Dichetophora obliterata	Ensembl	Ensembl only
+Insecta	1226616	Coremacera marginata	Ensembl	Ensembl only
+Insecta	1230162	Sialis fuliginosa	Ensembl	Ensembl only
+Insecta	1241338	Catoptria furcatella	Ensembl	Ensembl only
+Insecta	1241352	Epinotia nemorivaga	Ensembl	Ensembl only
+Insecta	1241361	Xanthorhoe annotinata	Ensembl	Ensembl only
+Insecta	1244581	Dasysyrphus tricinctus	Ensembl	Ensembl only
+Insecta	124803	Tarphius canariensis	Ensembl	Ensembl only
+Insecta	124917	Armigeres subalbatus	RefSeq	RefSeq only
+Insecta	125945	Drosophila biarmipes	RefSeq	RefSeq only
+Insecta	126231	Platycnemis pennipes	Ensembl	Ensembl only
+Insecta	1266490	Pollenia angustigena	Ensembl	Ensembl only
+Insecta	1266492	Pollenia pediculata	Ensembl	Ensembl only
+Insecta	1271715	Agapetus fuscipes	Ensembl	Ensembl only
+Insecta	1271730	Limnephilus marmoratus	Ensembl	Ensembl only
+Insecta	1271742	Glyphotaelius pellucidus	Ensembl	Ensembl only
+Insecta	129105	Drosophila santomea	RefSeq	RefSeq only
+Insecta	129397	Aporia crataegi	Ensembl	Ensembl only
+Insecta	129554	Anticarsia gemmatalis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	12957	Atta cephalotes	RefSeq	RefSeq only
+Insecta	13037	Danaus plexippus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	130591	Lycorma delicatula	RefSeq	RefSeq only
+Insecta	130686	Bombus consobrinus	Ensembl	Ensembl only
+Insecta	130704	Bombus ignitus	Ensembl	Ensembl only
+Insecta	130708	Bombus polaris	Ensembl	Ensembl only
+Insecta	130817	Melitaea interrupta	Ensembl	Ensembl only
+Insecta	131577	Agelastica alni	Ensembl	Ensembl only
+Insecta	13164	Myzus persicae	RefSeq	RefSeq only
+Insecta	131645	Galerucella nymphaeae	Ensembl	Ensembl only
+Insecta	13191	Pectinophora gossypiella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	132113	Bombus impatiens	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	13249	Rhodnius prolixus	RefSeq	RefSeq only
+Insecta	132710	Zerynthia rumina	Ensembl	Ensembl only
+Insecta	133065	Adelges cooleyi	RefSeq	RefSeq only
+Insecta	1337163	Aporophyla lueneburgensis	Ensembl	Ensembl only
+Insecta	133901	Frankliniella occidentalis	RefSeq	RefSeq only
+Insecta	1342029	Larinus minutus	Ensembl	Ensembl only
+Insecta	1342093	Polydrusus tereticollis	Ensembl	Ensembl only
+Insecta	1343054	Pieris balcana	Ensembl	Ensembl only
+Insecta	1344699	Anania verbascalis	Ensembl	Ensembl only
+Insecta	1352472	Platycheirus rosarum	Ensembl	Ensembl only
+Insecta	1352473	Volucella bombylans	Ensembl	Ensembl only
+Insecta	136037	Zootermopsis nevadensis	RefSeq	RefSeq only
+Insecta	13632	Lucilia sericata	RefSeq	RefSeq only
+Insecta	13686	Solenopsis invicta	RefSeq	RefSeq only
+Insecta	1373157	Ephestia elutella	Ensembl	Ensembl only
+Insecta	138070	Lysandra bellargus	Ensembl	Ensembl only
+Insecta	1385102	Tenthredo distinguenda	Ensembl	Ensembl only
+Insecta	139045	Anopheles coustani	RefSeq	RefSeq only
+Insecta	139047	Anopheles bellator	RefSeq	RefSeq only
+Insecta	1391527	Epinotia tetraquetrana	Ensembl	Ensembl only
+Insecta	139649	Teleopsis dalmanni	RefSeq	RefSeq only
+Insecta	139723	Anopheles culicifacies	Ensembl	Ensembl only
+Insecta	1405359	Plutella hyperboreella	Ensembl	Ensembl only
+Insecta	1411665	Andrena chrysosceles	Ensembl	Ensembl only
+Insecta	1411666	Andrena dorsata	Ensembl	Ensembl only
+Insecta	1411667	Andrena fulva	Ensembl	Ensembl only
+Insecta	141258	Tachina grossa	Ensembl	Ensembl only
+Insecta	1419289	Buathra laborator	Ensembl	Ensembl only
+Insecta	142686	Ceratosolen solmsi marchali	RefSeq	RefSeq only
+Insecta	1431430	Andrena trimmerana	Ensembl	Ensembl only
+Insecta	1437190	Osmia bicornis bicornis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1437193	Osmia lignaria lignaria	RefSeq	RefSeq only
+Insecta	143948	Diuraphis noxia	RefSeq	RefSeq only
+Insecta	143950	Sipha flava	RefSeq	RefSeq only
+Insecta	143995	Megachile rotundata	RefSeq	RefSeq only
+Insecta	144034	Pogonomyrmex barbatus	RefSeq	RefSeq only
+Insecta	1441554	Idaea pallidata	Ensembl	Ensembl only
+Insecta	1441559	Idaea rufaria	Ensembl	Ensembl only
+Insecta	1441563	Idaea subsericeata	Ensembl	Ensembl only
+Insecta	1441566	Idaea trigeminata	Ensembl	Ensembl only
+Insecta	1448897	Depressaria daucella	Ensembl	Ensembl only
+Insecta	1458189	Cydia fagiglandana	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1464561	Culex laticinctus	Ensembl	Ensembl only
+Insecta	146840	Labia minor	Ensembl	Ensembl only
+Insecta	1477025	Hyposmocoma kahamanoa	RefSeq	RefSeq only
+Insecta	1486046	Drosophila subpulchrella	RefSeq	RefSeq only
+Insecta	1496333	Anopheles maculipalpis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1498833	Eudonia angustea	Ensembl	Ensembl only
+Insecta	1502335	Mecyna flavalis	Ensembl	Ensembl only
+Insecta	1504853	Nineta flava	Ensembl	Ensembl only
+Insecta	1511221	Aelia acuminata	Ensembl	Ensembl only
+Insecta	1511665	Phaonia angelicae	Ensembl	Ensembl only
+Insecta	151304	Dendrolimus pini	Ensembl	Ensembl only
+Insecta	1518028	Ectemnius cavifrons	Ensembl	Ensembl only
+Insecta	1518534	Anopheles coluzzii	RefSeq	RefSeq only
+Insecta	1521116	Anopheles marshallii	Ensembl	Ensembl only
+Insecta	1530245	Ectropis grisescens	Ensembl	Ensembl only
+Insecta	1542539	Megachile leachella	Ensembl	Ensembl only
+Insecta	1542540	Megachile ligniseca	Ensembl	Ensembl only
+Insecta	1542580	Andrena bucephala	Ensembl	Ensembl only
+Insecta	1542598	Andrena marginata	Ensembl	Ensembl only
+Insecta	155166	Plebejus idas	Ensembl	Ensembl only
+Insecta	1553328	Gnatocerus cornutus	RefSeq	RefSeq only
+Insecta	1555629	Marasmia exigua	Ensembl	Ensembl only
+Insecta	1560625	Sisyra terminalis	Ensembl	Ensembl only
+Insecta	156304	Ceratina calcarata	RefSeq	RefSeq only
+Insecta	156442	Panstrongylus geniculatus	Ensembl	Ensembl only
+Insecta	1572519	Eristalis pertinax	Ensembl	Ensembl only
+Insecta	1572538	Ptychoptera contaminata	Ensembl	Ensembl only
+Insecta	1585304	Stictocephala bisonia	Ensembl	Ensembl only
+Insecta	1587174	Chrysolina oricalcia	Ensembl	Ensembl only
+Insecta	1587176	Chrysomela saliceti	Ensembl	Ensembl only
+Insecta	1587206	Cryptocephalus primarius	Ensembl	Ensembl only
+Insecta	1588336	Oxystoma pomonae	Ensembl	Ensembl only
+Insecta	1594215	Acleris hastiana	Ensembl	Ensembl only
+Insecta	1594229	Anania hortulata	Ensembl	Ensembl only
+Insecta	1594231	Anania terrealis	Ensembl	Ensembl only
+Insecta	1594261	Crambus pratella	Ensembl	Ensembl only
+Insecta	1594279	Diurnea lipsiella	Ensembl	Ensembl only
+Insecta	1594301	Eudonia murana	Ensembl	Ensembl only
+Insecta	1594307	Grapholita tenebrosana	Ensembl	Ensembl only
+Insecta	1594309	Hedya pruniana	Ensembl	Ensembl only
+Insecta	1594321	Parapoynx stratiotata	Ensembl	Ensembl only
+Insecta	1594354	Tinea trinotella	Ensembl	Ensembl only
+Insecta	1594356	Yponomeuta plumbellus	Ensembl	Ensembl only
+Insecta	1594363	Lobesia reliquana	Ensembl	Ensembl only
+Insecta	1594449	Euspilapteryx auroguttella	Ensembl	Ensembl only
+Insecta	1606781	Stomorhina lunata	Ensembl	Ensembl only
+Insecta	1608717	Maniola cypricola	Ensembl	Ensembl only
+Insecta	161013	Thrips palmi	RefSeq	RefSeq only
+Insecta	161770	Plectrocnemia conspersa	RefSeq	RefSeq only
+Insecta	1637456	Criorhina ranunculi	Ensembl	Ensembl only
+Insecta	1639166	Lobesia virulenta	Ensembl	Ensembl only
+Insecta	1660580	Agriphila selasella	Ensembl	Ensembl only
+Insecta	1660612	Cydia pactolana	Ensembl	Ensembl only
+Insecta	1660626	Epinotia pygmaeana	Ensembl	Ensembl only
+Insecta	1660628	Epinotia tenerana	Ensembl	Ensembl only
+Insecta	1660629	Erebia eriphyle	Ensembl	Ensembl only
+Insecta	1660630	Erebia melampus	Ensembl	Ensembl only
+Insecta	1660634	Ethmia dodecea	Ensembl	Ensembl only
+Insecta	1660681	Pyrausta nigrata	Ensembl	Ensembl only
+Insecta	1660724	Eudonia pallida	Ensembl	Ensembl only
+Insecta	166361	Onthophagus taurus	RefSeq	RefSeq only
+Insecta	1664817	Erebia disa	Ensembl	Ensembl only
+Insecta	1664830	Erebia melancholica	Ensembl	Ensembl only
+Insecta	1666553	Epinotia crenana	Ensembl	Ensembl only
+Insecta	1666554	Epinotia cruciana	Ensembl	Ensembl only
+Insecta	1666702	Pyrgus centaureae	Ensembl	Ensembl only
+Insecta	168615	Camponotus vicinus	RefSeq	RefSeq only
+Insecta	169492	Orygma luctuosum	Ensembl	Ensembl only
+Insecta	170843	Planococcus citri	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	171575	Araschnia levana	Ensembl	Ensembl only
+Insecta	171585	Inachis io	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	171592	Nymphalis antiopa	Ensembl	Ensembl only
+Insecta	171594	Nymphalis polychloros	Ensembl	Ensembl only
+Insecta	171605	Vanessa cardui	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1717392	Dioctria linearis	Ensembl	Ensembl only
+Insecta	1717430	Machimus rusticus	Ensembl	Ensembl only
+Insecta	1720740	Pollenia griseotomentosa	Ensembl	Ensembl only
+Insecta	1734902	Catocala nymphagoga	Ensembl	Ensembl only
+Insecta	1734906	Catocala promissa	Ensembl	Ensembl only
+Insecta	1736056	Euwallacea similis	RefSeq	RefSeq only
+Insecta	173985	Cheilosia urbana	Ensembl	Ensembl only
+Insecta	174621	Wyeomyia smithii	RefSeq	RefSeq only
+Insecta	174628	Bactrocera latifrons	RefSeq	RefSeq only
+Insecta	1754071	Craniophora pontica	Ensembl	Ensembl only
+Insecta	177636	Rhyacophila brunnea	RefSeq	RefSeq only
+Insecta	1776468	Linnaemya tessellans	Ensembl	Ensembl only
+Insecta	1776471	Linnaemya vulpina	Ensembl	Ensembl only
+Insecta	178035	Dufourea novaeangliae	RefSeq	RefSeq only
+Insecta	178769	Eurosta solidaginis	RefSeq	RefSeq only
+Insecta	178772	Empis livida	Ensembl	Ensembl only
+Insecta	179666	Tyria jacobaeae	Ensembl	Ensembl only
+Insecta	1804828	Diarsia dahlii	Ensembl	Ensembl only
+Insecta	1818115	Xylocopa sonorina	RefSeq	RefSeq only
+Insecta	1822507	Chrysopilus asiliformis	Ensembl	Ensembl only
+Insecta	1830378	Formica aserva	Ensembl	Ensembl only
+Insecta	183418	Apis laboriosa	RefSeq	RefSeq only
+Insecta	184059	Bombus soroeensis	Ensembl	Ensembl only
+Insecta	1845008	Agriotes pubescens	Ensembl	Ensembl only
+Insecta	185578	Anopheles nili	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	1857961	Agrotis puta	Ensembl	Ensembl only
+Insecta	1857962	Agrotis ripae	Ensembl	Ensembl only
+Insecta	1859540	Eristalis intricaria	Ensembl	Ensembl only
+Insecta	186751	Anopheles moucheti	RefSeq	RefSeq only
+Insecta	1869276	Bombus superbus	Ensembl	Ensembl only
+Insecta	1869394	Acleris hyemana	Ensembl	Ensembl only
+Insecta	1869440	Agrotis bigramma	Ensembl	Ensembl only
+Insecta	1869501	Blastobasis adustella	Ensembl	Ensembl only
+Insecta	1869771	Cydia amplana	RefSeq	RefSeq only
+Insecta	186982	Elmis aenea	Ensembl	Ensembl only
+Insecta	1869821	Earias vernana	Ensembl	Ensembl only
+Insecta	1869848	Ephestia unicolorella	Ensembl	Ensembl only
+Insecta	1869850	Epiblema costipunctana	Ensembl	Ensembl only
+Insecta	1869865	Eriocrania cicatricella	Ensembl	Ensembl only
+Insecta	1869899	Eupithecia fennoscandica	Ensembl	Ensembl only
+Insecta	1869911	Eupithecia phoeniceata	Ensembl	Ensembl only
+Insecta	1869970	Grapholita orobana	Ensembl	Ensembl only
+Insecta	1869985	Hedya salicella	Ensembl	Ensembl only
+Insecta	1870000	Hypena obsitalis	Ensembl	Ensembl only
+Insecta	1870006	Incurvaria oehlmanniella	Ensembl	Ensembl only
+Insecta	1870024	Lacanobia blenna	Ensembl	Ensembl only
+Insecta	1870035	Lithophane leautieri	Ensembl	Ensembl only
+Insecta	1870047	Luffia ferchaultella	Ensembl	Ensembl only
+Insecta	1870131	Ochropleura leucogaster	Ensembl	Ensembl only
+Insecta	1870140	Orgyia antiquoides	Ensembl	Ensembl only
+Insecta	1870251	Polymixis flavicincta	Ensembl	Ensembl only
+Insecta	1873866	Spialia rosae	Ensembl	Ensembl only
+Insecta	1875239	Brachycentrus maculatus	RefSeq	RefSeq only
+Insecta	1888591	Nemophora bellela	Ensembl	Ensembl only
+Insecta	1889570	Trypoxylon attenuatum	Ensembl	Ensembl only
+Insecta	189513	Chrysoperla carnea	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	189913	Leptidea sinapis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	189979	Bibio marci	Ensembl	Ensembl only
+Insecta	1902997	Ptychoptera albimana	Ensembl	Ensembl only
+Insecta	190331	Agriopis marginaria	Ensembl	Ensembl only
+Insecta	190335	Abraxas sylvata	Ensembl	Ensembl only
+Insecta	190347	Epirrhoe alternata	Ensembl	Ensembl only
+Insecta	190350	Idaea degeneraria	Ensembl	Ensembl only
+Insecta	190352	Idaea filicata	Ensembl	Ensembl only
+Insecta	190354	Idaea seriata	Ensembl	Ensembl only
+Insecta	190366	Timandra comae	Ensembl	Ensembl only
+Insecta	190369	Xanthorhoe ferrugata	Ensembl	Ensembl only
+Insecta	190385	Uranotaenia lowii	RefSeq	RefSeq only
+Insecta	1905387	Amblyjoppa proteus	Ensembl	Ensembl only
+Insecta	1906381	Eupithecia pygmaeata	Ensembl	Ensembl only
+Insecta	191418	Maniola jurtina	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	191421	Limenitis reducta	Ensembl	Ensembl only
+Insecta	192191	Pandemis heparana	Ensembl	Ensembl only
+Insecta	1936067	Eutolmus rufibarbis	Ensembl	Ensembl only
+Insecta	1943797	Boloria chariclea	Ensembl	Ensembl only
+Insecta	1964332	Temnothorax americanus	RefSeq	RefSeq only
+Insecta	197043	Homalodisca vitripennis	RefSeq	RefSeq only
+Insecta	1971315	Melinopterus prodromus	Ensembl	Ensembl only
+Insecta	197152	Cloeon dipterum	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	197161	Ischnura elegans	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	197179	Cylas formicarius	RefSeq	RefSeq only
+Insecta	198700	Orgyia recens	Ensembl	Ensembl only
+Insecta	198719	Drosophila innubila	RefSeq	RefSeq only
+Insecta	199890	Anopheles epiroticus	Ensembl	Ensembl only
+Insecta	2014018	Ecdyonurus torrentis	Ensembl	Ensembl only
+Insecta	2015173	Ooceraea biroi	RefSeq	RefSeq only
+Insecta	2017130	Galeruca laticollis	Ensembl	Ensembl only
+Insecta	201759	Anthonomus rubi	Ensembl	Ensembl only
+Insecta	201766	Apoderus coryli	Ensembl	Ensembl only
+Insecta	202138	Polydrusus pterygomalis	Ensembl	Ensembl only
+Insecta	2021473	Metopia argyrocephala	Ensembl	Ensembl only
+Insecta	2023354	Schistocerca serialis cubense	RefSeq	RefSeq only
+Insecta	2025111	Tipula lateralis	Ensembl	Ensembl only
+Insecta	202808	Vespa velutina	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	203782	Celastrina argiolus	Ensembl	Ensembl only
+Insecta	203811	Bombus fervidus	RefSeq	RefSeq only
+Insecta	203813	Bombus muscorum	Ensembl	Ensembl only
+Insecta	204497	Charissa subtaurica	Ensembl	Ensembl only
+Insecta	204503	Charissa obscurata	Ensembl	Ensembl only
+Insecta	204949	Cryptocephalus moraei	Ensembl	Ensembl only
+Insecta	2053667	Cotesia typhae	RefSeq	RefSeq only
+Insecta	2057221	Erebia christi	Ensembl	Ensembl only
+Insecta	2057223	Erebia embla	Ensembl	Ensembl only
+Insecta	2065413	Brachyptera putata	Ensembl	Ensembl only
+Insecta	207148	Aphodius fimetarius	Ensembl	Ensembl only
+Insecta	207624	Bombus campestris	Ensembl	Ensembl only
+Insecta	207636	Bombus haemorrhoidalis	Ensembl	Ensembl only
+Insecta	207650	Bombus vosnesenskii	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	2078957	Neocloeon triangulifer	RefSeq	RefSeq only
+Insecta	2079168	Polyommatus szabokyi	Ensembl	Ensembl only
+Insecta	2083513	Agriotes ferrugineipennis	Ensembl	Ensembl only
+Insecta	210248	Acrocera orbiculus	Ensembl	Ensembl only
+Insecta	211228	Cephus cinctus	RefSeq	RefSeq only
+Insecta	212017	Lethocerus indicus	Ensembl	Ensembl only
+Insecta	212811	Drosophila prolongata	Ensembl	Ensembl only
+Insecta	214030	Anaplectoides prasina	Ensembl	Ensembl only
+Insecta	214139	Eupithecia assimilata	Ensembl	Ensembl only
+Insecta	214143	Eupithecia satyrata	Ensembl	Ensembl only
+Insecta	214153	Gluphisia lintneri	Ensembl	Ensembl only
+Insecta	214311	Phragmatobia fuliginosa	Ensembl	Ensembl only
+Insecta	216862	Eupithecia subfuscata	Ensembl	Ensembl only
+Insecta	217217	Bombus confusus	Ensembl	Ensembl only
+Insecta	217634	Anoplophora glabripennis	RefSeq	RefSeq only
+Insecta	2184727	Pimpla rufipes	Ensembl	Ensembl only
+Insecta	218722	Carterocephalus silvicola	Ensembl	Ensembl only
+Insecta	218760	Pyrgus malvae	Ensembl	Ensembl only
+Insecta	218773	Thymelicus lineola	Ensembl	Ensembl only
+Insecta	219539	Scaeva pyrastri	Ensembl	Ensembl only
+Insecta	219809	Pseudomyrmex gracilis	RefSeq	RefSeq only
+Insecta	221902	Musca autumnalis	RefSeq	RefSeq only
+Insecta	222432	Peregrinus maidis	Ensembl	Ensembl only
+Insecta	222778	Tenthredo mesomela	Ensembl	Ensembl only
+Insecta	222816	Orussus abietinus	RefSeq	RefSeq only
+Insecta	2234001	Brachypalpus laphriformis	Ensembl	Ensembl only
+Insecta	224129	Agrilus planipennis	RefSeq	RefSeq only
+Insecta	224256	Syrphus vitripennis	Ensembl	Ensembl only
+Insecta	224526	Brachycaudus cardui	Ensembl	Ensembl only
+Insecta	2249760	Stelis phaeoptera	Ensembl	Ensembl only
+Insecta	226133	Protocalliphora azurea	Ensembl	Ensembl only
+Insecta	226135	Sarcophaga carnaria	Ensembl	Ensembl only
+Insecta	226145	Ferdinandea cuprea	Ensembl	Ensembl only
+Insecta	226147	Blera fallax	Ensembl	Ensembl only
+Insecta	226149	Volucella inflata	Ensembl	Ensembl only
+Insecta	226151	Volucella inanis	Ensembl	Ensembl only
+Insecta	227480	Lochmaea capreae	Ensembl	Ensembl only
+Insecta	227532	Anthocharis cardamines	Ensembl	Ensembl only
+Insecta	227535	Limenitis populi	Ensembl	Ensembl only
+Insecta	231887	Amblyteles armatorius	Ensembl	Ensembl only
+Insecta	231984	Lasius brunneus	Ensembl	Ensembl only
+Insecta	233843	Synanthedon spheciformis	Ensembl	Ensembl only
+Insecta	236805	Sesamia nonagrioides	Ensembl	Ensembl only
+Insecta	236850	Sarcophaga subvicina	Ensembl	Ensembl only
+Insecta	238572	Dendrolimus punctatus	Ensembl	Ensembl only
+Insecta	240869	Bombylius major	Ensembl	Ensembl only
+Insecta	242256	Erebia triaria	Ensembl	Ensembl only
+Insecta	242257	Erebia epiphron	Ensembl	Ensembl only
+Insecta	242259	Erebia oeme	Ensembl	Ensembl only
+Insecta	242260	Erebia gorge	Ensembl	Ensembl only
+Insecta	242261	Coenonympha glycerion	Ensembl	Ensembl only
+Insecta	242267	Plebejus argus	Ensembl	Ensembl only
+Insecta	2448451	Nomia melanderi	RefSeq	RefSeq only
+Insecta	247442	Harpalus rufipes	Ensembl	Ensembl only
+Insecta	248243	Siphlonurus alternatus	Ensembl	Ensembl only
+Insecta	2494358	Lasiommata paramegaera	Ensembl	Ensembl only
+Insecta	2494361	Melitaea nevadensis	Ensembl	Ensembl only
+Insecta	2494881	Cerceris ruficornis	Ensembl	Ensembl only
+Insecta	249498	Balanococcus diminutus	Ensembl	Ensembl only
+Insecta	2495015	Ectemnius lituratus	Ensembl	Ensembl only
+Insecta	2495127	Nysson spinosus	Ensembl	Ensembl only
+Insecta	2495172	Pemphredon lugubris	Ensembl	Ensembl only
+Insecta	2498891	Topomyia yanbarensis	RefSeq	RefSeq only
+Insecta	2505774	Erebia bubastis	Ensembl	Ensembl only
+Insecta	2505785	Pyrgus carlinae	Ensembl	Ensembl only
+Insecta	252295	Carposina sasakii	Ensembl	Ensembl only
+Insecta	2530218	Condylostylus longicornis	RefSeq	RefSeq only
+Insecta	253715	Macropis europaea	Ensembl	Ensembl only
+Insecta	254363	Autographa gamma	Ensembl	Ensembl only
+Insecta	254365	Abrostola triplasia	Ensembl	Ensembl only
+Insecta	2560978	Aporophyla australis	Ensembl	Ensembl only
+Insecta	2561016	Blastobasis lacticolella	Ensembl	Ensembl only
+Insecta	2561135	Coleophora lixella	Ensembl	Ensembl only
+Insecta	2561470	Lobesia littoralis	Ensembl	Ensembl only
+Insecta	2561724	Scrobipalpa ocellatella	Ensembl	Ensembl only
+Insecta	2561799	Tachystola acroxantha	Ensembl	Ensembl only
+Insecta	2561855	Zygaena punctum	Ensembl	Ensembl only
+Insecta	2562068	Bombus cullumanus	Ensembl	Ensembl only
+Insecta	2566210	Acleris effractana	Ensembl	Ensembl only
+Insecta	2566568	Epinotia brunnichana	Ensembl	Ensembl only
+Insecta	2566637	Grapholita jungiella	Ensembl	Ensembl only
+Insecta	2566765	Hesperophylax consimilis	RefSeq	RefSeq only
+Insecta	2566988	Micrasema longulum	RefSeq	RefSeq only
+Insecta	2567019	Mythimna riparia	Ensembl	Ensembl only
+Insecta	2567736	Yponomeuta cagnagella	Ensembl	Ensembl only
+Insecta	2567737	Yponomeuta evonymella	Ensembl	Ensembl only
+Insecta	256828	Bruchidius varius	Ensembl	Ensembl only
+Insecta	2578229	Mechanitis messenoides	Ensembl	Ensembl only
+Insecta	2588525	Leucophora obtusa	Ensembl	Ensembl only
+Insecta	2599362	Erebia albergana	Ensembl	Ensembl only
+Insecta	2605962	Colletes latitarsis	RefSeq	RefSeq only
+Insecta	262038	Prenolepis imparis	RefSeq	RefSeq only
+Insecta	263140	Sitodiplosis mosellana	RefSeq	RefSeq only
+Insecta	263933	Yponomeuta sedellus	Ensembl	Ensembl only
+Insecta	265360	Lycaena thersamon	Ensembl	Ensembl only
+Insecta	265386	Polyommatus icarus	Ensembl	Ensembl only
+Insecta	265458	Contarinia nasturtii	RefSeq	RefSeq only
+Insecta	2655036	Archips podanus	Ensembl	Ensembl only
+Insecta	268709	Lysandra coridon	Ensembl	Ensembl only
+Insecta	270466	Limenitis camilla	Ensembl	Ensembl only
+Insecta	2705177	Bombus vancouverensis nearcticus	RefSeq	RefSeq only
+Insecta	270614	Poecilus cupreus	Ensembl	Ensembl only
+Insecta	2712997	Dendarus foraminosus	Ensembl	Ensembl only
+Insecta	2716722	Melitaea aurelia	Ensembl	Ensembl only
+Insecta	2719080	Nephrotoma flavescens	Ensembl	Ensembl only
+Insecta	2719107	Tipula fascipennis	Ensembl	Ensembl only
+Insecta	2725500	Anthrax anthrax	Ensembl	Ensembl only
+Insecta	272628	Thymelicus sylvestris	Ensembl	Ensembl only
+Insecta	273439	Cheilosia impressa	Ensembl	Ensembl only
+Insecta	2736688	Tipula scripta	Ensembl	Ensembl only
+Insecta	2741127	Nephrotoma appendiculata	Ensembl	Ensembl only
+Insecta	2741128	Bombylius discolor	Ensembl	Ensembl only
+Insecta	2741129	Tipula vernalis	Ensembl	Ensembl only
+Insecta	2744207	Glaucopsyche paphos	Ensembl	Ensembl only
+Insecta	2744210	Hipparchia maderensis	Ensembl	Ensembl only
+Insecta	27454	Calliphora vomitoria	Ensembl	Ensembl only
+Insecta	27455	Musca vetustissima	RefSeq	RefSeq only
+Insecta	27457	Bactrocera dorsalis	RefSeq	RefSeq only
+Insecta	274613	Schistocerca piceifrons	RefSeq	RefSeq only
+Insecta	274614	Schistocerca cancellata	RefSeq	RefSeq only
+Insecta	27543	Choristoneura rosaceana	Ensembl	Ensembl only
+Insecta	2755281	Zophobas morio	RefSeq	RefSeq only
+Insecta	2767528	Microdon myrmicae	Ensembl	Ensembl only
+Insecta	2769477	Neocochylis molliculana	Ensembl	Ensembl only
+Insecta	2789720	Drosophila carrolli	Ensembl	Ensembl only
+Insecta	2794001	Machimus atricapillus	Ensembl	Ensembl only
+Insecta	279420	Sialis lutaria	Ensembl	Ensembl only
+Insecta	279440	Sisyra nigra	Ensembl	Ensembl only
+Insecta	2795562	Maniola bathseba	Ensembl	Ensembl only
+Insecta	2795564	Maniola hyperantus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	2795565	Maniola tithonus	Ensembl	Ensembl only
+Insecta	280486	Philanthus triangulum	Ensembl	Ensembl only
+Insecta	2817044	Belonocnema kinseyi	RefSeq	RefSeq only
+Insecta	2818049	Neophilaenus exclamationis	Ensembl	Ensembl only
+Insecta	2819439	Andrena cerasifolii	GenBank + RefSeq	RefSeq only
+Insecta	282008	Lysandra albicans	Ensembl	Ensembl only
+Insecta	282009	Aricia cramera	Ensembl	Ensembl only
+Insecta	282377	Lycaena alciphron	Ensembl	Ensembl only
+Insecta	282391	Lycaena phlaeas	Ensembl	Ensembl only
+Insecta	282395	Lycaena virgaureae	Ensembl	Ensembl only
+Insecta	2828945	Hipparchia cypriensis	Ensembl	Ensembl only
+Insecta	2829445	Myopa tessellatipennis	Ensembl	Ensembl only
+Insecta	283834	Deilephila elpenor	Ensembl	Ensembl only
+Insecta	283855	Hyles euphorbiae	Ensembl	Ensembl only
+Insecta	285223	Dascillus cervinus	Ensembl	Ensembl only
+Insecta	28584	Drosophila suzukii	RefSeq	RefSeq only
+Insecta	28586	Anastrepha ludens	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	28588	Zeugodacus cucurbitae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	28610	Rhagoletis pomonella	RefSeq	RefSeq only
+Insecta	28612	Rhagoletis zephyria	RefSeq	RefSeq only
+Insecta	286306	Cardiocondyla obscurior	RefSeq	RefSeq only
+Insecta	28638	Xylocopa virginica	Ensembl	Ensembl only
+Insecta	286459	Episyrphus balteatus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	286706	Halyomorpha halys	RefSeq	RefSeq only
+Insecta	2867249	Amblyjoppa fuscipennis	Ensembl	Ensembl only
+Insecta	2867262	Tipula helvola	Ensembl	Ensembl only
+Insecta	2867263	Tipula unca	Ensembl	Ensembl only
+Insecta	2867824	Hemadas nubilipennis	GenBank	GenBank only
+Insecta	2872261	Neodiprion fabricii	RefSeq	RefSeq only
+Insecta	287238	Zygaena carniolica	Ensembl	Ensembl only
+Insecta	287248	Zygaena fausta	Ensembl	Ensembl only
+Insecta	287314	Zygaena cynarae	Ensembl	Ensembl only
+Insecta	287327	Zygaena laeta	Ensembl	Ensembl only
+Insecta	287345	Zygaena purpuralis	Ensembl	Ensembl only
+Insecta	287354	Zygaena sarpedon	Ensembl	Ensembl only
+Insecta	287362	Zygaena angelicae	Ensembl	Ensembl only
+Insecta	287365	Zygaena armena	Ensembl	Ensembl only
+Insecta	287367	Zygaena dorycnii	Ensembl	Ensembl only
+Insecta	287373	Zygaena exulans	Ensembl	Ensembl only
+Insecta	287375	Zygaena filipendulae	Ensembl	Ensembl only
+Insecta	2876618	Hypomecis atomaria	Ensembl	Ensembl only
+Insecta	2881124	Tipula confusa	Ensembl	Ensembl only
+Insecta	2881873	Dolichomitus mesocentrus	Ensembl	Ensembl only
+Insecta	2884231	Tolmerus cingulatus	Ensembl	Ensembl only
+Insecta	2884234	Ophion ellenae	Ensembl	Ensembl only
+Insecta	289281	Arctia caja	Ensembl	Ensembl only
+Insecta	2898095	Aphrophora major	Ensembl	Ensembl only
+Insecta	29029	Drosophila eugracilis	RefSeq	RefSeq only
+Insecta	29030	Drosophila takahashii	RefSeq	RefSeq only
+Insecta	29031	Phlebotomus papatasi	RefSeq	RefSeq only
+Insecta	290404	Eupeodes corollae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	2904454	Melitaea pseudornata	Ensembl	Ensembl only
+Insecta	29053	Copidosoma floridanum	RefSeq	RefSeq only
+Insecta	29057	Ostrinia nubilalis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	29058	Helicoverpa armigera	RefSeq	RefSeq only
+Insecta	290679	Cetonia aurata	Ensembl	Ensembl only
+Insecta	2922074	Rhimphoctona megacephalus	Ensembl	Ensembl only
+Insecta	2922079	Netelia melanura	Ensembl	Ensembl only
+Insecta	295201	Aphrophora alni	Ensembl	Ensembl only
+Insecta	295525	Geotrupes spiniger	Ensembl	Ensembl only
+Insecta	295679	Rhagium mordax	Ensembl	Ensembl only
+Insecta	295817	Colydium elongatum	Ensembl	Ensembl only
+Insecta	295833	Endomychus coccineus	Ensembl	Ensembl only
+Insecta	295940	Silvanus unidentatus	Ensembl	Ensembl only
+Insecta	296003	Lagria hirta	Ensembl	Ensembl only
+Insecta	2961670	Neodiprion virginianus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	2964682	Microplitis deprimator	Ensembl	Ensembl only
+Insecta	2967106	Muscula muscula	Ensembl	Ensembl only
+Insecta	300111	Temnothorax curvispinosus	RefSeq	RefSeq only
+Insecta	300112	Temnothorax longispinosus	RefSeq	RefSeq only
+Insecta	30019	Drosophila busckii	RefSeq	RefSeq only
+Insecta	30023	Drosophila elegans	RefSeq	RefSeq only
+Insecta	30025	Drosophila ficusphila	RefSeq	RefSeq only
+Insecta	30033	Drosophila kikkawai	RefSeq	RefSeq only
+Insecta	30066	Anopheles merus	RefSeq	RefSeq only
+Insecta	30069	Anopheles stephensi	RefSeq	RefSeq only
+Insecta	30076	Triatoma infestans	Ensembl	Ensembl only
+Insecta	301036	Synanthedon formicaeformis	Ensembl	Ensembl only
+Insecta	301037	Bembecia ichneumoniformis	Ensembl	Ensembl only
+Insecta	301680	Synanthedon tipuliformis	Ensembl	Ensembl only
+Insecta	30192	Bombus lapidarius	Ensembl	Ensembl only
+Insecta	30194	Bombus pratorum	Ensembl	Ensembl only
+Insecta	30195	Bombus terrestris	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	30201	Bombus sylvestris	Ensembl	Ensembl only
+Insecta	30202	Bombus vestalis	Ensembl	Ensembl only
+Insecta	30207	Polistes fuscatus	RefSeq	RefSeq only
+Insecta	30212	Vespula germanica	Ensembl	Ensembl only
+Insecta	30213	Vespula pensylvanica	RefSeq	RefSeq only
+Insecta	3023605	Carabus banonii	Ensembl	Ensembl only
+Insecta	305662	Dioryctria abietella	Ensembl	Ensembl only
+Insecta	307131	Ceutorhynchus obstrictus	Ensembl	Ensembl only
+Insecta	307658	Monomorium pharaonis	RefSeq	RefSeq only
+Insecta	309002	Ormia ochracea	Ensembl	Ensembl only
+Insecta	309941	Bombus affinis	RefSeq	RefSeq only
+Insecta	309970	Bombus picipes	Ensembl	Ensembl only
+Insecta	311328	Tortrix viridana	Ensembl	Ensembl only
+Insecta	3126489	Ochlodes sylvanus	Ensembl	Ensembl only
+Insecta	313031	Hylaeus anthracinus	RefSeq	RefSeq only
+Insecta	313075	Hylaeus volcanicus	RefSeq	RefSeq only
+Insecta	3133243	Mythimna congrua	Ensembl	Ensembl only
+Insecta	316456	Anabrus simplex	RefSeq	RefSeq only
+Insecta	32260	Venturia canescens	RefSeq	RefSeq only
+Insecta	3228856	Blastobasis vittata	Ensembl	Ensembl only
+Insecta	3229087	Colletes wilmattae	Ensembl	Ensembl only
+Insecta	3229189	Nychiodes aphrodite	Ensembl	Ensembl only
+Insecta	3229210	Pseudoterpna rectistrigaria	Ensembl	Ensembl only
+Insecta	323312	Leucozona laternaria	Ensembl	Ensembl only
+Insecta	323313	Chrysotoxum bicinctum	Ensembl	Ensembl only
+Insecta	32391	Cotesia glomerata	RefSeq	RefSeq only
+Insecta	324823	Agrilus biguttatus	Ensembl	Ensembl only
+Insecta	325434	Malaya genurostris	RefSeq	RefSeq only
+Insecta	326957	Thera firmata	Ensembl	Ensembl only
+Insecta	326962	Scotopteryx chenopodiata	Ensembl	Ensembl only
+Insecta	327083	Dolichopus griseipennis	Ensembl	Ensembl only
+Insecta	330862	Tiphia femorata	Ensembl	Ensembl only
+Insecta	331285	Napeogenes inachia	Ensembl	Ensembl only
+Insecta	331327	Melinaea isocomma	Ensembl	Ensembl only
+Insecta	331329	Melinaea ludovica	Ensembl	Ensembl only
+Insecta	331331	Melinaea mothone	Ensembl	Ensembl only
+Insecta	331344	Napeogenes sylphis	Ensembl	Ensembl only
+Insecta	332931	Saturnia pavonia	Ensembl	Ensembl only
+Insecta	334116	Vanessa tameamea	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	33412	Zerene cesonia	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	33419	Heliconius numata	GenBank	GenBank only
+Insecta	33431	Heliconius erato demophoon	GenBank	GenBank only
+Insecta	33433	Heliconius sapho	Ensembl	Ensembl only
+Insecta	33435	Heliconius antiochus	Ensembl	Ensembl only
+Insecta	33448	Eueides isabella	Ensembl	Ensembl only
+Insecta	33453	Dryas iulia moderata	Ensembl	Ensembl only
+Insecta	33466	Yponomeuta malinellus	Ensembl	Ensembl only
+Insecta	3350558	Ptiloglossa arizonensis	RefSeq	RefSeq only
+Insecta	335469	Orgyia antiqua	Ensembl	Ensembl only
+Insecta	337506	Calliopsis andreniformis	RefSeq	RefSeq only
+Insecta	3384248	Aphrophora moscoviciae	Ensembl	Ensembl only
+Insecta	3433878	Hebata decipiens	Ensembl	Ensembl only
+Insecta	343691	Hermetia illucens	RefSeq	RefSeq only
+Insecta	345580	Anopheles ziemanni	RefSeq	RefSeq only
+Insecta	345723	Pontia edusa	Ensembl	Ensembl only
+Insecta	3458737	Netelia inedita	Ensembl	Ensembl only
+Insecta	346691	Altica lythri	Ensembl	Ensembl only
+Insecta	34676	Protophormia terraenovae	Ensembl	Ensembl only
+Insecta	346801	Melanotus villosus	Ensembl	Ensembl only
+Insecta	34682	Syritta pipiens	Ensembl	Ensembl only
+Insecta	346820	Philonthus cognatus	Ensembl	Ensembl only
+Insecta	346868	Uleiota planata	Ensembl	Ensembl only
+Insecta	34690	Anopheles melas	Ensembl	Ensembl only
+Insecta	34691	Anopheles quadriannulatus	Ensembl	Ensembl only
+Insecta	34720	Trachymyrmex septentrionalis	RefSeq	RefSeq only
+Insecta	347340	Eledona agricola	Ensembl	Ensembl only
+Insecta	347359	Halyzia sedecimguttata	Ensembl	Ensembl only
+Insecta	347362	Hermaeophaga mercurialis	Ensembl	Ensembl only
+Insecta	34740	Heliconius melpomene rosina	RefSeq	RefSeq only
+Insecta	347445	Prionychus ater	Ensembl	Ensembl only
+Insecta	350085	Agriotes obscurus	Ensembl	Ensembl only
+Insecta	350087	Cantharis rufa	Ensembl	Ensembl only
+Insecta	351686	Schizotus pectinicornis	Ensembl	Ensembl only
+Insecta	354296	Anoplolepis gracilipes	RefSeq	RefSeq only
+Insecta	354439	Rhynchophorus ferrugineus	RefSeq	RefSeq only
+Insecta	35570	Stomoxys calcitrans	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	360071	Amphimallon solstitiale	Ensembl	Ensembl only
+Insecta	36150	Cicadella viridis	Ensembl	Ensembl only
+Insecta	362088	Diprion similis	RefSeq	RefSeq only
+Insecta	362091	Tenthredo notha	Ensembl	Ensembl only
+Insecta	362106	Phymatocera aterrima	Ensembl	Ensembl only
+Insecta	3685856	Philhelius festivus	Ensembl	Ensembl only
+Insecta	368781	Cheilosia soror	Ensembl	Ensembl only
+Insecta	369887	Poecilobothrus nobilitatus	Ensembl	Ensembl only
+Insecta	37001	Glossina brevipalpis	Ensembl	Ensembl only
+Insecta	37344	Athalia rosae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	374263	Xylota segnis	Ensembl	Ensembl only
+Insecta	374264	Xylota sylvarum	Ensembl	Ensembl only
+Insecta	375433	Microplitis mediator	RefSeq	RefSeq only
+Insecta	38358	Bradysia coprophila	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	393326	Lomographa bimaculata	Ensembl	Ensembl only
+Insecta	395515	Bombus breviceps	Ensembl	Ensembl only
+Insecta	395520	Bombus difficillimus	Ensembl	Ensembl only
+Insecta	395565	Bombus skorikovi	Ensembl	Ensembl only
+Insecta	395577	Bombus waltoni	Ensembl	Ensembl only
+Insecta	396416	Bombus pyrosoma	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	397350	Barypeithes pellucidus	Ensembl	Ensembl only
+Insecta	39758	Mayetiola destructor	Ensembl	Ensembl only
+Insecta	40370	Drosophila montana	RefSeq	RefSeq only
+Insecta	405009	Fabriciana adippe	Ensembl	Ensembl only
+Insecta	405021	Boloria aquilonaris	Ensembl	Ensembl only
+Insecta	405022	Boloria eunomia	Ensembl	Ensembl only
+Insecta	405024	Boloria pales	Ensembl	Ensembl only
+Insecta	405034	Brenthis ino	Ensembl	Ensembl only
+Insecta	40932	Rhopalosiphum padi	RefSeq	RefSeq only
+Insecta	41101	Rhagonycha fulva	Ensembl	Ensembl only
+Insecta	41107	Dorcus parallelipipedus	Ensembl	Ensembl only
+Insecta	41139	Coccinella septempunctata	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	411798	Vollenhovia emeryi	RefSeq	RefSeq only
+Insecta	41427	Anopheles atroparvus	Ensembl	Ensembl only
+Insecta	414801	Dasysyrphus albostriatus	Ensembl	Ensembl only
+Insecta	414846	Platycheirus albimanus	Ensembl	Ensembl only
+Insecta	414950	Nicrophorus investigator	Ensembl	Ensembl only
+Insecta	41895	Tribolium madens	RefSeq	RefSeq only
+Insecta	419956	Calvia quattuordecimguttata	Ensembl	Ensembl only
+Insecta	42026	Drosophila bipectinata	RefSeq	RefSeq only
+Insecta	42062	Drosophila nasuta	RefSeq	RefSeq only
+Insecta	421273	Bombus sibiricus	Ensembl	Ensembl only
+Insecta	422171	Aleiodes testaceus	Ensembl	Ensembl only
+Insecta	42275	Vanessa atalanta	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	42288	Battus philenor	RefSeq	RefSeq only
+Insecta	423320	Catocala nupta	Ensembl	Ensembl only
+Insecta	423510	Catocala fraxini	Ensembl	Ensembl only
+Insecta	423515	Catocala fulminea	Ensembl	Ensembl only
+Insecta	425690	Quadrastichus erythrinae	GenBank	GenBank only
+Insecta	42839	Anopheles aquasalis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	43146	Rhopalosiphum maidis	RefSeq	RefSeq only
+Insecta	43151	Anopheles darlingi	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	431829	Meliscaeva auricollis	Ensembl	Ensembl only
+Insecta	433021	Anaspis frontalis	Ensembl	Ensembl only
+Insecta	433215	Diaperis boleti	Ensembl	Ensembl only
+Insecta	43337	Orthosia gothica	Ensembl	Ensembl only
+Insecta	434251	Lasioglossum baleicum	RefSeq	RefSeq only
+Insecta	437488	Cnaphalocrocis medinalis	Ensembl	Ensembl only
+Insecta	439567	Hypomecis punctinalis	Ensembl	Ensembl only
+Insecta	441921	Neodiprion lecontei	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	441929	Neodiprion pinetum	RefSeq	RefSeq only
+Insecta	444401	Andrena haemorrhoa	Ensembl	Ensembl only
+Insecta	446425	Brachyptera risi	Ensembl	Ensembl only
+Insecta	44670	Metopolophium dirhodum	RefSeq	RefSeq only
+Insecta	447850	Erebia medusa	Ensembl	Ensembl only
+Insecta	452744	Crataerina pallida	Ensembl	Ensembl only
+Insecta	454923	Diachasma alloeum	RefSeq	RefSeq only
+Insecta	456900	Cyphomyrmex costatus	RefSeq	RefSeq only
+Insecta	460826	Chelonus insularis	RefSeq	RefSeq only
+Insecta	467774	Emmelina monodactyla	Ensembl	Ensembl only
+Insecta	46794	Drosophila tropicalis	RefSeq	RefSeq only
+Insecta	468186	Erebia mnestra	Ensembl	Ensembl only
+Insecta	468190	Erebia rondoui	Ensembl	Ensembl only
+Insecta	468723	Dioctria rufipes	Ensembl	Ensembl only
+Insecta	468752	Leptogaster cylindrica	Ensembl	Ensembl only
+Insecta	468767	Neoitamus cyanurus	Ensembl	Ensembl only
+Insecta	468783	Philonicus albiceps	Ensembl	Ensembl only
+Insecta	469753	Culicoides brevitarsis	RefSeq	RefSeq only
+Insecta	470732	Sphinx ligustri	Ensembl	Ensembl only
+Insecta	471061	Mechanitis mazaeus	Ensembl	Ensembl only
+Insecta	471070	Methona curvifascia	Ensembl	Ensembl only
+Insecta	471704	Trachymyrmex cornetzi	RefSeq	RefSeq only
+Insecta	47314	Drosophila novamexicana	RefSeq	RefSeq only
+Insecta	473392	Andrena flavipes	Ensembl	Ensembl only
+Insecta	481570	Nomada fucata	Ensembl	Ensembl only
+Insecta	481575	Megachile willughbiella	Ensembl	Ensembl only
+Insecta	483950	Acanthosoma haemorrhoidale	Ensembl	Ensembl only
+Insecta	486017	Brachycaudus klugkisti	Ensembl	Ensembl only
+Insecta	486640	Odontomachus brunneus	RefSeq	RefSeq only
+Insecta	488582	Lasius platythorax	Ensembl	Ensembl only
+Insecta	491269	Conomelus anceps	Ensembl	Ensembl only
+Insecta	49291	Carabus problematicus	Ensembl	Ensembl only
+Insecta	494743	Netelia virgata	Ensembl	Ensembl only
+Insecta	499230	Thaumetopoea processionea	Ensembl	Ensembl only
+Insecta	500707	Dioryctria mendacella	Ensembl	Ensembl only
+Insecta	50387	Diabrotica undecimpunctata	RefSeq	RefSeq only
+Insecta	50389	Diabrotica virgifera virgifera	RefSeq	RefSeq only
+Insecta	505408	Trichopteryx carpinata	Ensembl	Ensembl only
+Insecta	505411	Falcaria lacertinaria	Ensembl	Ensembl only
+Insecta	50586	Lepisma saccharinum	RefSeq	RefSeq only
+Insecta	50603	Panorpa germanica	Ensembl	Ensembl only
+Insecta	509358	Carcharodus alceae	Ensembl	Ensembl only
+Insecta	509483	Spialia sertorius	Ensembl	Ensembl only
+Insecta	511033	Aphis hederae	Ensembl	Ensembl only
+Insecta	511117	Merodon equestris	Ensembl	Ensembl only
+Insecta	511597	Stratiomys singularior	Ensembl	Ensembl only
+Insecta	51655	Plutella xylostella	RefSeq	RefSeq only
+Insecta	516756	Eufriesea mexicana	RefSeq	RefSeq only
+Insecta	520822	Atta colombica	RefSeq	RefSeq only
+Insecta	520877	Epargyreus clarus	RefSeq	RefSeq only
+Insecta	520905	Tenthredo livida	Ensembl	Ensembl only
+Insecta	520932	Tenthredo scrophulariae	Ensembl	Ensembl only
+Insecta	520940	Tenthredo amoena	Ensembl	Ensembl only
+Insecta	522842	Marumba quercus	Ensembl	Ensembl only
+Insecta	524428	Macroglossum stellatarum	Ensembl	Ensembl only
+Insecta	52734	Dilophus febrilis	Ensembl	Ensembl only
+Insecta	527766	Myzus lythri	Ensembl	Ensembl only
+Insecta	53552	Sabethes cyaneus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	53553	Toxorhynchites rutilus septentrionalis	RefSeq	RefSeq only
+Insecta	535715	Euchloe belemia	Ensembl	Ensembl only
+Insecta	537450	Graphosoma italicum	Ensembl	Ensembl only
+Insecta	542985	Heliothis viriplaca	Ensembl	Ensembl only
+Insecta	545656	Culex modestus	Ensembl	Ensembl only
+Insecta	547581	Euchloe insularis	Ensembl	Ensembl only
+Insecta	547582	Euchloe simplonia	Ensembl	Ensembl only
+Insecta	55057	Mamestra brassicae	Ensembl	Ensembl only
+Insecta	554486	Coenonympha oedippus	Ensembl	Ensembl only
+Insecta	559647	Hydrotaea cyrtoneurina	Ensembl	Ensembl only
+Insecta	559660	Muscina levida	Ensembl	Ensembl only
+Insecta	55986	Ips typographus	RefSeq	RefSeq only
+Insecta	561267	Culex theileri	Ensembl	Ensembl only
+Insecta	561572	Frieseomelitta varia	RefSeq	RefSeq only
+Insecta	566305	Nephrocerus scutellatus	Ensembl	Ensembl only
+Insecta	569046	Gymnosoma rotundatum	Ensembl	Ensembl only
+Insecta	572725	Argyresthia goedartella	Ensembl	Ensembl only
+Insecta	572747	Ectropis crepuscularia	Ensembl	Ensembl only
+Insecta	572802	Acleris holmiana	Ensembl	Ensembl only
+Insecta	572809	Agriphila straminella	Ensembl	Ensembl only
+Insecta	572853	Hedya nubiferana	Ensembl	Ensembl only
+Insecta	575809	Dailognatha quadricollis	Ensembl	Ensembl only
+Insecta	57686	Acrolepiopsis assectella	Ensembl	Ensembl only
+Insecta	58002	Daktulosphaira vitifoliae	RefSeq	RefSeq only
+Insecta	580924	Lycaena hippothoe	Ensembl	Ensembl only
+Insecta	58237	Anopheles oryzalimnetes	RefSeq	RefSeq only
+Insecta	586954	Andrena barbilabris	Ensembl	Ensembl only
+Insecta	58733	Diachasmimorpha longicaudata	RefSeq	RefSeq only
+Insecta	58824	Plodia interpunctella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	594017	Sphenella marginata	Ensembl	Ensembl only
+Insecta	596532	Boloria dia	Ensembl	Ensembl only
+Insecta	596533	Boloria freija	Ensembl	Ensembl only
+Insecta	596534	Boloria frigga	Ensembl	Ensembl only
+Insecta	596536	Boloria titania	Ensembl	Ensembl only
+Insecta	596544	Colias thisoa	Ensembl	Ensembl only
+Insecta	596942	Sarcophaga caerulescens	Ensembl	Ensembl only
+Insecta	597456	Habropoda laboriosa	RefSeq	RefSeq only
+Insecta	598736	Erebia manto	Ensembl	Ensembl only
+Insecta	598737	Erebia pronoe	Ensembl	Ensembl only
+Insecta	59916	Bactrocera tryoni	RefSeq	RefSeq only
+Insecta	601032	Epeolus ainsliei	Ensembl	Ensembl only
+Insecta	601510	Nomada fabriciana	Ensembl	Ensembl only
+Insecta	601518	Nomada ferruginata	Ensembl	Ensembl only
+Insecta	601523	Nomada flava	Ensembl	Ensembl only
+Insecta	601583	Nomada hirtipes	Ensembl	Ensembl only
+Insecta	601640	Nomada lathburiana	Ensembl	Ensembl only
+Insecta	601768	Nomada panzeri	Ensembl	Ensembl only
+Insecta	601849	Nomada ruficornis	Ensembl	Ensembl only
+Insecta	609295	Dinoponera quadriceps	RefSeq	RefSeq only
+Insecta	610380	Harpegnathos saltator	RefSeq	RefSeq only
+Insecta	613905	Nylanderia fulva	RefSeq	RefSeq only
+Insecta	615972	Polyergus mexicanus	RefSeq	RefSeq only
+Insecta	62018	Hetaerina americana	RefSeq	RefSeq only
+Insecta	62324	Anopheles funestus	RefSeq	RefSeq only
+Insecta	631317	Gymnocheta viridis	Ensembl	Ensembl only
+Insecta	631328	Tachina fera	Ensembl	Ensembl only
+Insecta	631329	Tachina lurida	Ensembl	Ensembl only
+Insecta	63433	Leptopilina boulardi	RefSeq	RefSeq only
+Insecta	63436	Leptopilina heterotoma	RefSeq	RefSeq only
+Insecta	63975	Graellsia isabellae	Ensembl	Ensembl only
+Insecta	64459	Pieris rapae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	644619	Ochlerotatus camptorhynchus	RefSeq	RefSeq only
+Insecta	64791	Mycetomoellerius zeteki	RefSeq	RefSeq only
+Insecta	64793	Wasmannia auropunctata	RefSeq	RefSeq only
+Insecta	64838	Fopius arisanus	RefSeq	RefSeq only
+Insecta	65032	Epiphyas postvittana	Ensembl	Ensembl only
+Insecta	651059	Mechanitis menapis	Ensembl	Ensembl only
+Insecta	65147	Ophion obscuratus	Ensembl	Ensembl only
+Insecta	653684	Melanostoma mellinum	Ensembl	Ensembl only
+Insecta	65598	Bombus pascuorum	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	662956	Ocypus olens	Ensembl	Ensembl only
+Insecta	66420	Papilio xuthus	RefSeq	RefSeq only
+Insecta	670595	Pollenia amentaria	Ensembl	Ensembl only
+Insecta	680683	Amyelois transitella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	684658	Aphidius gifuensis	RefSeq	RefSeq only
+Insecta	685373	Macaria brunneata	Ensembl	Ensembl only
+Insecta	685396	Xanthorhoe decoloraria	Ensembl	Ensembl only
+Insecta	686820	Bombus turneri	Ensembl	Ensembl only
+Insecta	687026	Coleophora deauratella	Ensembl	Ensembl only
+Insecta	687034	Epinotia nanana	Ensembl	Ensembl only
+Insecta	687316	Carpatolechia fugitivella	Ensembl	Ensembl only
+Insecta	688607	Achroia grisella	RefSeq	RefSeq only
+Insecta	68878	Anopheles cruzii	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	689058	Amphipyra tragopoginis	Ensembl	Ensembl only
+Insecta	689062	Apamea unanimis	Ensembl	Ensembl only
+Insecta	689095	Lycia ursaria	Ensembl	Ensembl only
+Insecta	689108	Thera juniperata	Ensembl	Ensembl only
+Insecta	689501	Aricia nicias	Ensembl	Ensembl only
+Insecta	69004	Anopheles farauti	Ensembl	Ensembl only
+Insecta	691016	Euthyatira pudens	Ensembl	Ensembl only
+Insecta	691564	Coleophora mayrella	Ensembl	Ensembl only
+Insecta	692089	Limnephilus rhombicus	Ensembl	Ensembl only
+Insecta	69319	Microplitis demolitor	RefSeq	RefSeq only
+Insecta	6978	Periplaneta americana	RefSeq	RefSeq only
+Insecta	69820	Spodoptera litura	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7009	Schistocerca americana	RefSeq	RefSeq only
+Insecta	7010	Schistocerca gregaria	RefSeq	RefSeq only
+Insecta	7011	Schistocerca nitens	RefSeq	RefSeq only
+Insecta	7029	Acyrthosiphon pisum	RefSeq	RefSeq only
+Insecta	7038	Bemisia tabaci	RefSeq	RefSeq only
+Insecta	7044	Anthonomus grandis grandis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7048	Sitophilus oryzae	RefSeq	RefSeq only
+Insecta	7054	Photinus pyralis	RefSeq	RefSeq only
+Insecta	7061	Melolontha melolontha	Ensembl	Ensembl only
+Insecta	706635	Conistra vaccinii	Ensembl	Ensembl only
+Insecta	7067	Tenebrio molitor	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7070	Tribolium castaneum	RefSeq	RefSeq only
+Insecta	7084	Adalia bipunctata	Ensembl	Ensembl only
+Insecta	7091	Bombyx mori	RefSeq	RefSeq only
+Insecta	7092	Bombyx mandarina	RefSeq	RefSeq only
+Insecta	7108	Spodoptera frugiperda	RefSeq	RefSeq only
+Insecta	7111	Trichoplusia ni	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7113	Helicoverpa zea	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7116	Pieris brassicae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	712039	Polyommatus atlantica	Ensembl	Ensembl only
+Insecta	7130	Manduca sexta	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7137	Galleria mellonella	RefSeq	RefSeq only
+Insecta	7141	Choristoneura fumiferana	RefSeq	RefSeq only
+Insecta	7153	Chironomus tentans	Ensembl	Ensembl only
+Insecta	7159	Aedes aegypti	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7160	Aedes albopictus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7165	Anopheles gambiae	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7167	Anopheles albimanus	RefSeq	RefSeq only
+Insecta	7173	Anopheles arabiensis	RefSeq	RefSeq only
+Insecta	7175	Culex pipiens pallens	RefSeq	RefSeq only
+Insecta	7176	Culex quinquefasciatus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7200	Lutzomyia longipalpis	RefSeq	RefSeq only
+Insecta	721134	Ennomos autumnarius	Ensembl	Ensembl only
+Insecta	721163	Thyatira batis	Ensembl	Ensembl only
+Insecta	7213	Ceratitis capitata	RefSeq	RefSeq only
+Insecta	7217	Drosophila ananassae	RefSeq	RefSeq only
+Insecta	721895	Plusia putnami	Ensembl	Ensembl only
+Insecta	7220	Drosophila erecta	RefSeq	RefSeq only
+Insecta	7222	Drosophila grimshawi	RefSeq	RefSeq only
+Insecta	7224	Drosophila hydei	RefSeq	RefSeq only
+Insecta	72248	Colias croceus	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7225	Scaptodrosophila lebanonensis	RefSeq	RefSeq only
+Insecta	7226	Drosophila mauritiana	RefSeq	RefSeq only
+Insecta	722655	Aethalura punctulata	Ensembl	Ensembl only
+Insecta	722657	Apocheima hispidaria	Ensembl	Ensembl only
+Insecta	722659	Cabera pusaria	Ensembl	Ensembl only
+Insecta	722662	Ennomos fuscantarius	Ensembl	Ensembl only
+Insecta	7227	Drosophila melanogaster	GenBank + RefSeq	RefSeq only
+Insecta	7229	Drosophila miranda	RefSeq	RefSeq only
+Insecta	7230	Drosophila mojavensis	RefSeq	RefSeq only
+Insecta	7232	Drosophila navojoa	RefSeq	RefSeq only
+Insecta	7234	Drosophila persimilis	RefSeq	RefSeq only
+Insecta	7237	Drosophila pseudoobscura	RefSeq	RefSeq only
+Insecta	7238	Drosophila sechellia	RefSeq	RefSeq only
+Insecta	7240	Drosophila simulans	RefSeq	RefSeq only
+Insecta	7241	Drosophila subobscura	RefSeq	RefSeq only
+Insecta	7243	Drosophila teissieri	RefSeq	RefSeq only
+Insecta	7244	Drosophila virilis	RefSeq	RefSeq only
+Insecta	7245	Drosophila yakuba	RefSeq	RefSeq only
+Insecta	72491	Triatoma dimidiata	Ensembl	Ensembl only
+Insecta	7260	Drosophila willistoni	RefSeq	RefSeq only
+Insecta	7263	Drosophila arizonae	RefSeq	RefSeq only
+Insecta	7266	Drosophila guanche	GenBank + RefSeq	RefSeq only
+Insecta	7274	Drosophila serrata	RefSeq	RefSeq only
+Insecta	72781	Formica exsecta	RefSeq	RefSeq only
+Insecta	7282	Drosophila obscura	RefSeq	RefSeq only
+Insecta	72851	Colias philodice	RefSeq	RefSeq only
+Insecta	72852	Colias erate	Ensembl	Ensembl only
+Insecta	7291	Drosophila albomicans	RefSeq	RefSeq only
+Insecta	7368	Haematobia irritans	RefSeq	RefSeq only
+Insecta	7370	Musca domestica	RefSeq	RefSeq only
+Insecta	7373	Calliphora vicina	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7375	Lucilia cuprina	RefSeq	RefSeq only
+Insecta	7385	Sarcophaga bullata	GenBank	GenBank only
+Insecta	7394	Glossina morsitans morsitans	Ensembl	Ensembl only
+Insecta	7395	Glossina austeni	Ensembl	Ensembl only
+Insecta	7396	Glossina fuscipes	RefSeq	RefSeq only
+Insecta	7397	Glossina palpalis gambiensis	Ensembl	Ensembl only
+Insecta	74065	Dalbulus maidis	Ensembl	Ensembl only
+Insecta	74068	Macrosteles quadrilineatus	RefSeq	RefSeq only
+Insecta	74070	Dalbulus elimatus	Ensembl	Ensembl only
+Insecta	742174	Melanaphis sacchari	RefSeq	RefSeq only
+Insecta	7425	Nasonia vitripennis	RefSeq	RefSeq only
+Insecta	743375	Polistes dominula	RefSeq	RefSeq only
+Insecta	7445	Vespa crabro	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7446	Vespa mandarinia	RefSeq	RefSeq only
+Insecta	7454	Vespula vulgaris	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	7460	Apis mellifera	RefSeq	RefSeq only
+Insecta	7461	Apis cerana	RefSeq	RefSeq only
+Insecta	7462	Apis dorsata	RefSeq	RefSeq only
+Insecta	7463	Apis florea	RefSeq	RefSeq only
+Insecta	74873	Anopheles sinensis	Ensembl	Ensembl only
+Insecta	7493	Trichogramma pretiosum	RefSeq	RefSeq only
+Insecta	7515	Ctenocephalides felis	RefSeq	RefSeq only
+Insecta	75184	Bacillus rossius redtenbacheri	RefSeq	RefSeq only
+Insecta	753146	Acronicta rumicis	Ensembl	Ensembl only
+Insecta	753150	Alucita hexadactyla	Ensembl	Ensembl only
+Insecta	753161	Bucculatrix demaryella	Ensembl	Ensembl only
+Insecta	753163	Catocala sponsa	Ensembl	Ensembl only
+Insecta	753175	Earias clorana	Ensembl	Ensembl only
+Insecta	753177	Elophila nymphaeata	Ensembl	Ensembl only
+Insecta	753189	Hypena proboscidalis	Ensembl	Ensembl only
+Insecta	753204	Notodonta dromedarius	Ensembl	Ensembl only
+Insecta	753216	Phalera bucephala	Ensembl	Ensembl only
+Insecta	753225	Roeslerstammia erxlebella	Ensembl	Ensembl only
+Insecta	753282	Bedellia somnulentella	Ensembl	Ensembl only
+Insecta	753308	Diurnea fagella	Ensembl	Ensembl only
+Insecta	753375	Nematopogon swammerdamellus	Ensembl	Ensembl only
+Insecta	753441	Trisateles emortualis	Ensembl	Ensembl only
+Insecta	7539	Leptinotarsa decemlineata	RefSeq	RefSeq only
+Insecta	75519	Chrysolina haemoptera	Ensembl	Ensembl only
+Insecta	758703	Acleris abietana	Ensembl	Ensembl only
+Insecta	758705	Acleris cristana	Ensembl	Ensembl only
+Insecta	758706	Acleris emargana	Ensembl	Ensembl only
+Insecta	758707	Acleris ferrugana	Ensembl	Ensembl only
+Insecta	758709	Acleris laterana	Ensembl	Ensembl only
+Insecta	758710	Acleris lipsiana	Ensembl	Ensembl only
+Insecta	758711	Acleris logiana	Ensembl	Ensembl only
+Insecta	758712	Acleris lorquiniana	Ensembl	Ensembl only
+Insecta	76193	Papilio machaon	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	76194	Papilio polytes	RefSeq	RefSeq only
+Insecta	767470	Pterostichus madidus	Ensembl	Ensembl only
+Insecta	76990	Ancistrocerus nigricornis	Ensembl	Ensembl only
+Insecta	77166	Dendroctonus ponderosae	RefSeq	RefSeq only
+Insecta	77578	Halictus rubicundus	RefSeq	RefSeq only
+Insecta	78609	Gonepteryx rhamni	Ensembl	Ensembl only
+Insecta	78613	Colias hecla	Ensembl	Ensembl only
+Insecta	78615	Colias hyale	Ensembl	Ensembl only
+Insecta	78620	Colias palaeno	Ensembl	Ensembl only
+Insecta	78622	Colias phicomone	Ensembl	Ensembl only
+Insecta	78633	Pieris napi	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	78897	Lymantria monacha	Ensembl	Ensembl only
+Insecta	79499	Lacanobia oleracea	Ensembl	Ensembl only
+Insecta	79782	Cimex lectularius	RefSeq	RefSeq only
+Insecta	80765	Aphis gossypii	RefSeq	RefSeq only
+Insecta	82595	Biston betularia	Ensembl	Ensembl only
+Insecta	82600	Cydia pomonella	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	82742	Orius laevigatus	Ensembl	Ensembl only
+Insecta	83485	Linepithema humile	RefSeq	RefSeq only
+Insecta	85443	Dolichovespula saxonica	Ensembl	Ensembl only
+Insecta	85444	Dolichovespula sylvestris	Ensembl	Ensembl only
+Insecta	85660	Bombus hortorum	Ensembl	Ensembl only
+Insecta	85661	Bombus huntii	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	863751	Prorops nasuta	RefSeq	RefSeq only
+Insecta	871382	Eriocrania sparrmannella	Ensembl	Ensembl only
+Insecta	873508	Eupithecia linariata	Ensembl	Ensembl only
+Insecta	873512	Philereme transversata	Ensembl	Ensembl only
+Insecta	875883	Ennomos quercinarius	Ensembl	Ensembl only
+Insecta	875884	Phlogophora meticulosa	Ensembl	Ensembl only
+Insecta	875886	Orthosia cerasi	Ensembl	Ensembl only
+Insecta	876052	Colias sareptensis	Ensembl	Ensembl only
+Insecta	876060	Erebia sudetica	Ensembl	Ensembl only
+Insecta	876061	Hipparchia syriaca	Ensembl	Ensembl only
+Insecta	876064	Pieris bryoniae	Ensembl	Ensembl only
+Insecta	876067	Pyrgus alveus	Ensembl	Ensembl only
+Insecta	876070	Pyrgus cacaliae	Ensembl	Ensembl only
+Insecta	876071	Pyrgus carthami	Ensembl	Ensembl only
+Insecta	876072	Pyrgus sidae	Ensembl	Ensembl only
+Insecta	876074	Satyrium ilicis	Ensembl	Ensembl only
+Insecta	876075	Satyrium pruni	Ensembl	Ensembl only
+Insecta	876077	Spialia orbifer	Ensembl	Ensembl only
+Insecta	876078	Thymelicus acteon	Ensembl	Ensembl only
+Insecta	877792	Dalotia coriaria	RefSeq	RefSeq only
+Insecta	877844	Neocrepidodera transversa	Ensembl	Ensembl only
+Insecta	877886	Cantharis lateralis	Ensembl	Ensembl only
+Insecta	878211	Nebria salina	Ensembl	Ensembl only
+Insecta	878397	Pycnomerus fuliginosus	Ensembl	Ensembl only
+Insecta	878968	Rutpela maculata	Ensembl	Ensembl only
+Insecta	879067	Xestobium rufovillosum	Ensembl	Ensembl only
+Insecta	881891	Dolichovespula media	Ensembl	Ensembl only
+Insecta	882792	Luperina nickerlii	Ensembl	Ensembl only
+Insecta	88504	Lasioglossum calceatum	Ensembl	Ensembl only
+Insecta	88514	Lasioglossum morio	Ensembl	Ensembl only
+Insecta	88516	Lasioglossum pauxillum	Ensembl	Ensembl only
+Insecta	88523	Lasioglossum villosulum	Ensembl	Ensembl only
+Insecta	88531	Lasioglossum lativentre	Ensembl	Ensembl only
+Insecta	887762	Xanthostigma xanthostigma	Ensembl	Ensembl only
+Insecta	89055	Thermobia domestica	RefSeq	RefSeq only
+Insecta	89887	Drosophila sulfurigaster albostrigata	RefSeq	RefSeq only
+Insecta	904094	Ischnus inquisitorius	Ensembl	Ensembl only
+Insecta	91411	Polistes canadensis	RefSeq	RefSeq only
+Insecta	91738	Aricia artaxerxes	Ensembl	Ensembl only
+Insecta	91739	Aricia agestis	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	92598	Melanostoma scalare	Ensembl	Ensembl only
+Insecta	929971	Nymphalis c-album	Ensembl	Ensembl only
+Insecta	934814	Ennomos erosarius	Ensembl	Ensembl only
+Insecta	934818	Perizoma blandiatum	Ensembl	Ensembl only
+Insecta	934819	Perizoma flavofasciatum	Ensembl	Ensembl only
+Insecta	934828	Chloroclysta siterata	Ensembl	Ensembl only
+Insecta	934830	Cyclophora linearia	Ensembl	Ensembl only
+Insecta	934841	Eupithecia absinthiata	Ensembl	Ensembl only
+Insecta	934845	Eupithecia dodoneata	Ensembl	Ensembl only
+Insecta	934847	Eupithecia exiguata	Ensembl	Ensembl only
+Insecta	934850	Eupithecia haworthiata	Ensembl	Ensembl only
+Insecta	934853	Eupithecia inturbata	Ensembl	Ensembl only
+Insecta	934856	Eupithecia plumbeolata	Ensembl	Ensembl only
+Insecta	934860	Eupithecia tripunctaria	Ensembl	Ensembl only
+Insecta	934866	Eupithecia vulgata	Ensembl	Ensembl only
+Insecta	934877	Lomographa temerata	Ensembl	Ensembl only
+Insecta	934878	Macaria alternata	Ensembl	Ensembl only
+Insecta	934885	Parectropis similaria	Ensembl	Ensembl only
+Insecta	934900	Xanthorhoe biriviata	Ensembl	Ensembl only
+Insecta	934901	Xanthorhoe designata	Ensembl	Ensembl only
+Insecta	934903	Xanthorhoe montanata	Ensembl	Ensembl only
+Insecta	934908	Camptogramma bilineatum	Ensembl	Ensembl only
+Insecta	934917	Aplocera efformata	Ensembl	Ensembl only
+Insecta	934931	Colostygia pectinataria	Ensembl	Ensembl only
+Insecta	934957	Plemyria rubiginata	Ensembl	Ensembl only
+Insecta	93504	Ostrinia furnacalis	RefSeq	RefSeq only
+Insecta	935657	Colletes gigas	Ensembl + RefSeq	RefSeq + Ensembl
+Insecta	935663	Phyllaphis fagi	Ensembl	Ensembl only
+Insecta	938167	Euclidia mi	Ensembl	Ensembl only
+Insecta	938171	Abrostola tripartita	Ensembl	Ensembl only
+Insecta	938192	Hoplodrina octogenaria	Ensembl	Ensembl only
+Insecta	938226	Craniophora ligustri	Ensembl	Ensembl only
+Insecta	938238	Laspeyria flexula	Ensembl	Ensembl only
+Insecta	943103	Culex perexiguus	Ensembl	Ensembl only
+Insecta	94469	Phlebotomus argentipes	RefSeq	RefSeq only
+Insecta	95512	Anastrepha obliqua	RefSeq	RefSeq only
+Insecta	96551	Tuberolachnus salignus	Ensembl	Ensembl only
+Insecta	977896	Boloria thore	Ensembl	Ensembl only
+Insecta	986977	Eupithecia insigniata	Ensembl	Ensembl only
+Insecta	986980	Eupithecia pulchellata	Ensembl	Ensembl only
+Insecta	986981	Eupithecia semigraphata	Ensembl	Ensembl only
+Insecta	987013	Thera britannica	Ensembl	Ensembl only
+Insecta	987420	Eilema griseolum	Ensembl	Ensembl only
+Insecta	987421	Eilema lurideolum	Ensembl	Ensembl only
+Insecta	987434	Xanthia icteritia	Ensembl	Ensembl only
+Insecta	987436	Sphinx pinastri	Ensembl	Ensembl only
+Insecta	987439	Xestia rhomboidea	Ensembl	Ensembl only
+Insecta	987440	Herminia tarsipennalis	Ensembl	Ensembl only
+Insecta	987467	Shargacucullia prenanthis	Ensembl	Ensembl only
+Insecta	987468	Shargacucullia scrophulariae	Ensembl	Ensembl only
+Insecta	987469	Shargacucullia verbasci	Ensembl	Ensembl only
+Insecta	987860	Acronicta alni	Ensembl	Ensembl only
+Insecta	987863	Acronicta megacephala	Ensembl	Ensembl only
+Insecta	987870	Agrochola lota	Ensembl	Ensembl only
+Insecta	987877	Amphipyra berbera	Ensembl	Ensembl only
+Insecta	987881	Apamea lithoxylaea	Ensembl	Ensembl only
+Insecta	987887	Apamea sublustris	Ensembl	Ensembl only
+Insecta	987891	Autographa bractea	Ensembl	Ensembl only
+Insecta	987893	Autographa pulchrina	Ensembl	Ensembl only
+Insecta	987895	Caradrina clavipalpis	Ensembl	Ensembl only
+Insecta	987896	Caradrina kadenii	Ensembl	Ensembl only
+Insecta	987901	Charanyca trigrammica	Ensembl	Ensembl only
+Insecta	987902	Clostera curtula	Ensembl	Ensembl only
+Insecta	987903	Colocasia coryli	Ensembl	Ensembl only
+Insecta	987907	Cosmia affinis	Ensembl	Ensembl only
+Insecta	987922	Diaphora mendica	Ensembl	Ensembl only
+Insecta	987924	Diarsia mendica	Ensembl	Ensembl only
+Insecta	987926	Diloba caeruleocephala	Ensembl	Ensembl only
+Insecta	987932	Euplagia quadripunctaria	Ensembl	Ensembl only
+Insecta	987934	Euproctis chrysorrhoea	Ensembl	Ensembl only
+Insecta	987935	Euproctis similis	Ensembl	Ensembl only
+Insecta	987953	Hemaris fuciformis	Ensembl	Ensembl only
+Insecta	987954	Hemaris tityus	Ensembl	Ensembl only
+Insecta	987961	Hyppa rectilinea	Ensembl	Ensembl only
+Insecta	987968	Leucania comma	Ensembl	Ensembl only
+Insecta	987977	Meganola albula	Ensembl	Ensembl only
+Insecta	987978	Meganola strigula	Ensembl	Ensembl only
+Insecta	987983	Mythimna albipuncta	Ensembl	Ensembl only
+Insecta	987984	Mythimna conigera	Ensembl	Ensembl only
+Insecta	987985	Mythimna impura	Ensembl	Ensembl only
+Insecta	987987	Mythimna pudorina	Ensembl	Ensembl only
+Insecta	987996	Noctua janthina	Ensembl	Ensembl only
+Insecta	988002	Notodonta ziczac	Ensembl	Ensembl only
+Insecta	988004	Nycteola revayana	Ensembl	Ensembl only
+Insecta	988009	Oligia strigilis	Ensembl	Ensembl only
+Insecta	988010	Orthosia cruda	Ensembl	Ensembl only
+Insecta	988018	Pheosia gnoma	Ensembl	Ensembl only
+Insecta	988019	Pheosia tremula	Ensembl	Ensembl only
+Insecta	988024	Polia nebulosa	Ensembl	Ensembl only
+Insecta	988028	Ptilodon cucullina	Ensembl	Ensembl only
+Insecta	988039	Spilosoma urticae	Ensembl	Ensembl only
+Insecta	988041	Tholera decimalis	Ensembl	Ensembl only
+Insecta	988043	Xestia ashworthii	Ensembl	Ensembl only
+Insecta	988044	Xestia baja	Ensembl	Ensembl only
+Insecta	988045	Xestia castanea	Ensembl	Ensembl only
+Insecta	988049	Xestia xanthographa	Ensembl	Ensembl only
+Insecta	988064	Aporophyla lutulenta	Ensembl	Ensembl only
+Insecta	988065	Aporophyla nigra	Ensembl	Ensembl only
+Insecta	988069	Asteroscopus sphinx	Ensembl	Ensembl only
+Insecta	988087	Ceramica pisi	Ensembl	Ensembl only
+Insecta	98809	Bactrocera neohumeralis	RefSeq	RefSeq only
+Insecta	988125	Hecatera dysodea	Ensembl	Ensembl only
+Insecta	988148	Photedes minima	Ensembl	Ensembl only
+Insecta	988154	Polyploca ridens	Ensembl	Ensembl only
+Insecta	988163	Tiliacea citrago	Ensembl	Ensembl only
+Insecta	988178	Drymonia ruficornis	Ensembl	Ensembl only
+Insecta	989733	Agapeta zoegana	Ensembl	Ensembl only
+Insecta	989771	Epinotia trigonella	Ensembl	Ensembl only
+Insecta	994498	Macrosiphum cholodkovskyi	Ensembl	Ensembl only
+Insecta	995051	Boloria caucasica	Ensembl	Ensembl only
+Insecta	995702	Euwallacea fornicatus	RefSeq	RefSeq only
+Insecta	997289	Tethea ocularis	Ensembl	Ensembl only
+Insecta	997525	Agrotis clavis	Ensembl	Ensembl only
+Insecta	997526	Apamea anceps	Ensembl	Ensembl only
+Insecta	997530	Cerastis leucographa	Ensembl	Ensembl only
+Insecta	997532	Xanthia togata	Ensembl	Ensembl only
+Insecta	997540	Mythimna ferrago	Ensembl	Ensembl only
+Insecta	997545	Xestia sexstrigata	Ensembl	Ensembl only
+Magnoliopsida	1000418	Galeopsis tetrahit	Ensembl	Ensembl only
+Magnoliopsida	102107	Prunus mume	RefSeq	RefSeq only
+Magnoliopsida	102211	Benincasa hispida	RefSeq	RefSeq only
+Magnoliopsida	102599	Misopates orontium	Ensembl	Ensembl only
+Magnoliopsida	102714	Saxifraga aizoides	Ensembl	Ensembl only
+Magnoliopsida	1053395	Scutellaria minor	Ensembl	Ensembl only
+Magnoliopsida	106335	Hibiscus syriacus	RefSeq	RefSeq only
+Magnoliopsida	110753	Lysimachia maritima	Ensembl	Ensembl only
+Magnoliopsida	112863	Lycium barbarum	RefSeq	RefSeq only
+Magnoliopsida	112874	Lycium ferocissimum	RefSeq	RefSeq only
+Magnoliopsida	1136207	Hakea prostrata	RefSeq	RefSeq only
+Magnoliopsida	1155252	Galatella linosyris	Ensembl	Ensembl only
+Magnoliopsida	1155260	Cirsium dissectum	Ensembl	Ensembl only
+Magnoliopsida	115622	Polycarpon tetraphyllum	Ensembl	Ensembl only
+Magnoliopsida	119177	Inula conyza	Ensembl	Ensembl only
+Magnoliopsida	121554	Senecio squalidus	Ensembl	Ensembl only
+Magnoliopsida	121557	Senecio sylvaticus	Ensembl	Ensembl only
+Magnoliopsida	121769	Digitaria sanguinalis	Ensembl	Ensembl only
+Magnoliopsida	123417	Euonymus europaeus	Ensembl	Ensembl only
+Magnoliopsida	1245227	Primulina eburnea	RefSeq	RefSeq only
+Magnoliopsida	125585	Tamarix gallica	Ensembl	Ensembl only
+Magnoliopsida	125765	Rutidosis leptorrhynchoides	RefSeq	RefSeq only
+Magnoliopsida	127129	Impatiens noli-tangere	Ensembl	Ensembl only
+Magnoliopsida	127999	Tanacetum parthenium	Ensembl	Ensembl only
+Magnoliopsida	128002	Tanacetum vulgare	Ensembl	Ensembl only
+Magnoliopsida	13044	Potentilla indica	Ensembl	Ensembl only
+Magnoliopsida	130453	Arachis duranensis	RefSeq	RefSeq only
+Magnoliopsida	130454	Arachis ipaensis	RefSeq	RefSeq only
+Magnoliopsida	13055	Chamaenerion angustifolium	Ensembl	Ensembl only
+Magnoliopsida	133233	Achillea ptarmica	Ensembl	Ensembl only
+Magnoliopsida	13333	Amborella trichopoda	RefSeq	RefSeq only
+Magnoliopsida	13443	Coffea arabica	RefSeq	RefSeq only
+Magnoliopsida	13451	Corylus avellana	RefSeq	RefSeq only
+Magnoliopsida	13597	Ligustrum vulgare	Ensembl	Ensembl only
+Magnoliopsida	136204	Calystegia soldanella	Ensembl	Ensembl only
+Magnoliopsida	136217	Curcuma longa	RefSeq	RefSeq only
+Magnoliopsida	137693	Polygonum aviculare	Ensembl	Ensembl only
+Magnoliopsida	140968	Hypericum androsaemum	Ensembl	Ensembl only
+Magnoliopsida	143172	Arctium minus	Ensembl	Ensembl only
+Magnoliopsida	1435599	Urtica dioica subsp. dioica	RefSeq	RefSeq only
+Magnoliopsida	147635	Ranunculus sceleratus	Ensembl	Ensembl only
+Magnoliopsida	148897	Geum rivale	Ensembl	Ensembl only
+Magnoliopsida	1492673	Primulina huaijiensis	RefSeq	RefSeq only
+Magnoliopsida	150636	Gastrolobium bilobum	RefSeq	RefSeq only
+Magnoliopsida	15193	Carex hirta	Ensembl	Ensembl only
+Magnoliopsida	1534734	Xanthium orientale	Ensembl	Ensembl only
+Magnoliopsida	15368	Brachypodium distachyon	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	154761	Miscanthus floridulus	RefSeq	RefSeq only
+Magnoliopsida	155132	Akebia trifoliata	RefSeq	RefSeq only
+Magnoliopsida	157791	Vigna radiata var. radiata	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	160988	Zelkova abelicea	Ensembl	Ensembl only
+Magnoliopsida	161112	Wolffia australiana	RefSeq	RefSeq only
+Magnoliopsida	161951	Draba verna	Ensembl	Ensembl only
+Magnoliopsida	164258	Veronica serpyllifolia	Ensembl	Ensembl only
+Magnoliopsida	164435	Cornus suecica	Ensembl	Ensembl only
+Magnoliopsida	165200	Actinidia eriantha	RefSeq	RefSeq only
+Magnoliopsida	169227	Moehringia trinervia	Ensembl	Ensembl only
+Magnoliopsida	170927	Primula veris	Ensembl	Ensembl only
+Magnoliopsida	171875	Aristolochia californica	RefSeq	RefSeq only
+Magnoliopsida	172057	Centaurium erythraea	Ensembl	Ensembl only
+Magnoliopsida	172265	Ulmus glabra	Ensembl	Ensembl only
+Magnoliopsida	172267	Salix caprea	Ensembl	Ensembl only
+Magnoliopsida	172797	Solanum stenotomum	RefSeq	RefSeq only
+Magnoliopsida	175104	Primula vulgaris	Ensembl	Ensembl only
+Magnoliopsida	175201	Ribes sanguineum	Ensembl	Ensembl only
+Magnoliopsida	175228	Ribes rubrum	Ensembl	Ensembl only
+Magnoliopsida	175694	Andrographis paniculata	RefSeq	RefSeq only
+Magnoliopsida	178133	Rhodamnia argentea	RefSeq	RefSeq only
+Magnoliopsida	180498	Jatropha curcas	RefSeq	RefSeq only
+Magnoliopsida	180675	Salvia splendens	RefSeq	RefSeq only
+Magnoliopsida	180772	Vaccinium vitis-idaea	Ensembl	Ensembl only
+Magnoliopsida	182163	Rhododendron vialii	RefSeq	RefSeq only
+Magnoliopsida	189328	Potamogeton natans	Ensembl	Ensembl only
+Magnoliopsida	191066	Empetrum nigrum	Ensembl	Ensembl only
+Magnoliopsida	191132	Impatiens parviflora	Ensembl	Ensembl only
+Magnoliopsida	191669	Spergularia marina	Ensembl	Ensembl only
+Magnoliopsida	1940801	Avellara fistulosa	Ensembl	Ensembl only
+Magnoliopsida	194200	Ballota nigra	Ensembl	Ensembl only
+Magnoliopsida	195138	Veronica scutellata	Ensembl	Ensembl only
+Magnoliopsida	195143	Veronica triphyllos	Ensembl	Ensembl only
+Magnoliopsida	195145	Veronica verna	Ensembl	Ensembl only
+Magnoliopsida	20403	Astragalus alpinus	Ensembl	Ensembl only
+Magnoliopsida	206008	Panicum hallii	RefSeq	RefSeq only
+Magnoliopsida	207710	Neltuma alba	RefSeq	RefSeq only
+Magnoliopsida	210143	Corchorus capsularis	Ensembl	Ensembl only
+Magnoliopsida	21020	Castanea sativa	RefSeq	RefSeq only
+Magnoliopsida	210355	Epilobium hirsutum	Ensembl	Ensembl only
+Magnoliopsida	212925	Euphorbia lathyris	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	214053	Viola tricolor	Ensembl	Ensembl only
+Magnoliopsida	216479	Euphorbia maculata	Ensembl	Ensembl only
+Magnoliopsida	217475	Arachis stenosperma	RefSeq	RefSeq only
+Magnoliopsida	219896	Syzygium oleosum	RefSeq	RefSeq only
+Magnoliopsida	223678	Juncus squarrosus	Ensembl	Ensembl only
+Magnoliopsida	2249226	Juglans microcarpa x Juglans regia	RefSeq	RefSeq only
+Magnoliopsida	225117	Pyrus x bretschneideri	RefSeq	RefSeq only
+Magnoliopsida	226208	Salvia miltiorrhiza	RefSeq	RefSeq only
+Magnoliopsida	22663	Punica granatum	RefSeq	RefSeq only
+Magnoliopsida	23211	Pyrus communis	RefSeq	RefSeq only
+Magnoliopsida	234461	Carex depauperata	Ensembl	Ensembl only
+Magnoliopsida	234466	Carex arenaria	Ensembl	Ensembl only
+Magnoliopsida	234467	Carex echinata	Ensembl	Ensembl only
+Magnoliopsida	238501	Genista pilosa	Ensembl	Ensembl only
+Magnoliopsida	240680	Carex divulsa	Ensembl	Ensembl only
+Magnoliopsida	241207	Carex extensa	Ensembl	Ensembl only
+Magnoliopsida	241230	Carex rostrata	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	241234	Carex sylvatica	Ensembl	Ensembl only
+Magnoliopsida	24953	Myriophyllum sibiricum	Ensembl	Ensembl only
+Magnoliopsida	252537	Jacobaea maritima	Ensembl	Ensembl only
+Magnoliopsida	253017	Impatiens glandulifera	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	254029	Arenaria serpyllifolia	Ensembl	Ensembl only
+Magnoliopsida	258209	Berberis vulgaris	Ensembl	Ensembl only
+Magnoliopsida	2592077	Hierochloe odorata	Ensembl	Ensembl only
+Magnoliopsida	261450	Coptis chinensis	RefSeq	RefSeq only
+Magnoliopsida	267229	Rosa agrestis	Ensembl	Ensembl only
+Magnoliopsida	268080	Lapsana communis	Ensembl	Ensembl only
+Magnoliopsida	2711	Citrus sinensis	RefSeq	RefSeq only
+Magnoliopsida	278673	Petasites hybridus	Ensembl	Ensembl only
+Magnoliopsida	281872	Acaena ovalifolia	Ensembl	Ensembl only
+Magnoliopsida	28526	Solanum pennellii	RefSeq	RefSeq only
+Magnoliopsida	28532	Tarenaya hassleriana	RefSeq	RefSeq only
+Magnoliopsida	2890055	Androsace saussurei	Ensembl	Ensembl only
+Magnoliopsida	28930	Fagus sylvatica	Ensembl	Ensembl only
+Magnoliopsida	29695	Phragmites australis	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	29710	Dioscorea cayenensis subsp. rotundata	RefSeq	RefSeq only
+Magnoliopsida	29722	Amaranthus tricolor	RefSeq	RefSeq only
+Magnoliopsida	29739	Myrica gale	Ensembl	Ensembl only
+Magnoliopsida	29760	Vitis vinifera	RefSeq	RefSeq only
+Magnoliopsida	29780	Mangifera indica	RefSeq	RefSeq only
+Magnoliopsida	29788	Galium aparine	Ensembl	Ensembl only
+Magnoliopsida	29803	Sherardia arvensis	Ensembl	Ensembl only
+Magnoliopsida	298643	Crataegus laevigata	Ensembl	Ensembl only
+Magnoliopsida	299782	Linaria repens	Ensembl	Ensembl only
+Magnoliopsida	311941	Draba incana	Ensembl	Ensembl only
+Magnoliopsida	312760	Carex pendula	Ensembl	Ensembl only
+Magnoliopsida	313096	Lathyrus linifolius	Ensembl	Ensembl only
+Magnoliopsida	315347	Solanum verrucosum	RefSeq	RefSeq only
+Magnoliopsida	316510	Schoenoplectus triqueter	Ensembl	Ensembl only
+Magnoliopsida	32201	Carya illinoinensis	RefSeq	RefSeq only
+Magnoliopsida	324586	Carduus crispus	Ensembl	Ensembl only
+Magnoliopsida	326968	Ziziphus jujuba	RefSeq	RefSeq only
+Magnoliopsida	33113	Atropa belladonna	Ensembl	Ensembl only
+Magnoliopsida	33127	Parietaria judaica	Ensembl	Ensembl only
+Magnoliopsida	337392	Erodium moschatum	Ensembl	Ensembl only
+Magnoliopsida	3420	Tasmannia lanceolata	RefSeq	RefSeq only
+Magnoliopsida	34305	Lotus japonicus	RefSeq	RefSeq only
+Magnoliopsida	3451	Aquilegia vulgaris	Ensembl	Ensembl only
+Magnoliopsida	3467	Eschscholzia californica	RefSeq	RefSeq only
+Magnoliopsida	3469	Papaver somniferum	RefSeq	RefSeq only
+Magnoliopsida	3486	Humulus lupulus	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3505	Betula pendula	Ensembl	Ensembl only
+Magnoliopsida	3517	Alnus glutinosa	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3559	Chenopodium album	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3562	Spinacia oleracea	RefSeq	RefSeq only
+Magnoliopsida	35883	Ipomoea nil	RefSeq	RefSeq only
+Magnoliopsida	35885	Ipomoea triloba	RefSeq	RefSeq only
+Magnoliopsida	35896	Galium boreale	Ensembl	Ensembl only
+Magnoliopsida	35930	Ranunculus sardous	Ensembl	Ensembl only
+Magnoliopsida	3635	Gossypium hirsutum	RefSeq	RefSeq only
+Magnoliopsida	364024	Prosopis cineraria	RefSeq	RefSeq only
+Magnoliopsida	3641	Theobroma cacao	RefSeq	RefSeq only
+Magnoliopsida	3649	Carica papaya	RefSeq	RefSeq only
+Magnoliopsida	3656	Cucumis melo	RefSeq	RefSeq only
+Magnoliopsida	3659	Cucumis sativus	RefSeq	RefSeq only
+Magnoliopsida	3661	Cucurbita maxima	RefSeq	RefSeq only
+Magnoliopsida	3662	Cucurbita moschata	RefSeq	RefSeq only
+Magnoliopsida	3691	Populus nigra	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3694	Populus trichocarpa	RefSeq	RefSeq only
+Magnoliopsida	3702	Arabidopsis thaliana	GenBank	GenBank only
+Magnoliopsida	3711	Brassica rapa	RefSeq	RefSeq only
+Magnoliopsida	3712	Brassica oleracea var. oleracea	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	372271	Carex laevigata	Ensembl	Ensembl only
+Magnoliopsida	3726	Raphanus sativus	RefSeq	RefSeq only
+Magnoliopsida	3750	Malus domestica	RefSeq	RefSeq only
+Magnoliopsida	3752	Malus sylvestris	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3755	Prunus dulcis	GenBank + RefSeq	RefSeq only
+Magnoliopsida	3760	Prunus persica	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	376124	Holcus mollis	Ensembl	Ensembl only
+Magnoliopsida	37682	Aegilops tauschii subsp. strangulata	RefSeq	RefSeq only
+Magnoliopsida	379215	Carpobrotus edulis	Ensembl	Ensembl only
+Magnoliopsida	379955	Geranium rotundifolium	Ensembl	Ensembl only
+Magnoliopsida	3816	Abrus precatorius	RefSeq	RefSeq only
+Magnoliopsida	3818	Arachis hypogaea	RefSeq	RefSeq only
+Magnoliopsida	3821	Cajanus cajan	RefSeq	RefSeq only
+Magnoliopsida	3827	Cicer arietinum	RefSeq	RefSeq only
+Magnoliopsida	3848	Glycine soja	RefSeq	RefSeq only
+Magnoliopsida	3871	Lupinus angustifolius	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	38727	Panicum virgatum	RefSeq	RefSeq only
+Magnoliopsida	3880	Medicago truncatula	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3885	Phaseolus vulgaris	RefSeq	RefSeq only
+Magnoliopsida	38865	Quercus petraea	Ensembl	Ensembl only
+Magnoliopsida	3888	Lathyrus oleraceus	RefSeq	RefSeq only
+Magnoliopsida	38942	Quercus robur	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	3900	Trifolium subterraneum	Ensembl	Ensembl only
+Magnoliopsida	3908	Vicia sativa	Ensembl	Ensembl only
+Magnoliopsida	391055	Prunus ramburei	Ensembl	Ensembl only
+Magnoliopsida	3911	Vicia villosa	RefSeq	RefSeq only
+Magnoliopsida	3914	Vigna angularis	RefSeq	RefSeq only
+Magnoliopsida	3917	Vigna unguiculata	RefSeq	RefSeq only
+Magnoliopsida	39353	Paulownia tomentosa	Ensembl	Ensembl only
+Magnoliopsida	39388	Verbascum thapsus	Ensembl	Ensembl only
+Magnoliopsida	39468	Quercus cerris	Ensembl	Ensembl only
+Magnoliopsida	395328	Thalictrum alpinum	Ensembl	Ensembl only
+Magnoliopsida	397392	Malania oleifera	RefSeq	RefSeq only
+Magnoliopsida	3981	Hevea brasiliensis	RefSeq	RefSeq only
+Magnoliopsida	3983	Manihot esculenta	RefSeq	RefSeq only
+Magnoliopsida	398450	Lepidium didymum	Ensembl	Ensembl only
+Magnoliopsida	39848	Agrostemma githago	Ensembl	Ensembl only
+Magnoliopsida	3986	Mercurialis annua	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	39862	Silene acaulis	Ensembl	Ensembl only
+Magnoliopsida	3988	Ricinus communis	RefSeq	RefSeq only
+Magnoliopsida	403040	Triglochin palustris	Ensembl	Ensembl only
+Magnoliopsida	4039	Daucus carota subsp. sativus	RefSeq	RefSeq only
+Magnoliopsida	4045	Apium graveolens	RefSeq	RefSeq only
+Magnoliopsida	4052	Hedera helix	Ensembl	Ensembl only
+Magnoliopsida	405737	Henckelia pumila	RefSeq	RefSeq only
+Magnoliopsida	4072	Capsicum annuum	RefSeq	RefSeq only
+Magnoliopsida	4081	Solanum lycopersicum	RefSeq	RefSeq only
+Magnoliopsida	40880	Myrrhis odorata	Ensembl	Ensembl only
+Magnoliopsida	40919	Heracleum sphondylium	Ensembl	Ensembl only
+Magnoliopsida	4096	Nicotiana sylvestris	RefSeq	RefSeq only
+Magnoliopsida	4097	Nicotiana tabacum	RefSeq	RefSeq only
+Magnoliopsida	4098	Nicotiana tomentosiformis	RefSeq	RefSeq only
+Magnoliopsida	4112	Solanum nigrum	Ensembl	Ensembl only
+Magnoliopsida	4113	Solanum tuberosum	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	4123	Convolvulus arvensis	Ensembl	Ensembl only
+Magnoliopsida	4146	Olea europaea var. sylvestris	RefSeq	RefSeq only
+Magnoliopsida	4155	Erythranthe guttata	RefSeq	RefSeq only
+Magnoliopsida	41653	Tragopogon pratensis	Ensembl	Ensembl only
+Magnoliopsida	4182	Sesamum indicum	RefSeq	RefSeq only
+Magnoliopsida	42229	Prunus avium	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	4232	Helianthus annuus	GenBank + RefSeq	RefSeq only
+Magnoliopsida	423282	Cassiope tetragona subsp. saximontana	Ensembl	Ensembl only
+Magnoliopsida	42345	Phoenix dactylifera	RefSeq	RefSeq only
+Magnoliopsida	4236	Lactuca sativa	RefSeq	RefSeq only
+Magnoliopsida	4265	Cynara cardunculus var. scolymus	RefSeq	RefSeq only
+Magnoliopsida	4283	Cornus florida	RefSeq	RefSeq only
+Magnoliopsida	4298	Ilex aquifolium	Ensembl	Ensembl only
+Magnoliopsida	43171	Linaria vulgaris	Ensembl	Ensembl only
+Magnoliopsida	43206	Reichardia ligulata	Ensembl	Ensembl only
+Magnoliopsida	43335	Populus alba	RefSeq	RefSeq only
+Magnoliopsida	4337	Lysimachia arvensis	Ensembl	Ensembl only
+Magnoliopsida	434553	Myriophyllum alterniflorum	Ensembl	Ensembl only
+Magnoliopsida	436207	Arnica montana	Ensembl	Ensembl only
+Magnoliopsida	4431	Nelumbo lutea	RefSeq	RefSeq only
+Magnoliopsida	4442	Camellia sinensis	RefSeq	RefSeq only
+Magnoliopsida	4513	Hordeum vulgare subsp. vulgare	RefSeq	RefSeq only
+Magnoliopsida	4522	Lolium perenne	RefSeq	RefSeq only
+Magnoliopsida	4530	Oryza sativa Japonica Group	RefSeq	RefSeq only
+Magnoliopsida	4533	Oryza brachyantha	RefSeq	RefSeq only
+Magnoliopsida	4538	Oryza glaberrima	RefSeq	RefSeq only
+Magnoliopsida	4555	Setaria italica	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	4556	Setaria viridis	RefSeq	RefSeq only
+Magnoliopsida	4558	Sorghum bicolor	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	4565	Triticum aestivum	RefSeq	RefSeq only
+Magnoliopsida	457184	Persicaria maculosa	Ensembl	Ensembl only
+Magnoliopsida	4572	Triticum urartu	RefSeq	RefSeq only
+Magnoliopsida	45834	Solanum dulcamara	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	458696	Tripterygium wilfordii	RefSeq	RefSeq only
+Magnoliopsida	46032	Veronica arvensis	Ensembl	Ensembl only
+Magnoliopsida	46056	Bellardia viscosa	Ensembl	Ensembl only
+Magnoliopsida	4615	Ananas comosus	RefSeq	RefSeq only
+Magnoliopsida	46325	Eleocharis quinqueflora	Ensembl	Ensembl only
+Magnoliopsida	4641	Musa acuminata AAA Group	RefSeq	RefSeq only
+Magnoliopsida	467613	Salix repens	Ensembl	Ensembl only
+Magnoliopsida	4686	Asparagus officinalis	RefSeq	RefSeq only
+Magnoliopsida	470278	Salix cinerea	Ensembl	Ensembl only
+Magnoliopsida	473050	Urtica urens	Ensembl	Ensembl only
+Magnoliopsida	4733	Typha latifolia	RefSeq	RefSeq only
+Magnoliopsida	475003	Euphrasia confusa	Ensembl	Ensembl only
+Magnoliopsida	475394	Euphrasia tetraquetra	Ensembl	Ensembl only
+Magnoliopsida	476039	Thalictrum minus	Ensembl	Ensembl only
+Magnoliopsida	486065	Inga leiocalycina	Ensembl	Ensembl only
+Magnoliopsida	486073	Inga oerstediana	Ensembl	Ensembl only
+Magnoliopsida	487684	Inga laurina	Ensembl	Ensembl only
+Magnoliopsida	48773	Primulina tabacum	RefSeq	RefSeq only
+Magnoliopsida	487788	Geranium pratense	Ensembl	Ensembl only
+Magnoliopsida	49212	Salvia hispanica	RefSeq	RefSeq only
+Magnoliopsida	49369	Coffea eugenioides	RefSeq	RefSeq only
+Magnoliopsida	49451	Nicotiana attenuata	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	49576	Torilis japonica	Ensembl	Ensembl only
+Magnoliopsida	49614	Nymphoides peltata	Ensembl	Ensembl only
+Magnoliopsida	49984	Ajuga chamaepitys	Ensembl	Ensembl only
+Magnoliopsida	500837	Matthiola sinuata	Ensembl	Ensembl only
+Magnoliopsida	502401	Carex caryophyllea	Ensembl	Ensembl only
+Magnoliopsida	50459	Barbarea vulgaris	Ensembl	Ensembl only
+Magnoliopsida	50462	Cardamine flexuosa	Ensembl	Ensembl only
+Magnoliopsida	51240	Juglans regia	RefSeq	RefSeq only
+Magnoliopsida	51953	Elaeis guineensis	RefSeq	RefSeq only
+Magnoliopsida	53160	Lamium amplexicaule	Ensembl	Ensembl only
+Magnoliopsida	53164	Lamium purpureum	Ensembl	Ensembl only
+Magnoliopsida	53590	Orobanche cernua var. cumana	GenBank	GenBank only
+Magnoliopsida	54955	Telopea speciosissima	RefSeq	RefSeq only
+Magnoliopsida	55320	Potamogeton perfoliatus	Ensembl	Ensembl only
+Magnoliopsida	55363	Diospyros lotus	RefSeq	RefSeq only
+Magnoliopsida	55501	Triglochin maritima	Ensembl	Ensembl only
+Magnoliopsida	55513	Pistacia vera	RefSeq	RefSeq only
+Magnoliopsida	55578	Dioscorea sansibarensis	GenBank	GenBank only
+Magnoliopsida	55777	Bromus sterilis	Ensembl	Ensembl only
+Magnoliopsida	56535	Pulicaria dysenterica	Ensembl	Ensembl only
+Magnoliopsida	57577	Trifolium pratense	RefSeq	RefSeq only
+Magnoliopsida	57917	Filipendula ulmaria	Ensembl	Ensembl only
+Magnoliopsida	57919	Geum urbanum	Ensembl	Ensembl only
+Magnoliopsida	57926	Potentilla anserina	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	57932	Comarum palustre	Ensembl	Ensembl only
+Magnoliopsida	57948	Dryas octopetala	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	581251	Geranium molle	Ensembl	Ensembl only
+Magnoliopsida	58331	Quercus suber	RefSeq	RefSeq only
+Magnoliopsida	58660	Leontodon hispidus	Ensembl	Ensembl only
+Magnoliopsida	59011	Typha angustifolia	RefSeq	RefSeq only
+Magnoliopsida	59166	Valerianella locusta	Ensembl	Ensembl only
+Magnoliopsida	59297	Solidago canadensis	Ensembl	Ensembl only
+Magnoliopsida	59425	Pseudognaphalium luteoalbum	Ensembl	Ensembl only
+Magnoliopsida	60698	Macadamia integrifolia	RefSeq	RefSeq only
+Magnoliopsida	626748	Hypericum pulchrum	Ensembl	Ensembl only
+Magnoliopsida	630110	Luzula pallescens	Ensembl	Ensembl only
+Magnoliopsida	63459	Chenopodium quinoa	RefSeq	RefSeq only
+Magnoliopsida	644184	Potentilla sterilis	Ensembl	Ensembl only
+Magnoliopsida	64940	Fragaria moschata	Ensembl	Ensembl only
+Magnoliopsida	65001	Cheirolophus tagananensis	Ensembl	Ensembl only
+Magnoliopsida	65948	Nasturtium officinale	Ensembl	Ensembl only
+Magnoliopsida	66205	Acer campestre	Ensembl	Ensembl only
+Magnoliopsida	673928	Hypericum hirsutum	Ensembl	Ensembl only
+Magnoliopsida	675739	Cirsium heterophyllum	Ensembl	Ensembl only
+Magnoliopsida	702235	Filago lutescens	Ensembl	Ensembl only
+Magnoliopsida	702247	Gnaphalium uliginosum	Ensembl	Ensembl only
+Magnoliopsida	702255	Logfia minima	Ensembl	Ensembl only
+Magnoliopsida	70936	Medicago arabica	Ensembl	Ensembl only
+Magnoliopsida	715724	Galium uliginosum	Ensembl	Ensembl only
+Magnoliopsida	72664	Eutrema salsugineum	RefSeq	RefSeq only
+Magnoliopsida	72917	Erigeron canadensis	RefSeq	RefSeq only
+Magnoliopsida	73102	Gaultheria shallon	Ensembl	Ensembl only
+Magnoliopsida	73274	Helianthus anomalus	GenBank	GenBank only
+Magnoliopsida	73282	Helianthus debilis subsp. tardiflorus	GenBank	GenBank only
+Magnoliopsida	74524	Trifolium occidentale	Ensembl	Ensembl only
+Magnoliopsida	74630	Rosa spinosissima	Ensembl	Ensembl only
+Magnoliopsida	74645	Rosa rugosa	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	74649	Rosa chinensis	GenBank + RefSeq	RefSeq only
+Magnoliopsida	74693	Veronica anagallis-aquatica	Ensembl	Ensembl only
+Magnoliopsida	75091	Rubus saxatilis	Ensembl	Ensembl only
+Magnoliopsida	75702	Populus euphratica	RefSeq	RefSeq only
+Magnoliopsida	75715	Salix pentandra	Ensembl	Ensembl only
+Magnoliopsida	75943	Lactuca serriola	RefSeq	RefSeq only
+Magnoliopsida	75947	Lactuca virosa	RefSeq	RefSeq only
+Magnoliopsida	75948	Lactuca saligna	RefSeq	RefSeq only
+Magnoliopsida	76029	Fallopia convolvulus	Ensembl	Ensembl only
+Magnoliopsida	76502	Schoenoplectus lacustris	Ensembl	Ensembl only
+Magnoliopsida	77586	Leersia perrieri	Ensembl	Ensembl only
+Magnoliopsida	78191	Arabis hirsuta	Ensembl	Ensembl only
+Magnoliopsida	78828	Phalaenopsis equestris	RefSeq	RefSeq only
+Magnoliopsida	79772	Verbena officinalis	Ensembl	Ensembl only
+Magnoliopsida	81972	Arabidopsis lyrata subsp. lyrata	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	81985	Capsella rubella	RefSeq	RefSeq only
+Magnoliopsida	82091	Hydrocotyle vulgaris	Ensembl	Ensembl only
+Magnoliopsida	85681	Citrus x clementina	Ensembl + RefSeq	RefSeq + Ensembl
+Magnoliopsida	85692	Triticum dicoccoides	RefSeq	RefSeq only
+Magnoliopsida	86092	Melampyrum sylvaticum	Ensembl	Ensembl only
+Magnoliopsida	86752	Magnolia sinica	RefSeq	RefSeq only
+Magnoliopsida	87088	Vigna umbellata	RefSeq	RefSeq only
+Magnoliopsida	883867	Matricaria discoidea	Ensembl	Ensembl only
+Magnoliopsida	89077	Claytonia sibirica	Ensembl	Ensembl only
+Magnoliopsida	89674	Lolium rigidum	RefSeq	RefSeq only
+Magnoliopsida	904458	Petasites albus	Ensembl	Ensembl only
+Magnoliopsida	906689	Dendrobium catenatum	RefSeq	RefSeq only
+Magnoliopsida	90675	Camelina sativa	RefSeq	RefSeq only
+Magnoliopsida	94328	Zingiber officinale	RefSeq	RefSeq only
+Magnoliopsida	96939	Vitis riparia	RefSeq	RefSeq only
+Magnoliopsida	97021	Trifolium dubium	Ensembl	Ensembl only
+Magnoliopsida	97023	Trifolium fragiferum	Ensembl	Ensembl only
+Magnoliopsida	97043	Trifolium striatum	Ensembl	Ensembl only
+Magnoliopsida	97441	Viola odorata	Ensembl	Ensembl only
+Magnoliopsida	97700	Quercus lobata	RefSeq	RefSeq only
+Magnoliopsida	980011	Bidens hawaiensis	RefSeq	RefSeq only
+Magnoliopsida	981085	Morus notabilis	RefSeq	RefSeq only
+Magnoliopsida	98722	Jacobaea vulgaris	Ensembl	Ensembl only
+Mammalia	10009	Tamiasciurus hudsonicus	GenBank	GenBank only
+Mammalia	10020	Dipodomys ordii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10029	Cricetulus griseus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10034	Cricetus cricetus	Ensembl	Ensembl only
+Mammalia	10036	Mesocricetus auratus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10041	Peromyscus leucopus	RefSeq	RefSeq only
+Mammalia	10042	Peromyscus maniculatus bairdii	RefSeq	RefSeq only
+Mammalia	10047	Meriones unguiculatus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10058	Microtus pennsylvanicus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10068	Acomys cahirinus	Ensembl	Ensembl only
+Mammalia	10089	Mus caroli	RefSeq	RefSeq only
+Mammalia	100897	Alexandromys fortis	RefSeq	RefSeq only
+Mammalia	10090	Mus musculus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10093	Mus pahari	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10096	Mus spretus	Ensembl	Ensembl only
+Mammalia	10105	Mus minutoides	Ensembl	Ensembl only
+Mammalia	10116	Rattus norvegicus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10117	Rattus rattus	RefSeq	RefSeq only
+Mammalia	10129	Apodemus sylvaticus	RefSeq	RefSeq only
+Mammalia	10141	Cavia porcellus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10149	Hydrochoerus hydrochaeris	Ensembl	Ensembl only
+Mammalia	10160	Octodon degus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	10166	Ctenodactylus gundi	GenBank	GenBank only
+Mammalia	10181	Heterocephalus glaber	RefSeq	RefSeq only
+Mammalia	1026970	Nannospalax galili	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	103600	Sousa chinensis	Ensembl	Ensembl only
+Mammalia	1047088	Arvicola amphibius	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	105255	Dipodomys spectabilis	RefSeq	RefSeq only
+Mammalia	109475	Suncus etruscus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	109478	Myotis brandtii	RefSeq	RefSeq only
+Mammalia	109480	Myotis emarginatus	Ensembl	Ensembl only
+Mammalia	109481	Myotis nattereri	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	109678	Phodopus roborovskii	RefSeq	RefSeq only
+Mammalia	110931	Cynocephalus volans	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	111838	Microtus oregoni	RefSeq	RefSeq only
+Mammalia	118797	Lipotes vexillifer	RefSeq	RefSeq only
+Mammalia	130825	Ochotona curzoniae	RefSeq	RefSeq only
+Mammalia	13151	Micromys minutus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	1328070	Prolemur simus	Ensembl	Ensembl only
+Mammalia	132908	Pteropus vampyrus	RefSeq	RefSeq only
+Mammalia	13616	Monodelphis domestica	RefSeq	RefSeq only
+Mammalia	143287	Cavia tschudii	Ensembl	Ensembl only
+Mammalia	143291	Pteropus giganteus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	143292	Manis pentadactyla	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	143302	Condylura cristata	RefSeq	RefSeq only
+Mammalia	146134	Eospalax fontanierii	Ensembl	Ensembl only
+Mammalia	1574408	Cervus canadensis	RefSeq	RefSeq only
+Mammalia	159337	Myotis yumanensis	RefSeq	RefSeq only
+Mammalia	1608482	Herpailurus yagouaroundi	RefSeq	RefSeq only
+Mammalia	173903	Rhinopoma microphyllum	GenBank	GenBank only
+Mammalia	175524	Hipposideros larvatus	GenBank	GenBank only
+Mammalia	185453	Chrysochloris asiatica	RefSeq	RefSeq only
+Mammalia	1868482	Carlito syrichta	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	186990	Hipposideros armiger	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	187003	Taphozous melanopogon	Ensembl	Ensembl only
+Mammalia	1884717	Pteronotus mesoamericanus	RefSeq	RefSeq only
+Mammalia	188568	Aselliscus stoliczkanus	Ensembl + GenBank	Ensembl only
+Mammalia	189058	Neophocaena asiaeorientalis asiaeorientalis	RefSeq	RefSeq only
+Mammalia	191816	Lynx pardinus	GenBank	GenBank only
+Mammalia	191870	Gracilinanus agilis	RefSeq	RefSeq only
+Mammalia	192404	Sturnira hondurensis	RefSeq	RefSeq only
+Mammalia	2100816	Cervus hanglu yarkandensis	Ensembl	Ensembl only
+Mammalia	225400	Myotis davidii	RefSeq	RefSeq only
+Mammalia	246814	Pipistrellus pygmaeus	Ensembl	Ensembl only
+Mammalia	248799	Lophiomys imhausi	Ensembl	Ensembl only
+Mammalia	249018	Saccopteryx leptura	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	249021	Doryrhina cyclops	GenBank	GenBank only
+Mammalia	258863	Mops condylurus	GenBank	GenBank only
+Mammalia	269649	Chionomys nivalis	RefSeq	RefSeq only
+Mammalia	2715852	Cebus imitator	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	2746895	Balaenoptera ricei	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	27606	Eubalaena glacialis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	27610	Lagenorhynchus albirostris	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	27615	Kogia breviceps	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	27622	Molossus molossus	RefSeq	RefSeq only
+Mammalia	27675	Choloepus didactylus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	27679	Saimiri boliviensis	RefSeq	RefSeq only
+Mammalia	28737	Elephantulus edwardii	RefSeq	RefSeq only
+Mammalia	29064	Panthera uncia	RefSeq	RefSeq only
+Mammalia	29065	Martes martes	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	29073	Ursus maritimus	RefSeq	RefSeq only
+Mammalia	29078	Eptesicus fuscus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	29088	Neomonachus schauinslandi	RefSeq	RefSeq only
+Mammalia	291302	Miniopterus natalensis	RefSeq	RefSeq only
+Mammalia	29137	Dugong dugon	GenBank	GenBank only
+Mammalia	29139	Vombatus ursinus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	2952509	Rhinolophus yonghoiseni	GenBank	GenBank only
+Mammalia	2994998	Glossophaga mutica	GenBank	GenBank only
+Mammalia	2997257	Molossus nigricans	GenBank	GenBank only
+Mammalia	3030660	Rhinolophus perniger lanosus	GenBank	GenBank only
+Mammalia	30521	Bos grunniens	RefSeq	RefSeq only
+Mammalia	30522	Bos indicus x bos taurus	Ensembl	Ensembl only
+Mammalia	30532	Dama dama	RefSeq	RefSeq only
+Mammalia	30538	Vicugna pacos	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	30589	Alouatta palliata	Ensembl	Ensembl only
+Mammalia	30608	Microcebus murinus	RefSeq	RefSeq only
+Mammalia	30611	Otolemur garnettii	RefSeq	RefSeq only
+Mammalia	30640	Sciurus carolinensis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	3119969	Bubalus kerabau	RefSeq	RefSeq only
+Mammalia	32536	Acinonyx jubatus	RefSeq	RefSeq only
+Mammalia	33562	Dromiciops gliroides	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	3371016	Cnephaeus nilssonii	RefSeq	RefSeq only
+Mammalia	3371109	Leucopleurus acutus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	3371112	Lyroderma lyra	Ensembl	Ensembl only
+Mammalia	3371155	Aethalodelphis obliquidens	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	34839	Chinchilla lanigera	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	34844	Erethizon dorsatum	GenBank	GenBank only
+Mammalia	34865	Capricornis sumatraensis	RefSeq	RefSeq only
+Mammalia	34869	Rupicapra rupicapra	Ensembl	Ensembl only
+Mammalia	34880	Nyctereutes procyonoides	RefSeq	RefSeq only
+Mammalia	34882	Enhydra lutris kenyoni	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	34884	Callorhinus ursinus	RefSeq	RefSeq only
+Mammalia	34886	Eumetopias jubatus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	34899	Petaurus breviceps papuanus	RefSeq	RefSeq only
+Mammalia	35658	Mastomys coucha	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	36239	Mustela nivalis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	36723	Mustela erminea	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	37029	Prionailurus bengalensis	RefSeq	RefSeq only
+Mammalia	37032	Suricata suricatta	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	37174	Ovis canadensis	RefSeq	RefSeq only
+Mammalia	37181	Budorcas taxicolor	RefSeq	RefSeq only
+Mammalia	37293	Aotus nancymaae	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	37347	Tupaia belangeri chinensis	RefSeq	RefSeq only
+Mammalia	37548	Cavia aperea	Ensembl	Ensembl only
+Mammalia	379532	Propithecus coquereli	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	38626	Phascolarctos cinereus	RefSeq	RefSeq only
+Mammalia	38668	Onychomys leucogaster	Ensembl	Ensembl only
+Mammalia	38669	Perognathus longimembris pacificus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	38674	Onychomys torridus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	38679	Onychomys arenicola	Ensembl	Ensembl only
+Mammalia	38775	Antechinus flavipes	RefSeq	RefSeq only
+Mammalia	39030	Apodemus agrarius	Ensembl	Ensembl only
+Mammalia	39082	Muscardinus avellanarius	RefSeq	RefSeq only
+Mammalia	40151	Monodon monoceros	GenBank + RefSeq	RefSeq only
+Mammalia	412090	Pipistrellus hanaki	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	41426	Phacochoerus africanus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	419612	Camelus ferus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	42100	Phocoena sinus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	42254	Sorex araneus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	42410	Peromyscus eremicus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	42520	Peromyscus californicus insignis	RefSeq	RefSeq only
+Mammalia	430492	Rhinolophus trifoliatus	GenBank	GenBank only
+Mammalia	43179	Ictidomys tridecemlineatus	RefSeq	RefSeq only
+Mammalia	439328	Giraffa tippelskirchi	RefSeq	RefSeq only
+Mammalia	447135	Myodes glareolus	RefSeq	RefSeq only
+Mammalia	452646	Neogale vison	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	48139	Psammomys obesus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	482537	Galeopterus variegatus	RefSeq	RefSeq only
+Mammalia	48560	Capreolus pygargus	Ensembl	Ensembl only
+Mammalia	48708	Mesoplodon densirostris	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	48744	Hyperoodon ampullatus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	48745	Mesoplodon bidens	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	48850	Tamandua tetradactyla	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	491861	Grammomys surdaster	RefSeq	RefSeq only
+Mammalia	494514	Vulpes lagopus	RefSeq	RefSeq only
+Mammalia	50954	Talpa occidentalis	RefSeq	RefSeq only
+Mammalia	51014	Artibeus intermedius	Ensembl	Ensembl only
+Mammalia	51154	Catagonus wagneri	Ensembl	Ensembl only
+Mammalia	51298	Myotis myotis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	51337	Jaculus jaculus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	51338	Castor canadensis	RefSeq	RefSeq only
+Mammalia	52113	Mesoplodon mirus	RefSeq	RefSeq only
+Mammalia	53275	Rhizomys pruinosus	Ensembl	Ensembl only
+Mammalia	537920	Clethrionomys rutilus	Ensembl	Ensembl only
+Mammalia	54131	Colobus angolensis palliatus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	54180	Trachypithecus francoisi	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	54602	Macaca thibetana thibetana	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	55149	Sciurus vulgaris	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	575201	Hippopotamus amphibius kiboko	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	591936	Piliocolobus tephrosceles	RefSeq	RefSeq only
+Mammalia	59463	Myotis lucifugus	RefSeq	RefSeq only
+Mammalia	59465	Nyctalus leisleri	Ensembl	Ensembl only
+Mammalia	59472	Pipistrellus kuhlii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	59474	Pipistrellus pipistrellus	Ensembl	Ensembl only
+Mammalia	59477	Rhinolophus affinis	GenBank	GenBank only
+Mammalia	59479	Rhinolophus ferrumequinum	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	59482	Saccopteryx bilineata	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	59534	Oryx dammah	RefSeq	RefSeq only
+Mammalia	60711	Chlorocebus sabaeus	RefSeq	RefSeq only
+Mammalia	60746	Acomys russatus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	61156	Arvicanthis niloticus	RefSeq	RefSeq only
+Mammalia	61383	Lynx canadensis	RefSeq	RefSeq only
+Mammalia	61384	Lynx rufus	RefSeq	RefSeq only
+Mammalia	61388	Prionailurus viverrinus	RefSeq	RefSeq only
+Mammalia	61452	Neofelis nebulosa	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	61621	Rhinopithecus bieti	RefSeq	RefSeq only
+Mammalia	61622	Rhinopithecus roxellana	RefSeq	RefSeq only
+Mammalia	61853	Nomascus leucogenys	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	61862	Plecotus auritus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	62283	Sorex fumeus	RefSeq	RefSeq only
+Mammalia	62621	Lepus timidus	Ensembl	Ensembl only
+Mammalia	68408	Moschus berezovskii	RefSeq	RefSeq only
+Mammalia	68415	Moschus moschiferus	Ensembl	Ensembl only
+Mammalia	68724	Canis aureus	RefSeq	RefSeq only
+Mammalia	70687	Tupaia tana	GenBank	GenBank only
+Mammalia	72004	Bos mutus	RefSeq	RefSeq only
+Mammalia	74864	Martes flavigula	Ensembl	Ensembl only
+Mammalia	76717	Lontra canadensis	RefSeq	RefSeq only
+Mammalia	76772	Callospermophilus lateralis	GenBank + RefSeq	RefSeq only
+Mammalia	77151	Mustela nigripes	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	77218	Rhinolophus hipposideros	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	79684	Microtus ochrogaster	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	79784	Tursiops aduncus	Ensembl	Ensembl only
+Mammalia	81572	Hylobates moloch	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	82174	Pseudorca crassidens	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	83528	Acomys minous	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	83653	Grampus griseus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	859984	Eulemur rufifrons	RefSeq	RefSeq only
+Mammalia	885580	Fukomys damarensis	RefSeq	RefSeq only
+Mammalia	89248	Equus quagga	RefSeq	RefSeq only
+Mammalia	89399	Rhinolophus sinicus	RefSeq	RefSeq only
+Mammalia	89462	Bubalus bubalis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	89673	Phyllostomus discolor	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9258	Ornithorhynchus anatinus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9261	Tachyglossus aculeatus	RefSeq	RefSeq only
+Mammalia	92651	Macrotis lagotis	RefSeq	RefSeq only
+Mammalia	9301	Sminthopsis crassicaudata	RefSeq	RefSeq only
+Mammalia	9305	Sarcophilus harrisii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9315	Notamacropus eugenii	RefSeq	RefSeq only
+Mammalia	93162	Marmota flaviventris	RefSeq	RefSeq only
+Mammalia	9337	Trichosurus vulpecula	RefSeq	RefSeq only
+Mammalia	9361	Dasypus novemcinctus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9365	Erinaceus europaeus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9371	Echinops telfairi	RefSeq	RefSeq only
+Mammalia	9375	Talpa europaea	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9402	Pteropus alecto	RefSeq	RefSeq only
+Mammalia	9407	Rousettus aegyptiacus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9414	Megaderma spasma	GenBank	GenBank only
+Mammalia	9417	Artibeus jamaicensis	RefSeq	RefSeq only
+Mammalia	9423	Phyllostomus hastatus	RefSeq	RefSeq only
+Mammalia	94247	Dipodomys merriami	RefSeq	RefSeq only
+Mammalia	9430	Desmodus rotundus	RefSeq	RefSeq only
+Mammalia	9433	Miniopterus schreibersii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9438	Tadarida brasiliensis	Ensembl + GenBank	Ensembl only
+Mammalia	9440	Antrozous pallidus	GenBank	GenBank only
+Mammalia	94439	Tenrec ecaudatus	RefSeq	RefSeq only
+Mammalia	9447	Lemur catta	RefSeq	RefSeq only
+Mammalia	9470	Nycticebus coucang	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9483	Callithrix jacchus	RefSeq	RefSeq only
+Mammalia	9515	Sapajus apella	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9531	Cercocebus atys	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9541	Macaca fascicularis	RefSeq	RefSeq only
+Mammalia	9544	Macaca mulatta	RefSeq	RefSeq only
+Mammalia	9545	Macaca nemestrina	RefSeq	RefSeq only
+Mammalia	9555	Papio anubis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9565	Theropithecus gelada	RefSeq	RefSeq only
+Mammalia	9568	Mandrillus leucophaeus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9589	Hylobates pileatus	Ensembl	Ensembl only
+Mammalia	9590	Symphalangus syndactylus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	95912	Hyaena hyaena	RefSeq	RefSeq only
+Mammalia	9593	Gorilla gorilla gorilla	RefSeq	RefSeq only
+Mammalia	9597	Pan paniscus	RefSeq	RefSeq only
+Mammalia	9598	Pan troglodytes	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9600	Pongo pygmaeus	RefSeq	RefSeq only
+Mammalia	9601	Pongo abelii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9606	Homo sapiens	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9612	Canis lupus familiaris	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9622	Lycaon pictus	Ensembl + GenBank	Ensembl only
+Mammalia	9627	Vulpes vulpes	RefSeq	RefSeq only
+Mammalia	9629	Vulpes corsac	Ensembl	Ensembl only
+Mammalia	9643	Ursus americanus	RefSeq	RefSeq only
+Mammalia	9644	Ursus arctos	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9646	Ailuropoda melanoleuca	RefSeq	RefSeq only
+Mammalia	9657	Lutra lutra	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9659	Martes foina	Ensembl	Ensembl only
+Mammalia	9662	Meles meles	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9666	Mustela lutreola	RefSeq	RefSeq only
+Mammalia	9668	Mustela putorius furo	RefSeq	RefSeq only
+Mammalia	9678	Crocuta crocuta	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9685	Felis catus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9689	Panthera leo	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9690	Panthera onca	RefSeq	RefSeq only
+Mammalia	9691	Panthera pardus	RefSeq	RefSeq only
+Mammalia	9694	Panthera tigris	RefSeq	RefSeq only
+Mammalia	9696	Puma concolor	RefSeq	RefSeq only
+Mammalia	9704	Zalophus californianus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9711	Halichoerus grypus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9713	Leptonychotes weddellii	RefSeq	RefSeq only
+Mammalia	9715	Mirounga leonina	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9716	Mirounga angustirostris	RefSeq	RefSeq only
+Mammalia	9720	Phoca vitulina	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9728	Delphinus delphis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9731	Globicephala melas	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9733	Orcinus orca	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9737	Stenella coeruleoalba	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9739	Tursiops truncatus	RefSeq	RefSeq only
+Mammalia	9742	Phocoena phocoena	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9749	Delphinapterus leucas	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9755	Physeter macrocephalus	RefSeq	RefSeq only
+Mammalia	9764	Eschrichtius robustus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9767	Balaenoptera acutorostrata	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9768	Balaenoptera borealis	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9770	Balaenoptera physalus	RefSeq	RefSeq only
+Mammalia	9771	Balaenoptera musculus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9773	Megaptera novaeangliae	Ensembl + GenBank	Ensembl only
+Mammalia	9777	Trichechus inunguis	GenBank	GenBank only
+Mammalia	9778	Trichechus manatus latirostris	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9783	Elephas maximus indicus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9785	Loxodonta africana	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9793	Equus asinus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9796	Equus caballus	RefSeq	RefSeq only
+Mammalia	9798	Equus przewalskii	RefSeq	RefSeq only
+Mammalia	9805	Diceros bicornis minor	RefSeq	RefSeq only
+Mammalia	9807	Ceratotherium simum simum	RefSeq	RefSeq only
+Mammalia	9823	Sus scrofa	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9837	Camelus bactrianus	RefSeq	RefSeq only
+Mammalia	9838	Camelus dromedarius	RefSeq	RefSeq only
+Mammalia	9843	Vicugna vicugna mensalis	Ensembl	Ensembl only
+Mammalia	9858	Capreolus capreolus	Ensembl	Ensembl only
+Mammalia	9860	Cervus elaphus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9874	Odocoileus virginianus	RefSeq	RefSeq only
+Mammalia	9886	Muntiacus reevesi	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	98922	Myotis daubentonii	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9901	Bison bison bison	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9906	Bos javanicus	RefSeq	RefSeq only
+Mammalia	9913	Bos taurus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9915	Bos indicus	RefSeq	RefSeq only
+Mammalia	9925	Capra hircus	RefSeq	RefSeq only
+Mammalia	9940	Ovis aries	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9946	Tragelaphus strepsiceros	Ensembl	Ensembl only
+Mammalia	9970	Syncerus caffer	Ensembl	Ensembl only
+Mammalia	9974	Manis javanica	RefSeq	RefSeq only
+Mammalia	9978	Ochotona princeps	RefSeq	RefSeq only
+Mammalia	9983	Lepus europaeus	RefSeq	RefSeq only
+Mammalia	99837	Spermophilus dauricus	Ensembl	Ensembl only
+Mammalia	9986	Oryctolagus cuniculus	RefSeq	RefSeq only
+Mammalia	9988	Sylvilagus floridanus	Ensembl	Ensembl only
+Mammalia	9993	Marmota marmota marmota	RefSeq	RefSeq only
+Mammalia	9995	Marmota monax	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9997	Spermophilus citellus	Ensembl + RefSeq	RefSeq + Ensembl
+Mammalia	9999	Urocitellus parryii	Ensembl + GenBank + RefSeq	RefSeq + Ensembl
+Mollusca	100452	Candidula unifasciata	Ensembl	Ensembl only
+Mollusca	1028688	Arion vulgaris	Ensembl	Ensembl only
+Mollusca	102876	Eledone cirrhosa	Ensembl	Ensembl only
+Mollusca	1049056	Panopea generosa	Ensembl	Ensembl only
+Mollusca	1051067	Doryteuthis pealeii	Ensembl	Ensembl only
+Mollusca	109174	Haliotis asinina	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	1093978	Elysia marginata	Ensembl	Ensembl only
+Mollusca	109671	Physella acuta	RefSeq	RefSeq only
+Mollusca	112525	Biomphalaria pfeifferi	Ensembl + GenBank	Ensembl only
+Mollusca	112526	Biomphalaria straminea	Ensembl	Ensembl only
+Mollusca	112527	Biomphalaria sudanica	Ensembl	Ensembl only
+Mollusca	113549	Pteria penguin	Ensembl	Ensembl only
+Mollusca	1138471	Boreochiton ruber	Ensembl	Ensembl only
+Mollusca	114453	Bathymodiolus heckerae	Ensembl	Ensembl only
+Mollusca	120394	Peltodoris atromaculata	Ensembl	Ensembl only
+Mollusca	120439	Limaria hians	Ensembl	Ensembl only
+Mollusca	120566	Cyclina sinensis	Ensembl	Ensembl only
+Mollusca	120570	Mactra quadrangularis	Ensembl	Ensembl only
+Mollusca	1265871	Doris montereyensis	Ensembl	Ensembl only
+Mollusca	1287507	Berghia stephanieae	RefSeq	RefSeq only
+Mollusca	129788	Ruditapes philippinarum	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	13268	Solemya velum	Ensembl	Ensembl only
+Mollusca	134471	Stramonita haemastoma	Ensembl	Ensembl only
+Mollusca	1380851	Lutraria rhynchaena	Ensembl	Ensembl only
+Mollusca	1390362	Anadara kagoshimensis	Ensembl	Ensembl only
+Mollusca	1411927	Thracia phaseolina	Ensembl	Ensembl only
+Mollusca	1472349	Alviniconcha strummeri	Ensembl	Ensembl only
+Mollusca	1491186	Alviniconcha marisindica	Ensembl	Ensembl only
+Mollusca	152013	Congeria kusceri	Ensembl	Ensembl only
+Mollusca	1548725	Serripes groenlandicus	Ensembl	Ensembl only
+Mollusca	1564611	Felimare picta	Ensembl	Ensembl only
+Mollusca	157728	Saccostrea glomerata	Ensembl	Ensembl only
+Mollusca	158019	Sepia pharaonis	Ensembl	Ensembl only
+Mollusca	161078	Omphiscola glabra	Ensembl	Ensembl only
+Mollusca	1620919	Phorcus lineatus	Ensembl	Ensembl only
+Mollusca	1628040	Ellobium chinense	Ensembl	Ensembl only
+Mollusca	165450	Sinohyriopsis cumingii	Ensembl	Ensembl only
+Mollusca	1699438	Fragum whitleyi	Ensembl	Ensembl only
+Mollusca	1735272	Gigantopelta aegis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	188477	Elysia chlorotica	Ensembl	Ensembl only
+Mollusca	1885066	Scintilla philippinensis	Ensembl	Ensembl only
+Mollusca	1899359	Epicodakia pectinata	Ensembl	Ensembl only
+Mollusca	1899378	Clathrolucina costata	Ensembl	Ensembl only
+Mollusca	191078	Saccostrea echinata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	1920004	Cyrtodaria siliqua	Ensembl	Ensembl only
+Mollusca	1920007	Donax variegatus	Ensembl	Ensembl only
+Mollusca	1920014	Mysia undata	Ensembl	Ensembl only
+Mollusca	1954227	Arcuatula senhousia	Ensembl	Ensembl only
+Mollusca	1980407	Macomangulus tenuis	Ensembl	Ensembl only
+Mollusca	200191	Sinotaia quadrata	Ensembl	Ensembl only
+Mollusca	203155	Fustiaria rubescens	Ensembl	Ensembl only
+Mollusca	206348	Bathymodiolus brooksi	Ensembl	Ensembl only
+Mollusca	2067768	Ariolimax columbianus	Ensembl	Ensembl only
+Mollusca	216125	Steromphala cineraria	Ensembl	Ensembl only
+Mollusca	216257	Chrysomallon squamiferum	Ensembl	Ensembl only
+Mollusca	220392	Bathymodiolus septemdierum	Ensembl	Ensembl only
+Mollusca	220873	Tegillarca granosa	Ensembl	Ensembl only
+Mollusca	225164	Lottia gigantea	Ensembl	Ensembl only
+Mollusca	225303	Nipponacmea schrenckii	Ensembl	Ensembl only
+Mollusca	2291877	Archivesica marissinica	Ensembl	Ensembl only
+Mollusca	231223	Elysia crispata	Ensembl	Ensembl only
+Mollusca	244458	Anodontia alba	Ensembl	Ensembl only
+Mollusca	2493646	Potamilus streckersoni	Ensembl	Ensembl only
+Mollusca	2505931	Margaritifera margaritifera	Ensembl	Ensembl only
+Mollusca	2547956	Mytilisepta virgata	Ensembl	Ensembl only
+Mollusca	256056	Lepidochitona cinerea	Ensembl	Ensembl only
+Mollusca	256108	Chiton olivaceus	Ensembl	Ensembl only
+Mollusca	256131	Chaetoderma nitidulum	Ensembl	Ensembl only
+Mollusca	256138	Callochiton septemvalvis	Ensembl	Ensembl only
+Mollusca	2584915	Oreohelix idahoensis	Ensembl	Ensembl only
+Mollusca	259542	Plakobranchus ocellatus	Ensembl	Ensembl only
+Mollusca	2607531	Octopus sinensis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	2653900	Magallana hongkongensis	Ensembl	Ensembl only
+Mollusca	271030	Anisus vortex	Ensembl	Ensembl only
+Mollusca	2750724	Conus canariensis	Ensembl	Ensembl only
+Mollusca	2784310	Magallana angulata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	2830794	Gigantidas platifrons	Ensembl	Ensembl only
+Mollusca	2912563	Crassostrea tulipa	Ensembl	Ensembl only
+Mollusca	29158	Mytilus galloprovincialis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	29159	Magallana gigas	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	2934182	Phyllidia flava	Ensembl	Ensembl only
+Mollusca	296134	Sepia lycidas	Ensembl	Ensembl only
+Mollusca	2962468	Monoplex corrugatus	Ensembl	Ensembl only
+Mollusca	3034287	Deroceras lasithionense	Ensembl	Ensembl only
+Mollusca	304850	Babylonia areolata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	3051952	Gigantidas childressi	Ensembl	Ensembl only
+Mollusca	3054875	Acanthochitona discrepans	Ensembl	Ensembl only
+Mollusca	3071549	Anisus vorticulus	Ensembl	Ensembl only
+Mollusca	3074273	Donax semistriatus	Ensembl	Ensembl only
+Mollusca	310899	Modiolus philippinarum	Ensembl	Ensembl only
+Mollusca	31199	Argopecten irradians	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	31201	Spisula solida	Ensembl	Ensembl only
+Mollusca	31204	Mactromeris polynyma	Ensembl	Ensembl only
+Mollusca	31216	Littorina littorea	Ensembl	Ensembl only
+Mollusca	31218	Littorina obtusata	Ensembl	Ensembl only
+Mollusca	31220	Littorina saxatilis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	3154051	Deshayesiella sirenkoi	Ensembl	Ensembl only
+Mollusca	3161550	Verpa penis	Ensembl	Ensembl only
+Mollusca	318265	Meghimatium bilineatum	Ensembl	Ensembl only
+Mollusca	3198878	Liolophura sinensis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	3245481	Lissachatina immaculata	Ensembl	Ensembl only
+Mollusca	3248877	Ascarosepion bandense	Ensembl	Ensembl only
+Mollusca	334708	Patella ulyssiponensis	Ensembl	Ensembl only
+Mollusca	335759	Tricolia pullus	Ensembl	Ensembl only
+Mollusca	335776	Bolma rugosa	Ensembl	Ensembl only
+Mollusca	34570	Sepioteuthis lessoniana	Ensembl	Ensembl only
+Mollusca	356393	Limnoperna fortunei	Ensembl	Ensembl only
+Mollusca	36097	Haliotis laevigata	Ensembl	Ensembl only
+Mollusca	36100	Haliotis rubra	RefSeq	RefSeq only
+Mollusca	366651	Atrina japonica	Ensembl	Ensembl only
+Mollusca	36930	Saccostrea cuccullata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	36933	Onchidella celtica	Ensembl	Ensembl only
+Mollusca	370345	Batillaria attramentaria	Ensembl	Ensembl only
+Mollusca	37623	Ostrea edulis	RefSeq	RefSeq only
+Mollusca	37653	Octopus bimaculoides	RefSeq	RefSeq only
+Mollusca	400727	Pomacea canaliculata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	40130	Donax trunculus	Ensembl	Ensembl only
+Mollusca	406540	Lucinella divaricata	Ensembl	Ensembl only
+Mollusca	43341	Phorcus turbinatus	Ensembl	Ensembl only
+Mollusca	457845	Lutraria lutraria	Ensembl	Ensembl only
+Mollusca	45954	Dreissena polymorpha	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	461120	Unio delphinus	Ensembl	Ensembl only
+Mollusca	480380	Phymorhynchus buccinoides	Ensembl	Ensembl only
+Mollusca	481879	Semisulcospira habei	Ensembl	Ensembl only
+Mollusca	488663	Naticarius hebraeus	Ensembl	Ensembl only
+Mollusca	488666	Neverita josephinia	Ensembl	Ensembl only
+Mollusca	500758	Lanistes nyassanus	Ensembl	Ensembl only
+Mollusca	50417	Mimachlamys varia	Ensembl	Ensembl only
+Mollusca	509963	Ylistrum balloti	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	55521	Rapana venosa	Ensembl	Ensembl only
+Mollusca	55704	Acanthochitona fascicularis	Ensembl	Ensembl only
+Mollusca	55710	Cerastoderma edule	Ensembl	Ensembl only
+Mollusca	55715	Venus verrucosa	Ensembl	Ensembl only
+Mollusca	55720	Uroteuthis edulis	Ensembl	Ensembl only
+Mollusca	55810	Bulinus truncatus	Ensembl	Ensembl only
+Mollusca	55837	Unio pictorum	Ensembl	Ensembl only
+Mollusca	56141	Oncomelania hupensis	Ensembl	Ensembl only
+Mollusca	561460	Fragum sueziense	Ensembl	Ensembl only
+Mollusca	582868	Ampullaceana balthica	Ensembl	Ensembl only
+Mollusca	61363	Acanthopleura granulata	Ensembl	Ensembl only
+Mollusca	61716	Hapalochlaena maculosa	Ensembl	Ensembl only
+Mollusca	6454	Haliotis rufescens	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6455	Haliotis cracherodii	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6465	Patella vulgata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6500	Aplysia californica	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6523	Lymnaea stagnalis	Ensembl	Ensembl only
+Mollusca	6526	Biomphalaria glabrata	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6535	Cornu aspersum	Ensembl	Ensembl only
+Mollusca	6549	Mytilus californianus	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6550	Mytilus edulis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6551	Mytilus trossulus	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6565	Crassostrea virginica	RefSeq	RefSeq only
+Mollusca	6573	Mizuhopecten yessoensis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6579	Pecten maximus	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6596	Mercenaria mercenaria	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6604	Mya arenaria	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	6613	Euprymna scolopes	RefSeq	RefSeq only
+Mollusca	6645	Octopus vulgaris	Ensembl + GenBank	Ensembl only
+Mollusca	66713	Pinctada imbricata	Ensembl	Ensembl only
+Mollusca	69427	Albinaria teres	Ensembl	Ensembl only
+Mollusca	70193	Sepiola atlantica	Ensembl	Ensembl only
+Mollusca	73031	Perna viridis	Ensembl + RefSeq	RefSeq + Ensembl
+Mollusca	74434	Ostrea denselamellosa	Ensembl	Ensembl only
+Mollusca	78549	Callista chione	Ensembl	Ensembl only
+Mollusca	80818	Hippopus hippopus	Ensembl	Ensembl only
+Mollusca	80821	Fragum fragum	Ensembl	Ensembl only
+Mollusca	80829	Tridacna gigas	Ensembl	Ensembl only
+Mollusca	80831	Tridacna derasa	Ensembl	Ensembl only
+Mollusca	87958	Patella caerulea	Ensembl	Ensembl only
+Mollusca	87960	Patella depressa	Ensembl	Ensembl only
+Mollusca	87964	Patella rustica	Ensembl	Ensembl only
+Mollusca	87965	Tectura virginea	Ensembl	Ensembl only
+Mollusca	88005	Patella pellucida	Ensembl	Ensembl only
+Mollusca	881214	Ctena imbricatula	Ensembl	Ensembl only
+Mollusca	881239	Lucinisca nassula	Ensembl	Ensembl only
+Mollusca	881254	Stewartia floridana	Ensembl	Ensembl only
+Mollusca	97200	Cepaea hortensis	Ensembl	Ensembl only

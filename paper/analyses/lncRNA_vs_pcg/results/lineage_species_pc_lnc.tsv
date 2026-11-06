@@ -1,0 +1,11 @@
+lineage	species	annotations	species_with_pc	species_with_lnc	pct_pc	pct_lnc
+Mammalia	678	1130	678	331	100.0	48.8
+Aves	667	1194	667	257	100.0	38.5
+Actinopteri	511	865	511	403	100.0	78.9
+Insecta	1643	1868	1643	1193	100.0	72.6
+Arachnida	77	117	77	48	100.0	62.3
+Mollusca	183	239	183	177	100.0	96.7
+Cnidaria	96	107	96	71	100.0	74.0
+Magnoliopsida	665	812	665	374	100.0	56.2
+Ascomycota	1306	1967	1306	94	100.0	7.2
+Basidiomycota	482	772	482	89	100.0	18.5

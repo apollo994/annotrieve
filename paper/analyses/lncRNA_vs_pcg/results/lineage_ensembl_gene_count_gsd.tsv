@@ -1,0 +1,11 @@
+lineage	species	gsd_pc	gsd_lnc	median_pc	median_lnc
+Mammalia	178	1.09	7.04	1.94e+04	1.01e+03
+Aves	125	1.05	5.8	1.54e+04	918
+Actinopteri	276	1.24	5.52	2.29e+04	1.86e+03
+Insecta	927	1.15	8.31	1.28e+04	1.53e+03
+Arachnida	25	1.4	2.34	1.51e+04	3.14e+03
+Mollusca	170	1.45	4.99	2.16e+04	7.07e+03
+Cnidaria	53	1.28	4.38	2.73e+04	3.33e+03
+Magnoliopsida	219	1.39	4.58	3.08e+04	4.15e+03
+Ascomycota	91	1.44	7.27	1.03e+04	2
+Basidiomycota	88	1.45	23.1	1.3e+04	26

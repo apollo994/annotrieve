@@ -1,0 +1,11 @@
+lineage	RefSeq only	RefSeq + Ensembl	Ensembl only	GenBank only	total
+Mammalia	134	132	46	19	331
+Aves	97	73	52	35	257
+Actinopteri	109	193	83	18	403
+Insecta	260	74	853	6	1193
+Arachnida	22	6	19	1	48
+Mollusca	7	29	141	0	177
+Cnidaria	17	6	47	1	71
+Magnoliopsida	150	28	191	5	374
+Ascomycota	2	0	91	1	94
+Basidiomycota	1	0	88	0	89
